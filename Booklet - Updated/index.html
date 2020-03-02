@@ -84,12 +84,13 @@
       }
 
       .fit--contents { padding: 1.5rem 1.15rem; }
+      .is-export-mode .fit--contents { padding-bottom: 1.492rem; }
       .fit--timetable { padding: 1.45rem 1.04rem }
+      .is-export-mode .fit--timetable { padding-bottom: 1.442rem; }
       .fit--contact { padding: 2.95rem 1.245rem; }
 
-      .variation--a5 .fit--timetable {
-        padding: 1.5rem 1.07rem;
-      }
+      .variation--a5 .fit--timetable { padding: 1.5rem 1.07rem; }
+      .is-export-mode.variation--a5 .fit--timetable { padding-bottom: 1.492rem; }
 
       .fit--notes {
         padding: 1.45rem 1.1rem 0.9rem 1.2rem;
@@ -101,11 +102,15 @@
 
       .fit--oneColumnPage {
         padding: 1.43rem 2.8rem 1.15rem 1.18rem;
-      }      
+      }
+      
+      .is-export-mode .fit--oneColumnPage { padding-bottom: 1.144rem; }
 
       .variation--a5 .fit--oneColumnPage {
         padding: 1.52rem 2.8rem 1rem 1.23rem;
       }
+      
+      .is-export-mode .variation--a5 .fit--oneColumnPage { padding-bottom: 0.995rem; }
     
       .fit--annotation {
         padding: 1.54rem 1.05rem 1.55rem 1.2rem;
@@ -118,28 +123,42 @@
       .fit--biographies {
         padding: 1.44rem 3.25rem 1.35rem 1.05rem;
       }
+      
+      .is-export-mode .fit--biographies { padding-bottom: 1.343rem; }
 
       .variation--a5 .fit--biographies {
         padding: 1.5rem 3.25rem 1.15rem 1.07rem;
       }
+      
+      .is-export-mode.variation--a5 .fit--biographies { padding-bottom: 1.144rem; }
 
       .fit--spanColumns {
         padding: 1.44rem 1.15rem 1.1rem 1.05rem;
       }
+      
+      .is-export-mode .fit--spanColumns { padding-bottom: 1.094rem; }
 
       .variation--a5 .fit--spanColumns {
         padding: 1.5rem 1.2rem 1.38rem 1.07rem;
       }
+      
+      .is-export-mode.variation--a5 .fit--spanColumns { padding-bottom: 1.373rem; }
 
       .fit--twoColumnPage, 
       .fit--threeColumnPage {
         padding: 1.6rem 1rem 1.1rem 1.05rem;
       }
+      
+      .is-export-mode .fit--twoColumnPage, 
+      .is-export-mode .fit--threeColumnPage { padding-bottom: 1.094rem; }
 
       .variation--a5 .fit--twoColumnPage, 
       .variation--a5 .fit--threeColumnPage {
         padding: 1.7rem 1rem 1.15rem 1.08rem;
       }
+      
+      .is-export-mode.variation--a5 .fit--twoColumnPage, 
+      .is-export-mode.variation--a5 .fit--threeColumnPage { padding-bottom: 1.144rem; }      
 
       .header {
         position: relative;
@@ -1316,18 +1335,6 @@
       .u-bold { font-weight: bold; }
       .u-m-t-0 { margin-top: 0; }
       /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
-      
-    
-      .is-export-mode .fit--oneColumnPage,
-      .is-export-mode .fit--contents,
-      .is-export-mode .fit--timetable,
-      .is-export-mode .fit--biographies,
-      .is-export-mode .fit--spanColumns,
-      .is-export-mode .fit--twoColumnPage,
-      .is-export-mode .fit--threeColumnPage,
-      .is-export-mode .fit--sponsorsPage { 
-        padding-bottom: 0rem; 
-      }
 
       /********************************************** Multipage Cover **********************************************/
       .template--multipageCover .fit {
@@ -1342,7 +1349,9 @@
       }
 
       .template--multipageCover .fit--contents { padding: 1.5rem 1.15rem; }
+      .is-export-mode .template--multipageCover .fit--contents { padding-bottom: 1.492rem; }
       .template--multipageCover .fit--timetable { padding: 1.5rem 1rem; }
+      .is-export-mode .template--multipageCover .fit--timetable { padding-bottom: 1.492rem; }
       .template--multipageCover .fit--contact { padding: 2.95rem 1.245rem; }
 
       .template--multipageCover .fit--contents.page--white,
