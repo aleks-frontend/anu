@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html data-sign="OSL">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="placeholder-controller.css">
+
+    <style>
+
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+
+      :root {
+        --black: {{account.colors.rich-black}};
+        --white: {{account.colors.white}};
+        --platinum: {{account.colors.platinum}};
+        --rose: #e3007b;
+        --university-blue: #00549E;
+      }    
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 12pt;
+        color: var(--black);
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--university-blue);
+      }
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative;
+        z-index: 999;}
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0;
+        right: 0;
+        height: 1em;
+        width: 1em;
+        border: 0.01rem solid red;
+        color: red;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 1em;
+        text-align: center;
+        line-height: 1em;
+        background-color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'Max number of lines exceeded!';
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: black;
+        color: white;
+        border-radius: 0;
+        padding: 0.5em 4em 0.5em 0.5em;
+        box-sizing: border-box;
+        font-size: 0.3em;
+        font-weight: 400;
+        text-align: right;
+        line-height: 1.1em;
+        z-index: 2;
+      }
+
+      .overflow[data-max-height]:hover:after {
+        content: 'Max height exceeded!';  
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      } 
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }    
+
+      .fit {
+        word-break: break-word;
+      }
+
+      .hero {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background: var(--rose);
+      }
+
+      .hero_image {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+      }
+
+      .hero__text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 13.5pt;
+        letter-spacing: 0pt;
+        text-transform: uppercase;
+        color: var(--white);
+        font-weight: bold;
+      }
+
+      .column__container {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 34.3pt 28pt 28pt 32pt;
+      }
+
+      .bodyLayout--option-2 .column__container {
+        margin: 34.3pt 28pt 35pt 32pt;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .column--primary {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .column--tertiary {
+        position: relative;
+      }
+
+      .bodyLayout--option-1 .column--tertiary {
+        display: none;
+      }
+
+      .column__header {
+        font-size: 0;
+      }
+
+      .bodyLayout--option-1 .column__header {
+        padding-right: 20pt;
+      }
+
+      .logo {
+        width: 115pt;
+        margin-bottom: 24pt;
+      }
+
+      .heading {
+        font-size: 16pt;
+        padding: 0 5pt;
+        margin-bottom: 12pt;
+        line-height: 1.2em;
+      }
+
+      .bodyLayout--option-1 .heading {
+        padding: 0;
+        margin-bottom: 12pt;
+        font-size: 16.4pt;        
+      }
+
+      .heading h1 {
+        font-size: 100%;
+        font-weight: bold;
+      }
+
+      .heading h1 .tinymce_style--dark {
+        color: var(--black);
+      }
+
+      .heading h1 .tinymce_style--light {
+        color: var(--platinum);
+      }
+
+      .column__body {
+        font-size: 9pt;
+        padding: 0 5pt;
+      }
+
+      .bodyLayout--option-1 .column__body {
+        padding: 65pt 10pt 0 4pt;
+      }
+
+      .column__body p {
+        font-weight: 300;
+        margin-bottom: 4pt;
+      }
+
+      .column__body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .column__body ul {
+        padding-left: 14.7pt;
+        margin-bottom: 5pt;
+      }
+
+      .column__body li {
+        position: relative;
+        margin-bottom: 2.3pt;
+        font-size: 9pt;
+        line-height: 1.3em; 
+        font-weight: 300;
+      }
+
+      .column__body li:before {
+        content: ">";
+        position: absolute;
+        left: -14.3pt;
+        font-weight: bold;
+      }
+
+      .bodyLayout--option-1 .column__body--primary {
+
+        display: none;
+      }
+
+      .wayfinder--show .column__body--primary {
+        display: none;
+      }
+
+      .column__footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        flex: 1;
+        padding: 0 5pt;
+      }
+
+      .bodyLayout--option-1 .column__footer {
+        padding: 0 20pt 0 0;
+      }
+
+      .column__footer h1 {
+        font-size: 12pt;
+        font-weight: bold;
+        color: {{{account.colors.subheading-grey}}};
+      }
+
+      .column__footer p {
+        font-size: 9pt;
+        font-weight: 300;
+      }
+
+      .column__footerInner {
+        display: none;
+      }
+
+      .wayfinder--show .column__footerInner {
+        display: block;
+      }
+
+      .contact__container {       
+        display: none;
+        position: absolute;
+        bottom: 1pt;
+        right: 4pt;
+        width: 174pt;        
+      }
+
+      .bodyLayout--option-2 .contact__container {
+        display: block;
+      }
+
+      .bodyLayout--option-2 .contact__container--hide {
+        display: none;
+      }
+
+      .contact__heading {
+        margin-bottom: 4pt;
+        font-size: 9pt;
+        font-weight: bold;        
+      } 
+
+      .contact {
+        font-size: 9pt;
+        font-weight: 300;
+      }
+
+      .contact__item {
+        display: flex;
+        line-height: 1.2em;
+      }
+
+      .contact__label {
+        width: 17pt;
+      }
+      
+      .contact a {
+        color: var(--black);
+      }
+
+      .social {
+        margin-top: 3pt;
+      }
+
+      .social__item {
+        display: flex;
+        margin-bottom: 2.1pt;
+      }
+      
+      .social__item:last-child {
+        margin-bottom: 0;
+      }
+
+      .social__icon {
+        width: 12pt;
+        height: 12pt;
+        margin-right: 5pt;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;       
+      }
+
+      .social__icon--facebook {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/d1904bd7a92afd077cfe548a1505854d/fb-icon.svg');
+      } 
+
+      .social__icon--twitter {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/3b40ad42be4f6f25216ad710f3f6a524/twitter-icon.svg'); 
+      }   
+
+      .social__icon--instagram {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/924c3627c1db3fe9e65a829ac94bb6d2/instagram-icon.svg');      
+      }    
+
+      .social__icon--linkedin {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/12e7d7b7fafeda0583b85e9fe1f9d724/linkedin-icon.svg');
+      } 
+
+      .cricos {
+        font-size: 5pt;
+        position: absolute;
+        bottom: 14pt;
+        left: 95.8%;
+        transform: rotateZ(-90deg);
+        transform-origin: left center;
+        color: var(--black);
+        font-weight: 300;
+        white-space: nowrap;
+      }
+
+      .cricos--primary {
+        left: 96.8%;
+      }
+      
+      .hero__img{
+        width: 100%;
+        height: 100%;
+      }
+      
+      .exportID{
+        margin-left: 5px;
+      }
+     
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}" data-crop="{{show-crop}}" data-variation="{{ ANU_body-layout--dlpfi }}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+      {{#placeholder-image-2}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-2 }}"></div>
+      {{/placeholder-image-2}}
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="hero">
+            <div class="hero__img">{{{ ANU_background-image--dlpfi  }}}</div><!--hero__img-->
+            {{^ANU_background-image--dlpfi }}<div class="hero__text">Image</div>{{/ANU_background-image--dlpfi }} 
+          </div><!--hero-->
+          https://anu.outfit.io/templates/9433
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <div class="page bodyLayout--{{ ANU_body-layout--dlpfi }}{{^ANU_body-layout--dlpfi}}option-2{{/ANU_body-layout--dlpfi }} wayfinder--{{ ANU_show-hide-wayfinder--dlpfi }}{{^ANU_show-hide-wayfinder--dlpfi}}show{{/ANU_show-hide-wayfinder--dlpfi}}">
+
+      <div class="bleed">
+
+        <div class="container fit fit--secondary">
+          <div class="column__container">
+            <div class="column column--primary">
+              <div class="column__header js-subtrahend">
+                <img src={{account.logos.logo-gold}} class="logo"><!--logo-->
+                <div class="heading" data-max-line="4">{{{ ANU_heading--dlpfi }}}</div><!-- heading -->
+              </div> <!-- column__header-->              
+              <div class="column__body column__body--primary" data-max-height="dynamic">{{{ ANU_body-copy-col-1--dlpfi }}}</div><!-- column__body-->
+              <div class="column__footer"><div class="column__footerInner" data-max-height="85">{{{ ANU_wayfinder--dlpfi }}}</div></div><!-- column__footer-->
+            </div> <!-- column--primary -->
+            <div class="column column--secondary">
+              <div class="column__body">
+                <div class="column__content" data-max-height="230" data-max-height-alt="300">{{{ ANU_body-copy-col-2--dlpfi }}}</div><!-- column__content-->
+              </div> <!-- column__body-->
+            </div> <!-- column--secondary -->
+            <div class="column column--tertiary">
+              <div class="column__body" data-max-height="dynamic">
+                <div class="column__content">{{{ ANU_body-copy-col-3--dlpfi }}}</div><!-- column__content-->
+              </div> <!-- column__body-->
+              <div class="contact__container contact__container--{{ ANU_contact-information-shown-dlpfi }}{{^ANU_contact-information-shown-dlpfi}}show{{/ANU_contact-information-shown-dlpfi}} js-subtrahend">
+                {{#ANU_contact-heading--dlpfi}}
+                <div class="contact__heading">
+                  {{{ ANU_contact-heading--dlpfi }}}
+                </div><!--contact__heading-->   
+                {{/ANU_contact-heading--dlpfi}}
+                <div class="contact">
+                  {{#ANU_phone--dlpfi}}
+                  <div class="contact__item">
+                    <div class="contact__label">T</div><!--contact__label-->
+                    <div class="contact__value">{{{ ANU_phone--dlpfi }}}</div><!--contact__value-->                  
+                  </div><!--contact__item-->
+                  {{/ANU_phone--dlpfi}}
+                  {{#ANU_email--dlpfi}}
+                  <div class="contact__item">
+                    <div class="contact__label">E</div><!--contact__label-->
+                    <div class="contact__value">{{{ ANU_email--dlpfi }}}</div><!--contact__value-->
+                  </div><!--contact__item-->
+                  {{/ANU_email--dlpfi}}
+                  {{#ANU_website--dlpfi}}
+                  <div class="contact__item">
+                    <div class="contact__label">W</div><!--contact__label-->
+                    <div class="contact__value">{{{ ANU_website--dlpfi }}}</div><!--contact__value-->
+                  </div><!--contact__item-->
+                  {{/ANU_website--dlpfi}}
+                  <div class="social">
+                    {{#ANU_facebook--dlpfi}}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--facebook"></div><!--social__icon-->
+                      <div class="social__text">{{{ ANU_facebook--dlpfi }}}</div><!--social__text-->
+                    </div><!--social__item-->  
+                    {{/ANU_facebook--dlpfi}}
+                    {{#ANU_twitter--dlpfi}}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--twitter"></div><!--social__icon-->
+                      <div class="social__text">{{{ ANU_twitter--dlpfi }}}</div><!--social__text-->
+                    </div><!--social__item-->
+                    {{/ANU_twitter--dlpfi}}
+                    {{#ANU_instagram--dlpfi}}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--instagram"></div><!--social__icon-->
+                      <div class="social__text">{{{ ANU_instagram--dlpfi }}}</div><!--social__text-->
+                    </div><!--social__item--> 
+                    {{/ANU_instagram--dlpfi}}
+                    {{#ANU_linkedin--dlpfi}}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--linkedin"></div><!--social__icon-->
+                      <div class="social__text">{{{ ANU_linkedin--dlpfi }}}</div><!--social__text-->
+                    </div><!--social__item-->
+                    {{/ANU_linkedin--dlpfi}}
+                  </div><!--social-->
+                </div><!--contact-->
+              </div><!--contact__container-->              
+            </div> <!-- column--tertiary -->
+          </div> <!-- column__container -->
+          <div class="cricos cricos--primary">CRICOS #00120C<span class="exportID">{{#metadata}}OF_{{export_id}}{{/metadata}}{{^metadata}}OF_XXXXXX{{/metadata}}</span>{{#customExportCode}}_{{customExportCode}}{{/customExportCode}}</div><!--cricos-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+    </script>
+    <script src="main.js"></script>   
+    <script src="prefixfree.js"></script>
+    <script src="placeholder-controller.js"></script>
+    <script src="char-limit.js"></script>
+    <script src="check-export-mode.js"></script>
+    <script src="check-height.js"></script>    
+    <script src="max-line-check.js"></script>    
+    <script src="max-height-check.js"></script>    
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      const variation = document.body.dataset.variation;
+
+      // Fix for the resizable background images - fullscreen and digital vairaitons only
+      function checkCrop() {
+        if (window.showCrop === true) {
+        } else {
+          [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+            el.parentNode.style.left = '0';
+            el.parentNode.style.right = '0';
+            el.parentNode.style.top = '0';
+            el.parentNode.style.bottom = '0';
+            el.parentNode.style.width = '100%';
+            el.parentNode.style.height = '100%';
+          });
+        }
+      }
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck(); 
+          maxHeightCheck(variation); 
+          charLimit();       
+        });
+      });    
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });          
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck(); 
+        maxHeightCheck(variation);     
+      });
+
+      placeholderController();
+      checkCrop();  
+      checkExport(); 
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+    </script>
+
+
+  </body>
+</html>
