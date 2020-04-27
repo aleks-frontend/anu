@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html data-sign="OSL">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 11pt;
+        color: #000;
+      }
+
+      a {
+        display: inline-block;
+        text-decoration: none;
+        color: #000;
+      }
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative;
+        z-index: 999;}
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0.1rem;
+        right: 0.1rem;
+        height: .3107rem;
+        width: .3107rem;
+        border: 0.01rem solid red;
+        color: red;
+        padding: 0.01rem 0.01rem 0.01rem 0.0155rem;
+        box-sizing: border-box;
+        font-size: 0.2279rem;
+        text-align: center;
+        line-height: .2693rem;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 0.5rem;
+        right:  0.1rem;
+        background-color: black;
+        color: white;
+        border-radius: 0.01rem;
+        padding: 0.2rem 0.2rem;        
+        box-sizing: border-box;
+        font-size: 0.35rem;
+        font-weight: 400;     
+        text-align: right;
+        width: 6rem;
+        line-height: 0.45rem;
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      }  
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }
+
+      :root {
+        --primary: {{account.colors.process-black}};
+        --rose: #e3007b;
+        --platinum: {{account.colors.platinum}};
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 46pt 39pt 38pt 40pt;        
+      }
+
+      .header {
+        font-size: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .logo {
+        width: 164pt;
+        margin-bottom: 27pt;
+      }
+
+      .hero {
+        position: relative;
+        height: 363pt !important;
+        overflow: hidden;
+        background: var(--rose);
+      }
+
+      .hero__text {
+        position: absolute;
+        right: 11pt;
+        bottom: -4pt;
+        width: 222pt;  
+        z-index: 2;
+      }
+
+      .hero__text--secondary {
+        right: 7pt;
+        bottom: -2pt;
+        width: 147pt;
+        z-index: 3;
+      }
+
+      .hero__text--tertiary {
+        right: 8pt;
+        bottom: -9pt;
+      }     
+
+      .hero--noBg {
+        background: none;       
+      }
+
+      .hero--secondary {
+        height: 240pt !important;
+        width: 352pt !important;
+      }
+
+      .hero--tertiary {
+        margin-bottom: 27pt;
+      }
+
+      .header__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        height: 144pt;      
+      }
+
+      .header__inner--secondary {
+        text-align: left;
+      }
+
+      .header__inner--tertiary {
+        height: auto;
+      }
+
+      .heading h1 {
+        font-size: 23.3pt;      
+        text-transform: uppercase;
+        letter-spacing: 6.4pt;   
+        line-height: 1.3em;
+        color: var(--primary);
+        font-weight: 300;
+      }
+
+      .heading--secondary h1 {
+        font-size: 19pt;
+        letter-spacing: 4.7pt;
+      }
+
+      .subheading h2 {
+        font-size: 24pt;
+        text-transform: uppercase;
+        line-height: 1.3em;
+        letter-spacing: 6pt;
+        color: var(--platinum);
+        font-weight: 300;
+      }
+
+      .style--1 h2 {
+        text-transform: uppercase;
+      }
+
+      .subheading--secondary.style--1 h2 {
+        font-size: 18.4pt;
+        letter-spacing: 5.1pt;
+      }
+
+      .style--2 h2 {
+        font-size: 24pt;
+        font-weight: bold;
+        letter-spacing: 0pt;
+        text-transform: none;
+      }
+
+      .subheading--secondary.style--2 h2 {
+        font-size: 23.6pt;
+        letter-spacing: 0.2pt;
+      }
+
+      .subheadingOverflow {
+        max-height: 1rem;
+      }
+
+      .style--2 .subheadingOverflow {
+        max-height: 1.6rem;
+      }
+
+      .body {
+        flex: 1;
+        display: flex;   
+      }
+
+      .body--secondary {
+        flex-direction: column;
+        justify-content: center;
+        padding-bottom: 0;
+      }
+
+      .body--back {
+        position: relative;
+        display: block;
+        column-count: 2;
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        -moz-column-fill: auto; /* Firefox */
+        column-fill: auto;
+        column-gap: 14pt;
+        -webkit-column-gap: 14pt; /* Chrome, Safari, Opera */
+        -moz-column-gap: 14pt; /* Firefox */
+        padding-top: 81pt;
+      }
+
+      .body--back.u-column {
+        column-count: 3;
+      }
+
+      .side {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-shrink: 0;  
+        width: 181pt;    
+        padding-right: 10pt;
+        font-size: 10pt;
+      }
+
+      .side__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 4.2rem;
+        padding-right: 15pt;
+      }
+
+      .side__content h3 {
+        margin-bottom: 5.5pt;
+        font-size: 12pt;      
+      }
+
+      .side__content p,
+      .side__content a {
+        margin-bottom: 3pt;
+        font-size: 12pt;     
+        font-weight: 300;
+      }
+
+      .side__content h3:last-child,
+      .side__content p:last-child,
+      .side__content a:last-child,
+      .side__content li:last-child {
+        margin-bottom: 0pt;
+      }
+
+      .side__content ul {
+        margin-left: 14pt;
+      }
+
+      .side__content li {
+        position: relative;
+        margin-bottom: 5pt;
+        font-size: 11.5pt;      
+      }
+
+      .side__content li::before {
+        content: ">";
+        position: absolute;
+        top: -1pt;
+        left: -14pt;
+        font-weight: bold;
+      }
+
+      .collegeInfo {
+        font-size: 16pt;
+        font-weight: normal;
+      }
+
+      .collegeInfo p {
+        font-size: 16pt; 
+      }
+
+      .collegeInfo p:last-child,
+      .collegeInfo a:last-child {
+        margin-bottom: 0;
+      }
+
+      .collegeInfo__name--heath_and_medicine {
+        color: #00C49F;
+      }
+
+      .collegeInfo__name--business_and_economics {
+        color: #FFB300;
+      }
+
+      .collegeInfo__name--engineering_and_computer_science {
+        color: #C41237;
+      }
+
+      .collegeInfo__name--arts_and_social_sciences {
+        color: #0055FA;
+      }
+
+      .collegeInfo__name--science {
+        color: #009900;
+      }
+
+      .collegeInfo__name--law {
+        color: #5B00BD;
+      }
+
+      .collegeInfo__name--asia_and_the_pacific {
+        color: #FF6308;
+      }
+
+      .main { 
+        position: relative;
+        column-fill: auto;
+        column-count: 2;
+        column-gap: 12pt;
+      }      
+
+      .main--secondary {
+        column-count: unset;
+      }
+
+      .content {
+        margin-bottom: 11pt;  
+      }
+
+      .content--secondary {
+        margin-bottom: 0;
+      } 
+
+      .content__maxHeightp1 {
+        max-height: 5.6rem;
+      }
+
+      .content h3 {
+        margin-bottom: 4pt;
+        font-size: 12pt;      
+      }      
+
+      .content p {
+        margin-bottom: 3pt;
+        font-size: 9pt;
+        line-height: 1.25em;   
+        font-weight: 300;
+      }
+
+      .content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .content--secondary p {
+        font-size: 13pt;
+        line-height: 1.4em
+      }
+
+      .contact__heading {
+        margin-bottom: 3pt;
+        font-size: 12pt;
+        font-weight: bold;        
+        color: var(--platinum);
+      } 
+
+      .contact {
+        font-size: 9pt;
+        font-weight: 300;
+      }
+
+      .contact__item {
+        display: flex;
+      }
+
+      .contact__label {
+        width: 16pt;
+      }
+
+      .social {
+        margin-top: 5pt;
+      }
+
+      .social__item {
+        display: flex;
+        margin-bottom: 1.9pt;
+      }
+
+      .social__icon {
+        width: 12pt;
+        height: 12pt;
+        margin-right: 5pt;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;       
+      }
+
+      .social__icon--facebook {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/d1904bd7a92afd077cfe548a1505854d/fb-icon.svg');
+      } 
+
+      .social__icon--twitter {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/3b40ad42be4f6f25216ad710f3f6a524/twitter-icon.svg'); 
+      }   
+
+      .social__icon--instagram {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/924c3627c1db3fe9e65a829ac94bb6d2/instagram-icon.svg');      
+      }    
+
+      .social__icon--linkedin {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/12e7d7b7fafeda0583b85e9fe1f9d724/linkedin-icon.svg');
+      } 
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .footer__col {
+        font-size: 10pt;
+        max-height: 40%;
+      }
+
+      .footer__col--secondary {
+        max-width: 40%;
+        padding-bottom: 4pt;
+        text-align: right;     
+        font-weight: 300;
+        font-size: 12pt;
+      }
+
+      .block {
+        margin-bottom: 5pt;
+      }
+
+      .block--text {
+        margin-bottom: 10pt;
+        font-size: 10pt;
+      }
+
+      .block--text .tinymce_style--dark {
+        color: var(--primary);
+      }
+
+      .block--text .tinymce_style--light {
+        color: var(--platinum);
+      }
+
+      .block--text h2 {
+        margin-bottom: 4pt;
+        margin-top: 10pt;
+        font-size: 12pt;
+        font-weight: bold;
+        color: var(--platinum);
+      }
+
+      .block--text h2:first-child {
+        margin-top: 0pt;
+      }
+
+      .block--text p {
+        margin-bottom: 10pt; 
+        font-weight: 300;
+        font-size: 9pt;   
+      }
+
+      .block--text ul {
+        margin-left: 14pt;
+        margin-bottom: 5pt;
+      }
+
+      .block--text li {
+        position: relative;
+        margin-bottom: 5pt;
+        font-size: 9pt;    
+        font-weight: 300;
+      }
+
+      .block--text li::before {
+        content: ">";
+        position: absolute;
+        top: -1pt;
+        left: -14pt;
+        font-weight: bold;
+      }       
+
+      .block--text h2:last-child,
+      .block--text p:last-child,
+      .block--text a:last-child,
+      .block--text li:last-child {
+        margin-bottom: 0pt;
+      }
+
+      .block--image {
+        display: inline-block;
+        margin-bottom: 10pt;
+        width: 100%;
+      }
+
+      .block--image .image {
+        height: 179pt !important;
+      }
+
+      .block--image + .block--quote {
+        margin-top: 14pt;
+      }
+
+      .block--table {
+        margin-top: 15pt;
+        margin-bottom: 15pt;
+      }
+
+      .block--table:first-child {
+        margin-top: 0;
+      }
+
+      .table {
+        width: 100%; 
+        /*  display: inline-block; */
+      }
+
+      th {        
+        border-bottom: 2pt solid var(--platinum);
+      }
+
+      td {        
+        border-bottom: 1pt solid var(--platinum);
+        word-break: break-all;
+      }
+
+      .table__title h3 {
+        margin-bottom: 4pt;
+        font-size: 10pt;
+        font-weight: bold;   
+      }
+
+      .table__row {
+        padding-right: 4pt;
+        padding-bottom: 2pt;  
+        padding-top: 2pt;
+        font-weight: 300;
+        font-size: 9pt;
+        text-align: center;     
+      }
+
+      .table__row:nth-child(1) {
+        text-align: left;   
+      }
+
+      .table__row--heading {
+        font-weight: bold;
+        font-size: 7pt;
+      }
+
+      .block--quote {
+        padding-bottom: 8pt;
+        margin-bottom: 10pt;   
+      }
+
+      .block--quote h3 {
+        margin-bottom: 5pt;
+        font-size: 15pt;      
+      }
+
+      .block--quote p {
+        margin-bottom: 3pt;
+        font-size: 11.5pt;  
+      }
+
+      .block--quote p:last-child,
+      .block--quote h3:last-child {
+        margin-bottom: 0;
+      }
+
+      .quotebox {
+        padding: 10px;
+        /*margin-top: 14px;*/
+        background: var(--platinum);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .quote {
+
+      }
+
+      .quote__footer {
+        display: flex;
+        margin-top: 8pt;
+        font-size: 7pt;   
+      }
+
+      .quote__info p {
+        padding-bottom: 2pt;
+        font-size: 9pt; 
+      }
+
+      .quote__info--primary {
+        margin-right: 4pt;
+      }
+
+      .image {
+        width: 100%;
+        height: 179pt;
+        position: relative;
+        overflow: hidden;
+        margin-top: 3pt; 
+        background: var(--rose);
+      }
+
+      .imageText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 12pt;
+        text-transform: uppercase;
+        color: #fff;
+      }
+
+      .image--noBg {
+        background: none;
+      }
+
+      .image__text {
+        padding: 8pt 8pt;
+        background: #fff;           
+      }
+
+      .image__caption {
+        font-size: 7pt;       
+      }
+
+      .image__caption {
+        margin-bottom: 6pt;
+      }
+
+      .image__footer {
+        font-size: 7pt;
+      }
+
+      .image__info {
+        font-size: 9pt;
+      }  
+
+      .contact__container,
+      .contact__container--primary,
+      .contact__container--secondary {
+        display: inline-block;
+      }
+
+      .contact__container--secondary {
+        margin-top: 10pt;
+      }
+
+      .contact__container:first-child {
+        margin-top: 0;
+      }
+
+      .outfitCricosCode {         
+        position: absolute;
+        left: 97.3%;
+        bottom: 17pt;
+        transform: rotateZ(-90deg);
+        transform-origin: left bottom;
+        font-size: 4.9pt;     
+        white-space: nowrap;
+      }
+
+      .outfitCricosCode--secondary {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        font-size: 4.5pt;
+      }
+
+      .js-outfit-cricos-source {
+        display: none;
+      }
+
+      .js-export-id-source {
+        display: none;
+      }
+
+
+      /* Wayfinder colors */
+      .arts-social-sciences				{			color: {{{account.colors.arts---social-sciences}}};				}
+      .asia-the-pacific					{			color: {{{account.colors.asia-and-the-pacific}}};				}
+      .business-economics				{			color: {{{account.colors.business-and-economics}}};				}
+      .engineering-computer-science		{			color: {{{account.colors.engineering-and-computer-science}}};	}
+      .law								{			color: {{{account.colors.law}}};								}
+      .health-medicine					{			color: {{{account.colors.health-and-medicine}}};				}
+      .science							{			color: {{{account.colors.science}}};							}
+      .charcoalText						{			color: {{{account.colors.charcoal}}};							}      
+
+      .wayfinder,
+      .presenter__label {
+        line-height: 1.15em;
+        font-size: 12pt;
+      }
+
+      .wayfinder {
+        margin-bottom: -10px;
+      }
+
+      .presenter__label--hide {
+        display: none;
+      }
+      
+      .exportID{
+        margin-left: 5px;
+      }
+      
+      {{{account.snippets.wayfinderCSS}}}
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle }}{{^placeholder-toggle}}hide{{/placeholder-toggle}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+      {{#placeholder-image-2}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-2 }}"></div>
+      {{/placeholder-image-2}}
+    </div><!-- end placeholderMaster -->
+    <div class="js-outfit-cricos-source" data-outfit="{{ outfit-code }}" data-cricos="{{ cricos-code }}"></div>
+    {{#metadata}}<div class="js-export-id-source"> OF_{{export_id}}</div>{{/metadata}}
+
+    {{#collection.ANU_front-generic-flyer--gf}}
+
+    <!--page1-->
+    {{#block.ANU_front-three-column-large-image--gf}}
+    <div class="page">
+
+      <div class="bleed center-children">
+
+        <div class="container fit">
+
+          <div class="header header--large header--small">
+            <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/a8910d194dcfecedb03ada8af0e88a49/Logo-testAsset%202.svg" class="logo"><!--logo-->
+            <div class="hero {{#ANU_feature-image--gf}}hero--noBg{{/ANU_feature-image--gf}}">
+              {{^ANU_feature-image--gf}}<div class="imageText">Image</div>{{/ANU_feature-image--gf}} 
+              <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/054c996f8df2baf530e78020091cd0b3/download%20%281%29.png" class="hero__text">
+              {{{ ANU_feature-image--gf }}}</div><!--hero-->
+            <div class="header__inner">
+              {{#ANU_heading--gf}}
+              <div class="heading">
+                <div style="max-height: 1.6rem">
+                  <div class="check-overflow">
+                    {{{ ANU_heading--gf }}} 
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div><!--heading-->
+              {{/ANU_heading--gf}}
+              {{#ANU_subheading--gf}}
+              <div class="subheading {{{ ANU_subheading-style--gf }}}{{^ANU_subheading-style--gf}}style--1{{/ANU_subheading-style--gf}}">
+                <div class="subheadingOverflow">
+                  <div class="check-overflow">
+                    <h2>{{{ ANU_subheading--gf }}}</h2>
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div><!--subheading-->
+              {{/ANU_subheading--gf}}
+            </div><!--header__inner-->
+          </div><!--header-->
+          <div class="body">
+            <div class="side">          
+              <div style="max-height: 4.2rem">
+                <div class="check-overflow">  
+                  <div class="side__inner">
+                    <div class="side__content">  
+                      {{{ ANU_intro-copy--gf }}}
+                    </div><!--side__content-->             
+                    <div class="wayfinder" data-max-line="8"></div>
+
+                    </div><!-- side__inner -->
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div><!--side-->  
+              <div class="main">
+                <div style="max-height: 368pt">
+                  <div class="check-overflow">
+                    <div class="content__maxHeightp1">
+                      <div class="check-overflow">
+                        <div class="content">{{{ ANU_content--gf }}}</div>
+                      </div><!-- end check-overflow -->
+                    </div><!-- end max-height -->
+                    {{#collection.ANU_contact-details--gf}}
+                    <div class="contact__container contact__container--primary">
+                      <div class="contact__heading">Contact</div><!--contact__heading-->      
+                      <div class="contact">
+                        {{#ANU_phone--gf}}
+                        <div class="contact__item">
+                          <div class="contact__label">T</div><!--contact__label-->
+                          <div class="contact__value">{{{ ANU_phone--gf }}}</div><!--contact__value-->                  
+                        </div><!--contact__item-->
+                        {{/ANU_phone--gf}}
+                        {{#ANU_email--gf}}
+                        <div class="contact__item">
+                          <div class="contact__label">E</div><!--contact__label-->
+                          <div class="contact__value">{{{ ANU_email--gf }}}</div><!--contact__value-->
+                        </div><!--contact__item-->
+                        {{/ANU_email--gf}}
+                        {{#ANU_website--gf}}
+                        <div class="contact__item">
+                          <div class="contact__label">W</div><!--contact__label-->
+                          <div class="contact__value">{{{ ANU_website--gf }}}</div><!--contact__value-->
+                        </div><!--contact__item-->
+                        {{/ANU_website--gf}}
+                        <div class="social">
+                          {{#ANU_facebook--gf}}
+                          <div class="social__item">
+                            <div class="social__icon social__icon--facebook"></div><!--social__icon-->
+                            <div class="social__text">{{{ ANU_facebook--gf }}}</div><!--social__text-->
+                          </div><!--social__item-->  
+                          {{/ANU_facebook--gf}}
+                          {{#ANU_twitter--gf}}
+                          <div class="social__item">
+                            <div class="social__icon social__icon--twitter"></div><!--social__icon-->
+                            <div class="social__text">{{{ ANU_twitter--gf }}}</div><!--social__text-->
+                          </div><!--social__item-->
+                          {{/ANU_twitter--gf}}
+                          {{#ANU_instagram--gf}}
+                          <div class="social__item">
+                            <div class="social__icon social__icon--instagram"></div><!--social__icon-->
+                            <div class="social__text">{{{ ANU_instagram--gf }}}</div><!--social__text-->
+                          </div><!--social__item--> 
+                          {{/ANU_instagram--gf}}
+                          {{#ANU_linkedin--gf}}
+                          <div class="social__item">
+                            <div class="social__icon social__icon--linkedin"></div><!--social__icon-->
+                            <div class="social__text">{{{ ANU_linkedin--gf }}}</div><!--social__text-->
+                          </div><!--social__item-->
+                          {{/ANU_linkedin--gf}}
+                        </div><!--social-->
+                      </div><!--contact-->
+                    </div><!-- end contact__container -->
+                    {{/collection.ANU_contact-details--gf}}
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div><!--main-->          
+            </div><!--body-->
+            <div class="outfitCricosCode">CRICOS #{{cricos-code}}{{#metadata}}  OF_{{export_id}}{{/metadata}}{{#customExportCode}}_{{customExportCode}}{{/customExportCode}}</div><!--url-->
+          </div><!--container fit-->
+        </div>
+        </div><!--bleed-->
+
+      </div><!--page -->
+      {{/block.ANU_front-three-column-large-image--gf}}
+      <!--page 1-->
+
+      <!--page 2-->
+      {{#block.ANU_front-three-column-small-image--gf}}
+      <div class="page">
+
+        <div class="bleed center-children">
+
+          <div class="container fit">
+
+            <div class="header header--large header--small">
+              <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/a8910d194dcfecedb03ada8af0e88a49/Logo-testAsset%202.svg" class="logo"><!--logo-->
+              <div class="hero hero--secondary {{#ANU_feature-image--gf }}hero--noBg{{/ANU_feature-image--gf}}">
+                {{^ANU_feature-image--gf}}<div class="imageText">Image</div>{{/ANU_feature-image--gf}}  
+                <img src="https://files.outfit.io/media_library_items/66505/ANU.svg" class="hero__text hero__text--secondary">
+                {{{ ANU_feature-image--gf }}}</div><!--hero-->
+              <div class="header__inner header__inner--secondary">
+                {{#ANU_heading--gf}}
+                <div class="heading heading--secondary">
+                  <div style="max-height: 1.6rem">
+                    <div class="check-overflow">
+                      {{{ ANU_heading--gf }}} 
+                    </div> <!-- check-overflow -->
+                  </div> <!-- max-height -->
+                </div><!--heading-->
+                {{/ANU_heading--gf}}main
+                {{#ANU_subheading--gf}}
+                <div class="subheading subheading--secondary {{{ ANU_subheading-style--gf }}}{{^ANU_subheading-style--gf}}style--1{{/ANU_subheading-style--gf}}">
+                  <div class="subheadingOverflow">
+                    <div class="check-overflow">
+                      {{{ ANU_subheading--gf }}}
+                    </div> <!-- check-overflow -->
+                  </div> <!-- max-height -->
+                </div><!--subheading-->
+                {{/ANU_subheading--gf}}
+              </div><!--header__inner-->
+            </div><!--header-->
+            <div class="body">
+              <div class="side">          
+                <div class="side__content">  
+                  <div style="max-height: 4.8rem">
+                    <div class="check-overflow">
+                      {{{ ANU_intro-copy--gf }}}     
+                    </div> <!-- check-overflow -->
+                  </div> <!-- max-height -->
+                </div><!--side__content-->                           
+                <div class="wayfinder" data-max-line="8"></div>              
+              </div><!--side-->  
+              <div class="main">
+                <div style="max-height: 614pt;">
+                  <div class="check-overflow">
+                    <div class="content">{{{ ANU_content--gf }}}</div>
+                    {{#collection.ANU_contact-details--gf}}
+                    <div class="contact__heading">Contact</div><!--contact__heading-->      
+                    <div class="contact">
+                      {{#ANU_phone--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">T</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_phone--gf }}}</div><!--contact__value-->                  
+                      </div><!--contact__item-->
+                      {{/ANU_phone--gf}}
+                      {{#ANU_email--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">E</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_email--gf }}}</div><!--contact__value-->
+                      </div><!--contact__item-->
+                      {{/ANU_email--gf}}
+                      {{#ANU_website--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">W</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_website--gf }}}</div><!--contact__value-->
+                      </div><!--contact__item-->
+                      {{/ANU_website--gf}}
+                      <div class="social">
+                        {{#ANU_facebook--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--facebook"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_facebook--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->  
+                        {{/ANU_facebook--gf}}
+                        {{#ANU_twitter--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--twitter"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_twitter--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->
+                        {{/ANU_twitter--gf}}
+                        {{#ANU_instagram--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--instagram"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_instagram--gf }}}</div><!--social__text-->
+                        </div><!--social__item--> 
+                        {{/ANU_instagram--gf}}
+                        {{#ANU_linkedin--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--linkedin"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_linkedin--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->
+                        {{/ANU_linkedin--gf}}
+                      </div><!--social-->
+                    </div><!--contact-->
+                    {{/collection.ANU_contact-details--gf}}
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div><!--main-->
+              <div class="url url--secondary"></div><!--url-->
+            </div><!--body-->
+            <div class="outfitCricosCode">CRICOS #{{cricos-code}}{{#metadata}}  OF_{{export_id}}{{/metadata}}{{#customExportCode}}_{{customExportCode}}{{/customExportCode}}</div><!--url-->
+          </div><!--container fit-->
+
+        </div><!--bleed-->
+
+      </div><!--page-->  
+
+      {{/block.ANU_front-three-column-small-image--gf}}
+      <!--page 2-->
+
+      <!--page 3-->
+      {{#block.ANU_front-one-column--gf}}
+      <div class="page">
+
+        <div class="bleed center-children">
+
+          <div class="container fit">
+
+            <div class="header header--large header--small">
+              <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/a8910d194dcfecedb03ada8af0e88a49/Logo-testAsset%202.svg" class="logo"><!--logo-->
+              <div class="hero hero--tertiary {{#ANU_feature-image--gf }}hero--noBg{{/ANU_feature-image--gf}}">
+                {{^ANU_feature-image--gf}}<div class="imageText">Image</div>{{/ANU_feature-image--gf}}  
+                <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/054c996f8df2baf530e78020091cd0b3/download%20%281%29.png" class="hero__text hero__text--tertiary">
+                {{{ ANU_feature-image--gf }}}</div><!--hero-->
+              <div class="header__inner header__inner--tertiary">
+                {{#ANU_heading--gf}}
+                <div class="heading">
+                  <div style="max-height: 1.6rem">
+                    <div class="check-overflow">
+                      {{{ ANU_heading--gf }}} 
+                    </div> <!-- check-overflow -->
+                  </div> <!-- max-height -->
+                </div><!--heading-->
+                {{/ANU_heading--gf}}
+                {{#ANU_subheading--gf}}
+                <div class="subheading {{{ ANU_subheading-style--gf }}}{{^ANU_subheading-style--gf}}style--1{{/ANU_subheading-style--gf}}">
+                  <div class="subheadingOverflow">
+                    <div class="check-overflow">
+                      {{{ ANU_subheading--gf }}}
+                    </div> <!-- check-overflow -->
+                  </div> <!-- max-height -->
+                </div><!--subheading-->
+                {{/ANU_subheading--gf}}
+              </div><!--header__inner-->
+            </div><!--header-->
+            <div class="body body--secondary">
+              <div class="main main--secondary">
+                <div style="max-height: 2.1em;">
+                  <div class="check-overflow">
+                    <div class="content content--secondary">{{{ ANU_content--gf }}}</div>               
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div><!--main-->
+              <div class="url url--secondary"></div><!--url-->
+            </div><!--body-->
+            <div class="footer">
+              <div class="footer__col">
+
+              <div class="wayfinder" data-max-line="8"></div>
+  
+
+              </div><!--footer__col-->
+              <div class="footer__col footer__col--secondary">
+                <div class="url">
+                  <div style="max-height: 1.5em">
+                    <div class="check-overflow">
+                      {{{ ANU_url--gf }}}
+                    </div> <!--check-overflow-->
+                  </div> <!--max-height-->
+                </div><!--url-->
+                <div class="outfitCricosCode outfitCricosCode--secondary">CRICOS #{{cricos-code}}<span class="exportID">{{#metadata}}OF_{{export_id}}{{/metadata}}{{^metadata}}OF_XXXXXX{{/metadata}}</span>{{#customExportCode}}_{{customExportCode}}{{/customExportCode}}</div><!--url-->
+
+              </div><!--footer__col-->
+            </div><!--footer-->
+          </div><!--container fit-->
+
+        </div><!--bleed-->
+
+      </div><!--page-->   
+
+      {{/block.ANU_front-one-column--gf}}
+      <!--page 3-->
+      {{/collection.ANU_front-generic-flyer--gf}}
+
+
+      {{#collection.ANU_generic-flyer--gf}}
+
+      <!--page 4-->
+      {{#block.ANU_back-two-column--gf}}
+      <div class="page">
+
+        <div class="bleed center-children">
+
+          <div class="container fit fit--secondary">
+
+            <div class="body body--back">
+              <div style="max-height: 1387pt;">
+                <div class="check-overflow">
+                  {{#collection.ANU_content--gf}}
+                  {{#block.ANU_copy--gf}}
+                  <div class="block block--text">{{{ ANU_text--gf }}}</div><!--block block--content-->
+                  {{/block.ANU_copy--gf}}
+
+                  {{#block.ANU_image--gf}}
+
+                  <div class="block block--image">                
+
+                    <div class="image {{#ANU_image--gf }}image--noBg{{/ANU_image--gf}}">   
+                      <div class="hero__image">
+                        {{^ANU_image--gf}}<div class="imageText">Image</div>{{/ANU_image--gf}} 
+                      </div><!-- end hero__image -->
+                      {{{ ANU_image--gf }}}</div><!--image-->                 
+                    {{#ANU_caption--gf}}
+                    <div class="image__text">
+                      <div class="image__caption">{{{ ANU_caption--gf }}}</div><!--image__caption-->
+                    </div><!--image__text-->
+                    {{/ANU_caption--gf}}
+                  </div><!--block block--image-->
+
+                  {{/block.ANU_image--gf}}
+
+                  {{#block.ANU_table--gf}}
+                  <div class="block block--table">
+                    <div class="table__title">{{{ ANU_title--gf }}}</div><!--table__title-->  
+                    <table class="table">
+                      <tr>
+                        <th class="table__row table__row--heading" width="32%">Bachelor of</th>
+                        <th class="table__row table__row--heading" width="32%">Length</th>
+                        <th class="table__row table__row--heading" width="12%">Rank</th>
+                        <th class="table__row table__row--heading" width="12%">OP</th>                   
+                        <th class="table__row table__row--heading">IB</th>
+                      </tr>
+                      {{#spreadsheet.ANU_table-content--gf}}
+                      <tr>
+                        <td class="table__row">{{ANU_bachelor-of--gf}}</td>
+                        <td class="table__row">{{ANU_length--gf}}</td>
+                        <td class="table__row">{{ANU_rank--gf}}</td>
+                        <td class="table__row">{{ANU_op--gf}}</td>
+                        <td class="table__row">{{ANU_ib--gf}}</td>
+                      </tr>
+                      {{/spreadsheet.ANU_table-content--gf}}
+                    </table><!--table-->
+                  </div><!--block block--table-->         
+                  {{/block.ANU_table--gf}}
+
+                  {{#block.ANU_quote--gf}}
+                  <div class="block block--quote">
+
+                    <div class="image {{#ANU_image--gf }}image--noBg{{/ANU_image--gf}}">   
+                      <div class="hero__image">
+                        {{^ANU_image--gf}}<div class="imageText">Image</div>{{/ANU_image--gf}} 
+                      </div><!-- end hero__image -->                  
+                      {{{ ANU_image--gf }}}</div><!--image-->
+
+                    <div class="quotebox">
+                      <div class="quote">
+                        {{{ ANU_content--gf }}}
+                      </div><!--quote-->
+
+                      <div class="quote__footer">
+                        {{#ANU_name--gf}} <div class="quote__info quote__info--primary">{{{ ANU_name--gf }}}</div>{{/ANU_name--gf}}<!--quote__info-->
+                      </div><!--quote__footer-->
+                    </div>
+                  </div><!--block block--quote-->
+                  {{/block.ANU_quote--gf}}
+
+
+                  {{/collection.ANU_content--gf}}
+                  <div class="contact__container contact__container--secondary">
+                    {{#collection.ANU_contact-details--gf}}
+                    <div class="contact__heading">Contact</div><!--contact__heading-->      
+                    <div class="contact">
+                      {{#ANU_phone--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">T</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_phone--gf }}}</div><!--contact__value-->                  
+                      </div><!--contact__item-->
+                      {{/ANU_phone--gf}}
+                      {{#ANU_email--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">E</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_email--gf }}}</div><!--contact__value-->
+                      </div><!--contact__item-->
+                      {{/ANU_email--gf}}
+                      {{#ANU_website--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">W</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_website--gf }}}</div><!--contact__value-->
+                      </div><!--contact__item-->
+                      {{/ANU_website--gf}}
+                      <div class="social">
+                        {{#ANU_facebook--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--facebook"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_facebook--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->  
+                        {{/ANU_facebook--gf}}
+                        {{#ANU_twitter--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--twitter"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_twitter--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->
+                        {{/ANU_twitter--gf}}
+                        {{#ANU_instagram--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--instagram"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_instagram--gf }}}</div><!--social__text-->
+                        </div><!--social__item--> 
+                        {{/ANU_instagram--gf}}
+                        {{#ANU_linkedin--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--linkedin"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_linkedin--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->
+                        {{/ANU_linkedin--gf}}
+                      </div><!--social-->
+                    </div><!--contact-->
+                    {{/collection.ANU_contact-details--gf}}
+                  </div><!--contact__container-->
+                </div> <!--check-overflow-->
+              </div> <!--max-height-->
+            </div><!--body body--back-->
+            <div class="outfitCricosCode">CRICOS #{{cricos-code}}{{#metadata}}  OF_{{export_id}}{{/metadata}}{{#customExportCode}}_{{customExportCode}}{{/customExportCode}}</div><!--url-->
+          </div><!--container fit fit--secondary-->
+
+        </div><!--bleed-->
+
+      </div><!--page-->
+      {{/block.ANU_back-two-column--gf}}
+
+      <!--page 4-->
+
+      <!--page 5-->
+      {{#block.ANU_back-three-column--gf}}
+      <div class="page">
+
+        <div class="bleed center-children">
+
+          <div class="container fit fit--secondary">
+
+            <div class="body body--back u-column">
+
+              <div style="max-height: 2077pt;">
+                <div class="check-overflow">
+                  {{#collection.ANU_content--gf}}
+                  {{#block.ANU_copy--gf}}
+                  <div class="block block--text">{{{ ANU_text--gf }}}</div><!--block block--content-->
+                  {{/block.ANU_copy--gf}}
+
+
+                  {{#block.ANU_image--gf}}
+                  <div class="block block--image">
+                    <div class="image {{#ANU_image--gf }}image--noBg{{/ANU_image--gf}}">
+                      {{^ANU_image--gf}}<div class="imageText">Image</div>{{/ANU_image--gf}}
+                      {{{ ANU_image--gf }}}</div><!--image-->   
+                    {{#ANU_caption--gf}}
+                    <div class="image__text">            
+                      <div class="image__caption">{{{ ANU_caption--gf }}}</div><!--image__caption-->
+                    </div><!--image__text-->
+                    {{/ANU_caption--gf}}
+                  </div><!--block block--image-->
+                  {{/block.ANU_image--gf}}
+
+
+                  {{#block.ANU_table--gf}}
+                  <div class="block block--table">
+                    <div class="table__title">{{{ ANU_title--gf }}}</div><!--table__title-->  
+                    <table class="table">
+                      <tr>
+                        <th class="table__row table__row--heading">Bachelor of</th>
+                        <th class="table__row table__row--heading">Length</th>
+                        <th class="table__row table__row--heading">Rank</th>
+                        <th class="table__row table__row--heading">OP</th>                   
+                        <th class="table__row table__row--heading">IB</th>
+                      </tr>
+                      {{#spreadsheet.ANU_table-content--gf}}
+                      <tr>
+                        <td class="table__row">{{ANU_bachelor-of--gf}}</td>
+                        <td class="table__row">{{ANU_length--gf}}</td>
+                        <td class="table__row">{{ANU_rank--gf}}</td>
+                        <td class="table__row">{{ANU_op--gf}}</td>
+                        <td class="table__row">{{ANU_ib--gf}}</td>
+                      </tr>
+                      {{/spreadsheet.ANU_table-content--gf}}
+                    </table><!--table-->
+                  </div><!--block block--table-->         
+                  {{/block.ANU_table--gf}}
+
+
+                  {{#block.ANU_quote--gf}}
+                  <div class="block block--quote">
+
+                    <div class="image {{#ANU_image--gf }}image--noBg{{/ANU_image--gf}}">   
+                      <div class="hero__image">
+                        {{^ANU_image--gf}}<div class="imageText">Image</div>{{/ANU_image--gf}} 
+                      </div><!-- end hero__image -->                  
+                      {{{ ANU_image--gf }}}</div><!--image-->
+
+                    <div class="quotebox">
+                      <div class="quote">
+                        {{{ ANU_content--gf }}}
+                      </div><!--quote-->
+
+                      <div class="quote__footer">
+                        {{#ANU_name--gf}} <div class="quote__info quote__info--primary">{{{ ANU_name--gf }}}</div>{{/ANU_name--gf}}<!--quote__info-->
+                      </div><!--quote__footer-->
+                    </div>
+                  </div><!--block block--quote-->
+                  {{/block.ANU_quote--gf}}
+
+
+                  {{/collection.ANU_content--gf}}
+                  <div class="contact__container">
+                    {{#collection.ANU_contact-details--gf}}
+                    <div class="contact__heading">Contact</div><!--contact__heading-->      
+                    <div class="contact">
+                      {{#ANU_phone--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">T</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_phone--gf }}}</div><!--contact__value-->                  
+                      </div><!--contact__item-->
+                      {{/ANU_phone--gf}}
+                      {{#ANU_email--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">E</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_email--gf }}}</div><!--contact__value-->
+                      </div><!--contact__item-->
+                      {{/ANU_email--gf}}
+                      {{#ANU_website--gf}}
+                      <div class="contact__item">
+                        <div class="contact__label">W</div><!--contact__label-->
+                        <div class="contact__value">{{{ ANU_website--gf }}}</div><!--contact__value-->
+                      </div><!--contact__item-->
+                      {{/ANU_website--gf}}
+                      <div class="social">
+                        {{#ANU_facebook--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--facebook"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_facebook--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->  
+                        {{/ANU_facebook--gf}}
+                        {{#ANU_twitter--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--twitter"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_twitter--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->
+                        {{/ANU_twitter--gf}}
+                        {{#ANU_instagram--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--instagram"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_instagram--gf }}}</div><!--social__text-->
+                        </div><!--social__item--> 
+                        {{/ANU_instagram--gf}}
+                        {{#ANU_linkedin--gf}}
+                        <div class="social__item">
+                          <div class="social__icon social__icon--linkedin"></div><!--social__icon-->
+                          <div class="social__text">{{{ ANU_linkedin--gf }}}</div><!--social__text-->
+                        </div><!--social__item-->
+                        {{/ANU_linkedin--gf}}
+                      </div><!--social-->
+                    </div><!--contact-->
+                    {{/collection.ANU_contact-details--gf}}
+                  </div><!--contact__container-->
+                </div> <!--check-overflow-->
+              </div> <!--max-height-->
+            </div><!--body body--back-->
+            <div class="outfitCricosCode">CRICOS #{{cricos-code}}{{#metadata}}  OF_{{export_id}}{{/metadata}}{{#customExportCode}}_{{customExportCode}}{{/customExportCode}}</div><!--url-->
+
+          </div><!--container fit fit--secondary-->
+
+        </div><!--bleed-->
+
+      </div><!--page-->
+      {{/block.ANU_back-three-column--gf}}
+      <!--page 5-->
+      {{/collection.ANU_generic-flyer--gf}}
+
+      <script>
+        window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+      </script>
+      <script src="main.js"></script>   
+      <script src="prefixfree.js"></script>
+      <script src="placeholder-controller.js"></script>
+      <script src="char-limit.js"></script>
+      <script src="check-export-mode.js"></script>
+      <script src="check-height.js"></script>    
+      <script src="max-line-check.js"></script>    
+      <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.3.min.js" type="text/javascript"></script>
+      <script>
+        function loop() {
+          checkHeight(document.getElementsByClassName('check-overflow'));
+          maxLineCheck();
+        } setInterval(loop, 1000);  
+
+        // Fix for the resizable background images - fullscreen and digital vairaitons only
+        function checkCrop() {
+          if (window.showCrop === true) {
+          } else {
+            [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+              el.parentNode.style.left = '0';
+              el.parentNode.style.right = '0';
+              el.parentNode.style.top = '0';
+              el.parentNode.style.bottom = '0';
+              el.parentNode.style.width = '100%';
+              el.parentNode.style.height = '100%';
+            });
+          }
+        }
+
+        placeholderController();
+        checkCrop();  
+        checkExport(); 
+        charLimit();
+
+        // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+        /*
+      TextFit.fit({
+        selector: '.textFit'
+      });      
+      */
+        
+           {{{account.snippets.wayfinderJS}}}
+       
+           {{#collection.ANU_wayfinder}}
+              {{#block.ANU_college}}
+                 wayfinderAddCollege('{{{ANU_college_content}}}', true);
+              {{/block.ANU_college}}
+              {{#block.ANU_custom}}
+                 wayfinderAddCustom("{{{wayfinderType}}}", "{{{wayfinderName}}}");
+              {{/block.ANU_custom}}
+           {{/collection.ANU_wayfinder}} 
+
+      </script>
+
+
+      </body>
+    </html>
