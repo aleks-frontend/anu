@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html data-sign="OSB">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative;
+        z-index: 999;}
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0.1rem;
+        right: 0.1rem;
+        height: .3107rem;
+        width: .3107rem;
+        border: 0.01rem solid red;
+        color: red;
+        padding: 0.01rem 0.01rem 0.01rem 0.0155rem;
+        box-sizing: border-box;
+        font-size: 0.2279rem;
+        text-align: center;
+        line-height: .2693rem;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 0.5rem;
+        right:  0.1rem;
+        background-color: black;
+        color: white;
+        border-radius: 0.01rem;
+        padding: 0.2rem 0.2rem;        
+        box-sizing: border-box;
+        font-size: 0.35rem;
+        font-weight: 400;     
+        text-align: right;
+        width: 6rem;
+        line-height: 0.45rem;
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';
+      }
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }
+
+      :root {
+        --primary: {{account.colors.process-black}};
+        --secondary: #93afbd;
+        --tertiary: #e9098c;
+      }
+
+      .fit {
+        padding: 1.07rem 0.93rem 0.89rem 0.93rem;
+        display: flex;
+        flex-direction: column;
+      }  
+
+      .header {
+        height: 13.78rem;
+      }
+
+      .small .header {
+        height: 10.88rem;
+      }
+
+      .logo {
+        position: relative;
+        max-width: 3.83rem;
+        margin-bottom: 0.23rem;
+      }
+
+      .hero {
+        position: relative;
+        height: 8.4238rem;
+        background: var(--tertiary);
+        overflow: hidden;
+      }
+
+      .small .hero {
+        height: 5.58rem;
+        width: 8.20rem;
+      }
+
+      .hero--noBg {
+        background: none;       
+      }
+      
+      .repoImage{
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .imageText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 0.28rem;
+        text-transform: uppercase;
+        color: #fff;
+      }
+
+      .hero__image {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .hero__text {
+        width: 5.12rem;
+        position: absolute;
+        right: 0.28rem;
+        bottom: -0.09rem;
+      }
+
+      .small .hero__text {
+        right: 0.19rem;
+      }
+
+      .small .hero__text {
+        width: 3.36rem;
+      }
+
+      .header__inner {
+        display: flex;
+        height: 3.38rem;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+      }
+
+      .small .header__inner {
+        align-items: flex-start;
+      }
+
+      .heading h1 {
+        font-size: 0.54rem;
+        text-align: center;
+        line-height: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15rem;
+        color: var(--primary):
+      }
+
+      .small .heading h1 {
+        font-size: 0.45rem;
+        letter-spacing: 0.11rem;
+        text-align: left;
+      }
+
+      .subheading {
+        line-height: 1em;
+        text-align: center;
+        color: var(--secondary);
+      }
+
+      .small .subheading {
+        text-align: left;
+      }
+
+      .subheadingOverflow {
+        max-height: 1.2em;
+      }
+
+      .style--2 .subheadingOverflow {
+        max-height: 2.4em;
+      }
+
+      .style--1 {
+        font-size: 0.56rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14rem;
+        font-weight: 300;
+      }
+
+      .small .style--1 {
+        font-size: 0.43rem;
+        letter-spacing: 0.12rem;
+      }
+
+      .style--2 {
+        font-size: 0.56rem;
+        font-weight: bold;
+        letter-spacing: 0rem;
+        text-transform: none;
+      }
+
+      .small .style--2 {
+        font-size: 0.55rem;
+        letter-spacing: 0.2pt;
+        font-weight: bold;
+      }
+
+      .bodyContainer {
+        flex: 1;
+        display: flex;
+        color: var(--primary):
+      }
+
+      .side {
+        width: 4.13rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-right: 0.23rem;
+        padding-top: 0.08rem;
+      }
+
+      .side__overflow {
+        max-height: 4.3rem;
+      }
+
+      .side__contentOverflow {
+        max-height: 2.36rem;
+      }
+
+      .small .side__contentOverflow {
+        max-height: 4.6rem;
+      }   
+
+      .side__content h3 {
+        margin-bottom: 0.11rem;
+        font-size: 0.3rem;
+      } 
+
+      .side__content a {
+        font-size: 0.3rem;
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .small .side__content h3 {
+        margin-bottom: 0.11rem;
+        font-size: 0.28rem;
+        letter-spacing: 0.3pt;
+      }
+
+      .side__content p,
+      .side__content li {
+        font-size: 0.295rem;
+        letter-spacing: -0.3pt;
+        line-height: 1.12em;
+        font-weight: 300;
+        margin-bottom: 0.09rem;
+      }
+
+      .small .side__content p,
+      .small .side__content li {
+        font-size: 0.29rem;
+        letter-spacing: -0.15pt;
+        line-height: 0.34rem;
+      }
+
+      .side__content li {
+        position: relative;
+      }
+
+      .side__content ul {
+        margin-left: 0.33rem;
+      }
+
+      .side__content li::before {
+        content: ">";
+        font-weight: bold;
+        position: absolute;
+        top: -0.02rem;
+        left: -0.33rem;
+        font-size: 0.26rem;
+      }
+
+      .collegeInfo__label {
+        font-size: 0.37rem;
+        line-height: 1.3em;
+      }
+
+      .collegeInfo__name {
+        margin-top: -0.02rem;
+        font-size: 0.37rem;
+      }
+
+      .collegeInfo__name--heath_and_medicine {
+        color: #00C49F;
+      }
+
+      .collegeInfo__name--business_and_economics {
+        color: #FFB300;
+      }
+
+      .collegeInfo__name--engineering_and_computer_science {
+        color: #C41237;
+      }
+
+      .collegeInfo__name--arts_and_social_sciences {
+        color: #0055FA;
+      }
+
+      .collegeInfo__name--science {
+        color: #009900;
+      }
+
+      .collegeInfo__name--law {
+        color: #5B00BD;
+      }
+
+      .collegeInfo__name--asia_and_the_pacific {
+        color: #FF6308;
+      }
+
+      .main {
+        flex: 1;
+        position: relative;
+        -webkit-column-count: 2; 
+        -moz-column-count: 2; 
+        column-count: 2;
+        -webkit-column-gap: 0.33rem; 
+        -moz-column-gap: 0.33rem; 
+        column-gap: 0.33rem;
+        column-fill: auto;
+        padding: 0.04rem 0.07rem 0.05rem 0.11rem;
+        font-size: 0.20rem;
+        font-weight: 300;
+        line-height: 1.295em;
+        letter-spacing: 0.003rem;
+      }
+
+      .main p {
+        margin-bottom: 0.14rem;
+      }
+
+      .mainOverflow {
+        max-height: 8.6rem;
+      }
+
+      .small .mainOverflow {
+        max-height: 14.3rem;
+      }
+
+      .content p {
+        margin-bottom: 0.07rem;
+      }
+
+      .content p:last-child {
+        margin-bottom: 0.35rem;
+      }
+
+      .large .content__maxHeight {
+        max-height: 5.2rem;
+      }
+
+      .small .content__maxHeight {
+        max-height: 10.4rem;
+      }
+
+      .bodyContainer a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .contact__container {
+        display: inline-block;
+        break-after: avoid-column;
+        
+      }
+
+      .contact {
+        margin-bottom: 0.16rem;
+      }
+
+      .contact__heading {
+        margin-bottom: 0.13rem;
+        margin-top: 0.05rem;
+        font-size: 0.28rem;
+        font-weight: bold;
+        color: var(--secondary);
+        letter-spacing: 0.3pt;
+      }
+
+      .contact__item,
+      .social__item {
+        display: flex;
+        flex-direction: row;
+        font-size: 0.21rem;
+      }
+
+      .social__item {
+        margin-bottom: 2pt;
+      }
+
+      .contact__value {
+        margin-left: 0.28rem;
+      }
+
+      .contact__value p,
+      .social__text p {
+        margin-bottom: 0;
+      }
+
+      .contact__value--website {
+        margin-left: 0.18rem;
+      }
+
+      .social__text {
+        margin-left: 0.11rem;
+        font-size: 0.20rem;
+        margin-bottom: 0;
+      }
+
+      .social__icon--facebook {
+        background: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/d1904bd7a92afd077cfe548a1505854d/fb-icon.svg');
+      } 
+
+      .social__icon--twitter {
+        background: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/3b40ad42be4f6f25216ad710f3f6a524/twitter-icon.svg'); 
+      }   
+
+      .social__icon--instagram {
+        background: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/924c3627c1db3fe9e65a829ac94bb6d2/instagram-icon.svg');      
+      }    
+
+      .social__icon--linkedin {
+        background: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/12e7d7b7fafeda0583b85e9fe1f9d724/linkedin-icon.svg');
+      } 
+
+      .social__icon {
+        width: 0.28rem;
+        height: 0.28rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      .outfitCricosCode {         
+        position: absolute;
+        left: 97.3%;
+        bottom: 0.40rem;
+        transform: rotateZ(-90deg);
+        transform-origin: left bottom;
+        font-size: 0.11rem;     
+        white-space: nowrap;
+      }
+
+      .outfitCricosCode--secondary {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        font-size: 0.11rem;
+      }
+
+      .js-outfit-cricos-source {
+        display: none;
+      }
+
+      /* Wayfinder colors */
+      .arts-social-sciences				{			color: {{{account.colors.arts---social-sciences}}};				}
+      .asia-the-pacific					{			color: {{{account.colors.asia-and-the-pacific}}};				}
+      .business-economics				{			color: {{{account.colors.business-and-economics}}};				}
+      .engineering-computer-science		{			color: {{{account.colors.engineering-and-computer-science}}};	}
+      .law								{			color: {{{account.colors.law}}};								}
+      .health-medicine					{			color: {{{account.colors.health-and-medicine}}};				}
+      .science							{			color: {{{account.colors.science}}};							}
+      .charcoalText						{			color: {{{account.colors.charcoal}}};							}      
+
+
+      .wayfinder,
+      .presenter__label {
+        line-height: 1.15em;
+        font-size: 0.27rem;
+      }
+
+      .wayfinder {
+        margin-bottom: -0.18rem;
+      }
+
+      .presenter__label--hide {
+        display: none;
+      }
+      
+      {{{account.snippets.wayfinderCSS}}}
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle }}{{^placeholder-toggle}}hide{{/placeholder-toggle}} {{{ ANU_template-variation--p2 }}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+    </div><!-- end placeholderMaster -->
+    <div class="js-outfit-cricos-source" data-outfit="{{ outfit-code }}"></div>
+    <div class="page">
+
+      <div class="bleed center-children">
+
+        <div class="container fit">
+
+          <div class="header">
+            <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/a8910d194dcfecedb03ada8af0e88a49/Logo-testAsset%202.svg" class="logo" /> <!-- logo -->
+            <div class="hero {{#ANU_featureImage--p2 }} hero--noBg {{/ANU_featureImage--p2}}">
+              <div class="repoImage">
+              	{{{ ANU_featureImage--p2 }}} 
+              </div>
+              <div class="hero__image">
+                <img src="https://files.outfit.io/media_library_items/66505/ANU.svg" class="hero__text">
+              </div>
+            </div> <!-- hero -->
+            <div class="header__inner">
+              {{ #ANU_heading--p2 }}
+              <div class="heading"> 
+                <div style="max-height: 2em">
+                  <div class="check-overflow">
+                    {{{ ANU_heading--p2 }}} 
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div> <!-- heading --> 
+              {{ /ANU_heading--p2 }}
+              {{ #ANU_subheading--p2 }}
+              <div class="subheading  {{{ ANU_subheading-style--p2 }}}"> 
+                <div class="subheadingOverflow">
+                  <div class="check-overflow">
+                    {{{ ANU_subheading--p2 }}} 
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div> <!-- subheading -->
+              {{ /ANU_subheading--p2 }}
+            </div> <!-- header__inner -->
+          </div> <!-- header -->
+          <div class="bodyContainer">
+            <div class="side">
+              <div class="side__content">
+                <div class="side__contentOverflow">
+                  <div class="check-overflow">
+                    {{{ ANU_intro-copy--p2 }}}
+                  </div> <!-- check-overflow -->
+                </div> <!-- max-height -->
+              </div> <!-- side__content -->
+              <div class="collegeInfo">
+                <div class="wayfinder" data-max-line="8"></div>  
+            </div> <!-- colegeInanufo --> 
+          </div> <!-- side -->
+          <div class="main">
+            <div class="mainOverflow">
+              <div class="check-overflow">
+                <div class="content">
+                  <div class="content__maxHeight">
+                    <div class="check-overflow">
+                      {{{ ANU_content--p2 }}}
+                    </div><!-- end check-overflow -->
+                  </div><!-- end max-height -->
+                </div> <!-- content -->
+                {{ #collection.ANU_contact-details--p2 }}
+                <div class="contact__container">
+                  <div class="contact__heading">
+                    Contact
+                  </div> <!-- contact__heading -->
+                  <div class="contact">
+                    {{ #ANU_phone--p2 }}
+                    <div class="contact__item">
+                      <div class="contact__label">
+                        T
+                      </div> <!-- contact__label -->
+                      <div class="contact__value">
+                        {{{ ANU_phone--p2 }}}
+                      </div> <!-- contact__value -->
+                    </div> <!-- contact__item -->
+                    {{ /ANU_phone--p2 }}
+                    {{ #ANU_email--p2 }}
+                    <div class="contact__item">
+                      <div class="contact__label">
+                        E
+                      </div> <!-- contact__label -->
+                      <div class="contact__value">
+                        {{{ ANU_email--p2 }}}
+                      </div> <!-- contact__value -->
+                    </div> <!-- contact__item -->
+                    {{ /ANU_email--p2 }}
+                    {{ #ANU_website--p2 }}
+                    <div class="contact__item">
+                      <div class="contact__label">
+                        W
+                      </div> <!-- contact__label -->
+                      <div class="contact__value contact__value--website">
+                        {{{ ANU_website--p2 }}}
+                      </div> <!-- contact__value -->
+                    </div> <!-- contact__item -->
+                    {{ /ANU_website--p2 }}
+                  </div> <!-- contact -->
+                  <div class="social">
+                    {{ #ANU_facebook--p2 }}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--facebook">
+                      </div> <!-- social__icon -->
+                      <div class="social__text">
+                        {{{ ANU_facebook--p2 }}}
+                      </div> <!-- social__text -->
+                    </div> <!-- social__item -->
+                    {{ /ANU_facebook--p2 }}
+                    {{ #ANU_twitter--p2 }}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--twitter">
+                      </div> <!-- social__icon -->
+                      <div class="social__text">
+                        {{{ ANU_twitter--p2 }}}
+                      </div> <!-- social__text -->
+                    </div> <!-- social__item -->
+                    {{ /ANU_twitter--p2 }}
+                    {{ #ANU_instagram--p2 }}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--instagram">
+                      </div> <!-- social__icon -->
+                      <div class="social__text">
+                        {{{ ANU_instagram--p2 }}}
+                      </div> <!-- social__text -->
+                    </div> <!-- social__item -->
+                    {{ /ANU_instagram--p2 }}
+                    {{ #ANU_linkedin--p2 }}
+                    <div class="social__item">
+                      <div class="social__icon social__icon--linkedin">
+                      </div> <!-- social__icon -->
+                      <div class="social__text">
+                        {{{ ANU_linkedin--p2 }}}
+                      </div> <!-- social__text -->
+                    </div> <!-- social__item -->
+                    {{ /ANU_linkedin--p2 }}
+                  </div> <!-- social -->
+                </div> <!-- contact__container -->
+                {{ /collection.ANU_contact-details--p2 }}
+              </div> <!-- check-overflow -->
+            </div> <!-- max-height -->
+          </div> <!-- main -->
+        </div><!-- bodyContainer -->
+        <div class="outfitCricosCode">CRICOS #{{ cricos-code }}{{#metadata}}  OF_{{export_id}}{{/metadata}}{{#customExportCode}}_{{customExportCode}}{{/customExportCode}}</div><!--url-->
+
+      </div><!--container fit-->
+
+    </div><!--bleed-->
+
+    </div><!--page-->
+
+
+  <script>
+    window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+  </script>
+  <script src="main.js"></script>   
+  <script src="prefixfree.js"></script>
+  <script src="placeholder-controller.js"></script>
+  <script src="char-limit.js"></script>
+  <script src="check-export-mode.js"></script>
+  <script src="check-height.js"></script>    
+  <script src="max-line-check.js"></script>    
+  <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.3.min.js" type="text/javascript"></script>
+  <script src="https://outfit-assets-production.s3.amazonaws.com/scripts/clients/anu/anu-wayfinder/wayfinder_v1.0.js"></script>
+  <script>
+
+    // Fix for the resizable background images - fullscreen and digital vairaitons only
+    function checkCrop() {
+      if (window.showCrop === true) {
+      } else {
+        [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+          el.parentNode.style.left = '0';
+          el.parentNode.style.right = '0';
+          el.parentNode.style.top = '0';
+          el.parentNode.style.bottom = '0';
+          el.parentNode.style.width = '100%';
+          el.parentNode.style.height = '100%';
+        });
+      }
+    }
+
+    // Tracking text changes and firing text restriction functions
+    const overflowObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        checkHeight(document.getElementsByClassName('check-overflow')); 
+        maxLineCheck(); 
+      });
+    });    
+
+    const fits = document.querySelectorAll('.fit');
+
+    fits.forEach(fit => {
+      overflowObserver.observe(fit, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });        
+    })      
+
+    placeholderController();
+    checkCrop();  
+    checkExport(); 
+    charLimit();
+    
+    {{{account.snippets.wayfinderJS}}}
+       
+   {{#collection.ANU_wayfinder}}
+      {{#block.ANU_college}}
+         wayfinderAddCollege('{{{ANU_college_content}}}', true);
+      {{/block.ANU_college}}
+      {{#block.ANU_custom}}
+         wayfinderAddCustom("{{{wayfinderType}}}", "{{{wayfinderName}}}");
+      {{/block.ANU_custom}}
+   {{/collection.ANU_wayfinder}} 
+
+    // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+    /*
+        TextFit.fit({
+          selector: '.textFit'
+        });      
+        */
+
+  </script>
+
+
+  </body>
+</html>
