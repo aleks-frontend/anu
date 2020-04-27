@@ -1,0 +1,3143 @@
+<!DOCTYPE html>
+<html data-sign="OSZ" async>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+
+      /*
+      Input ordering
+      {{show-crop}}
+      {{placeholder-toggle-new}}
+      {{placeholder-opacity}}
+      {{ANU_variation--mpgip}}  
+      */
+
+      :root {
+        --primary: {{{account.colors.process-black}}};
+        --white: {{{account.colors.white}}};
+        --rose: #e3007b;
+        --pink: rgb(248, 209, 227);
+        --black-opacity: rgba(0, 0, 0, 0.85);
+        --platinum: {{{account.colors.platinum}}};
+        --platinum-opacity: rgba(148, 175, 190, 0.5) ;
+        --dark-grey: {{{account.colors.subheading-grey}}};
+        --edm-platinum: {{{account.colors.edm-platinum}}};
+        --a4ImageSize: 6.72rem;
+        --a5ImageSize: 6.6rem;
+        --black: {{{account.colors.process-black}}};
+       }
+
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 11pt;
+        font-weight: 300;
+        color: var(--primary);
+        word-break: break-word;
+      }
+       html .theme--dark{
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 11pt;
+        font-weight: normal;
+      }
+      p {
+        font-size: 9pt !important;
+        line-height: 1.2 !important;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }     
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }        
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 1.18rem;
+      }
+
+      .theme--dark .fit--front,
+      .theme--dark .fit--contact { 
+        background: var(--primary);
+      }
+
+      .fit--contents { padding: 1.5rem 1.15rem; }
+      .fit--timetable { padding: 1.45rem 1.04rem }
+      .fit--contact { padding: 2.95rem 1.245rem; }
+
+      .variation--a5 .fit--timetable {
+        padding: 1.5rem 1.07rem;
+      }
+
+      .fit--notes {
+        padding: 1.45rem 1.1rem 0.9rem 1.2rem;
+      }
+
+      .variation--a5  .fit--notes {
+        padding: 1.52rem 1.1rem 0.9rem 1.25rem;
+      }
+
+      .fit--oneColumnPage {
+        padding: 1.43rem 2.8rem 1.15rem 1.18rem;
+      }      
+
+      .variation--a5 .fit--oneColumnPage {
+        padding: 1.52rem 2.8rem 1rem 1.23rem;
+      }
+    
+      .fit--annotation {
+        padding: 1.54rem 1.05rem 1.55rem 1.2rem;
+      }
+
+      .variation--a5 .fit--annotation {
+        padding: 1.58rem 1.05rem 1.57rem 1.22rem;
+      }
+
+      .fit--biographies {
+        padding: 1.44rem 3.25rem 1.35rem 1.05rem;
+      }
+
+      .variation--a5 .fit--biographies {
+        padding: 1.5rem 3.25rem 1.15rem 1.07rem;
+      }
+
+      .fit--spanColumns {
+        padding: 1.44rem 1.15rem 1.1rem 1.05rem;
+      }
+
+      .variation--a5 .fit--spanColumns {
+        padding: 1.5rem 1.2rem 1.38rem 1.07rem;
+      }
+
+      .fit--twoColumnPage, 
+      .fit--threeColumnPage {
+        padding: 1.6rem 1rem 1.1rem 1.05rem;
+      }
+
+      .variation--a5 .fit--twoColumnPage, 
+      .variation--a5 .fit--threeColumnPage {
+        padding: 1.7rem 1rem 1.15rem 1.08rem;
+      }
+
+      .header {
+        position: relative;
+        max-height: 1.49rem;
+        margin-bottom: 10mm;
+      }
+
+      .variation--a5 .header {
+        max-height: 1.44rem;
+        padding-right: 4.7rem;
+        margin-bottom: 5mm;
+      }
+
+      .header--biographies {
+        height: 1.68rem;
+      }
+
+      .variation--a5 .header--biographies {
+        height: 1.64rem;
+      }
+
+      .header--twoColumnPage,
+      .header--threeColumnPage {
+        height: 1.4rem;
+       }
+
+      .variation--a5 .header--twoColumnPage,
+      .variation--a5 .header--threeColumnPage {
+        height: 1.31rem;
+      }
+
+      .logo {
+        display: none;
+        width: 3.8rem;
+      }
+
+      .theme--light .logo--dark,
+      .theme--dark .logo--light {
+        display: block;
+      }
+
+      .body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex: 1;        
+      }
+
+      .dynamic__container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .body--twoColumnPage .dynamic__container,
+      .body--threeColumnPage .dynamic__container {
+        flex-direction: row;
+      }
+
+      .body--twoColumnPage {
+        margin-left: -0.3rem;
+      }
+
+      .body--threeColumnPage {
+        margin-left: -0.2rem;
+      }
+
+      .body__inner { 
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: relative;
+      }
+
+      .theme--dark .body__inner:before { background: {{{account.colors.charcoal}}}; }
+
+      .body__inner--twoColumnPage { 
+        width: 6.2rem;
+        margin-left: 0.3rem;
+      }
+      .body__inner--threeColumnPage { 
+        width: 4.1rem;
+        margin-left: 0.2rem;
+      }
+
+      .hero {
+        position: relative;
+        height: 8.45rem;
+        background: var(--rose);
+      }
+
+      .hero--hideContent { background: transparent; }
+
+      .hero__text {
+        position: absolute;
+        left: 4.6%;
+        top: 45%;
+        font-size: 0.44rem;
+        color: var(--white);
+        text-transform: uppercase;
+        letter-spacing: 4.9pt;
+      }
+
+      .theme--dark .hero__text { color: var(--primary); }
+      .hero--hideContent .hero__text { display: none; }
+
+      .hero__logo {
+        position: absolute;
+        bottom: -3.3px;
+        right: 2.6%;
+        width: 5.1rem;
+        z-index: 1;
+      }
+
+      .theme--light .hero__logoFill { fill: var(--white); }
+      .theme--dark .hero__logoFill { fill: var(--primary); }
+
+      .hero__image {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .content__container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .heading {
+        margin-bottom: 0.19rem;
+        line-height: 1.2em;  
+        letter-spacing: 0.11rem;
+      }      
+
+      .theme--dark .fit--front .heading,
+      .theme--dark .fit--contact .heading { 
+        color: var(--white);
+      }
+
+      .heading,
+      .subheading {
+        text-align: center;
+        font-size: 0.43rem;
+        text-transform: uppercase; 
+      }
+
+      .heading--contents {  margin-bottom: 1.24rem;}
+
+      .heading--contents,
+      .heading--timetable,
+      .heading--oneColumnPage,
+      .heading--biographies,
+      .heading--spanColumns,
+      .heading--notes,
+      .heading--twoColumnPage, 
+      .heading--threeColumnPage,
+      .heading--sponsorsPage {
+        text-align: left;
+      }      
+
+      .heading--contact { text-align: left; }
+
+      .heading--oneColumnPage,
+      .heading--biographies,
+      .heading--spanColumns,
+      .heading--twoColumnPage, 
+      .heading--threeColumnPage,
+      .heading--sponsorsPage { 
+        margin-bottom: 0rem; 
+      }
+
+      .variation--a5 .heading {
+        font-size: 0.42rem;
+      }
+
+      .heading--timetable {
+        margin-bottom: 1.15rem;
+      }
+
+      .heading--notes {
+        margin-bottom: 0.7rem;
+        padding-right: 6.4rem;
+      }
+
+      .subheading {
+        line-height: 1.3em;
+        color: var(--platinum);
+      }
+
+      .subheading--1 { letter-spacing: 0.11rem; }
+
+      .subheading--2 {
+        font-weight: bold;
+        text-transform: none;
+      }
+
+      .footer,
+      .anu_wayfinder {  
+        padding-left: 0.01rem; 
+        font-size: 0.375rem;
+        line-height: 1.15em;
+      }
+
+      .fit--contact .anu_wayfinder {    
+        font-size: 0.28rem;
+      }
+
+      .footer { padding-right: 6.3rem; }
+
+      
+      .contact { margin-bottom: 0.4rem; }
+
+      .contact__text { 
+        font-size: 0.28rem;
+        line-height: 1.25em;
+      }
+
+      .theme--dark .footer__label,
+      .theme--dark .anu_wayfinder .body p,
+      .theme--dark .contact__text,
+      .theme--dark .exportNumber {  
+        color: var(--white);
+      }
+
+      .contact__text--small { 
+        font-size: 0.135rem; 
+        margin-bottom: -0.14rem;
+      }
+
+      .contact__group { 
+        display: flex;
+        align-items: center;
+      }
+
+      .contact__text--static { width: 0.4rem; }
+
+      .contact__icon {
+        display: none;
+        width: 0.24rem; 
+      }
+
+      .theme--dark .contact__icon--secondary,
+      .theme--light .contact__icon--primary { 
+        display: block;
+      }
+
+      .arts-social-sciences				{			color: {{{account.colors.arts---social-sciences}}};				}
+      .asia-the-pacific					{			color: {{{account.colors.asia-and-the-pacific}}};				}
+      .business-economics				{			color: {{{account.colors.business-and-economics}}};				}
+      .engineering-computer-science		{			color: {{{account.colors.engineering-and-computer-science}}};	}
+      .law								{			color: {{{account.colors.law}}};								}
+      .health-medicine					{			color: {{{account.colors.health-and-medicine}}};				}
+      .science							{			color: {{{account.colors.science}}};							}
+      .charcoalText						{			color: {{{account.colors.charcoal}}};							}
+      .theme--dark .charcoalText	    {			color: {{{account.colors.white}}};							    }
+
+
+      .section {
+        position: relative;
+        flex: 1;
+      }
+
+      .table { 
+        display: flex; 
+        flex-direction: column;
+        width: 8.1rem;
+        padding-left: 0.01rem;
+      }
+
+      .table__row {
+        display: flex;
+        height: 0.42rem;
+        align-items: flex-start;
+      }
+
+      .table__row + .table__row--subheading {
+        margin-top: 0.11rem;
+      }   
+
+      .table__column {  
+        padding: 0 0.1rem;
+        font-size: 0.229rem;
+        line-height: 1.2em;
+      }  
+
+      .table__column--header { 
+        font-size: 0.239rem;
+        font-weight: bold; 
+      }
+
+      .table__column--big { 
+        flex: 1; 
+        padding: 0;
+      }
+
+      /*.page:nth-child(even) .pageNumber__container {
+        position: absolute;
+        bottom: 0.56rem;
+        left: 0.7rem;
+        display: flex;
+        width: 90%;
+      }
+       .page:nth-child(odd) .pageNumber__container {
+        position: absolute;
+        bottom: 0.56rem;
+        left: 0.7rem; 
+        display: flex;
+        flex-direction: row-reverse;
+        width: 90%;
+      }*/
+      
+      .pageNumber__container.left {
+        position: absolute;
+        bottom: 0.56rem;
+        left: 0.7rem;
+        display: flex;
+        width: 90%;
+      }
+       .pageNumber__container.right {
+        position: absolute;
+        bottom: 0.56rem;
+        left: 0.7rem; 
+        display: flex;
+        flex-direction: row-reverse;
+        width: 90%;
+      }
+
+      .variation--a5 .pageNumber__container {
+        bottom: 0.68rem;
+        left: 0.77rem;
+        width: 4.8rem;
+      }
+
+      .fit--annotation .pageNumber__container {
+        display: none;
+      }
+
+      .theme--dark .fit--contact .pageNumber,
+      .theme--dark .fit--contact .pageNumber__text {
+        color: var(--white);
+      }
+
+      .pageNumber ,
+      .pageNumber__text,
+      .pageFootnote {
+        font-size: 0.16rem;
+        line-height: 1.2em;
+      }
+
+      .variation--a5 .pageNumber ,
+      .variation--a5 .pageNumber__text,
+      .variation--a5 .pageFootnote {
+        font-size: 0.154rem;
+        line-height: 1.2em;
+      }
+
+      .pageNumber__container.right .pageNumber { 
+        width: 7mm;
+        text-align: right;
+      }
+      .pageNumber__container.left .pageNumber { 
+        width: 7mm;
+        text-align: left;
+      }
+      .venue-location {
+        font-size: 0.375rem;
+        font-weight: regular;
+        padding-bottom: 0.5rem;
+      }
+      .dayHeading {
+        font-size:0.4rem;
+        font-weight: bold;
+        border-bottom: 1.5pt solid var(--platinum);
+        padding-bottom: 0.1rem;
+      }
+
+      .event {
+        display: grid;
+        grid-template-rows: auto;
+      }
+
+      .event + .event { margin-top: 0.2rem; }
+
+      .event__row {
+        display: grid;
+        /*grid-template-columns: 30% auto;*/
+        font-size: 0.2rem;
+        min-height: 0.36rem;
+        border-top: 1pt solid var(--platinum);
+        padding-top: 0.2rem;
+      }
+
+      .event__row--subheading { 
+        align-items: flex-end;
+        padding-bottom: 0.03rem;
+        border-bottom: 1.5pt solid var(--platinum);
+      }
+      .event__row--subheading:first-child {
+        padding-top: 0.03rem;
+        border-top: 1.5pt solid var(--platinum);
+      }
+      .event__row.event__row--subheading.noLeftHeading.noRightHeading {
+        display: none !important;
+      }
+      align-items: flex-end;
+    padding-bottom: 0.03rem;
+    border-bottom: 1.5pt solid var(--platinum);
+}
+
+
+
+
+
+
+
+
+      .event__text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0.1rem 0.4rem 0.1rem 0.06rem;
+      }
+
+      .event__text h2 {
+        font-size: 0.36rem;
+        line-height: 1.2em;
+      }
+
+      .event__text--subheading-- { 
+        padding: 0rem 0.13rem 0.05rem 0.13rem;
+        font-size: 0.2rem;
+        font-weight: bold;
+      }
+      .event .event__row.event__text--subheading--noHeading {
+        display: none;
+      }
+      .event__text--heading {
+        font-size: 0.236rem;
+        font-weight: bold;
+      }   
+
+      .event__row--heading { 
+        min-height: 0.47rem;
+        border: none ;
+      }
+
+      .event__subheading h2 {
+        font-weight: bold;
+        color: var(--platinum);
+      }
+
+      .event__text:last-child { flex: 1; }
+
+      .exportNumber { 
+        position: absolute;
+        bottom: -0.13rem;
+        right: -3.3rem;
+        width: 5rem;
+        font-size: 0.12rem;
+        color: var(--primary);
+        transform: rotate(-90deg);
+      }
+
+      /* Code taken from Generic Flyer */
+
+      .block { margin-bottom: 0.1166rem; }
+
+      .block--text {
+        margin-bottom: 0.3032rem;
+        font-size: 0.2332rem;
+      }
+
+      .block--textColumn {
+        display: flex;
+        margin-left: -0.3rem;
+      }
+
+      .block--textSecondary {
+        margin-bottom: 0.2332rem;
+        font-size: 0.2332rem;
+        padding-left: 0.04rem;
+        margin-left: 0rem;
+      }
+
+      .variation--a5.block--textSecondary {
+        margin-bottom: 0.2332rem;
+        padding-left: 0.06rem;
+      }
+
+      .block--text .tinymce_style--light {
+        color: var(--platinum);
+      }
+
+      .block--text h1 {
+        margin-top: 5mm;
+        font-size: 0.469rem;
+        line-height: 1.2em;
+        font-weight: bold;
+      }
+      .block--text h1:first-child {
+        margin-top: 0;
+      }
+      .block--text h2:first-child {
+        margin-top: 0;
+      }
+
+      .variation--a5 .block--text h1 {
+        margin-top: 5mm;
+        font-size: 0.458rem;
+      }
+
+      .block--text h2 {
+        margin-top: 3mm;
+        font-size: 0.2923rem;
+        line-height: 1.4em;
+      }
+
+      .variation--a5 .block--text h2 {
+        margin-bottom: 0.41rem;
+        margin-top: 3mm;
+        font-size: 0.286rem;
+        line-height: 1.5em;
+      }
+
+      .block--textSecondary h2 {
+        margin-bottom: 0.0933rem;
+        margin-top: 5mm;
+        font-size: 0.36rem;
+        line-height: 1.2em;
+        font-weight: bold;
+      }
+      .block--textSecondary h2:first-child {
+        margin-top: 0;
+      }
+
+      .variation--a5 .block--textSecondary h2 {
+        margin-bottom: 0.09rem;
+        font-size: 0.353rem;
+        line-height: 1.2em;
+      }
+
+      .block--text p {
+        font-weight: 300;
+        font-size: 0.211rem;
+        line-height: 1.3em;
+        margin-top: 2mm;
+      }
+      .block--text p:first-child {
+        margin-top: 0;
+      }
+
+      .variation--a5 .block--text p {
+        margin-bottom: 0.21rem;
+        font-size: 0.2061rem;
+        line-height: 1.2em;
+      }
+
+      .block--textSecondary p {
+        font-size: 0.236rem;   
+      }
+
+      .fit--twoColumnPage .block--textSecondary p {
+        margin-bottom: 0.15rem; 
+        line-height: 1.3em;
+      }
+
+      .variation--a5 .fit--twoColumnPage .block--textSecondary p {
+        margin-bottom: 0.16rem; 
+        font-size: 0.231rem;  
+        line-height: 1.3em;
+      }
+
+      .fit--threeColumnPage .block--textSecondary p {
+        margin-bottom: 0.2rem;
+        font-size: 0.236rem;  
+        line-height: 1.2em;
+      }
+
+      .variation--a5 .fit--threeColumnPage .block--textSecondary p {
+        line-height: 1.2em;
+      }
+
+      .block--text ul {
+        margin-left: 0.3265rem;
+        margin-bottom: 0.1166rem;
+      }
+
+      .block--text li {
+        position: relative;
+        font-size: 0.236rem;    
+        font-weight: 300;
+        margin-top: 2mm;
+      }
+
+      .block--text li::before {
+        content: ">";
+        position: absolute;
+        top: -0.0233rem;
+        left: -5mm;
+        font-weight: bold;
+      }      
+
+      .block--text a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .block:last-child,
+      .block--text h1:last-child,
+      .block--text h2:last-child,
+      .block--text p:last-child,
+      .block--text a:last-child,
+      .block--text li:last-child,
+      .block--sponsorship:last-child {
+        margin-bottom: 0;
+      }
+
+      .block--sponsorship {
+        margin-bottom: 0.85rem;
+      }
+
+      .variation--a5 .block--sponsorship {
+        margin-bottom: 0.789rem;
+      }
+
+      .block--sponsorship:first-child {
+        margin-top: 0.62rem;
+      }
+
+      .variation--a5 .block--sponsorship:first-child {
+        margin-top: 0.6rem;
+      }
+
+      .sponsorship__heading {
+        margin-bottom: 0.5933rem;
+        margin-top: 0.84rem;
+        font-size: 0.433rem;
+        line-height: 1.2em;
+        font-weight: bold;
+        color: var(--platinum);
+      }
+
+      .variation--a5 .sponsorship__heading {
+        margin-bottom: 0.57rem;
+        margin-top: 0.84rem;
+        font-size: 0.418rem;
+      }
+
+      .sponsorship__logo {
+        max-width: 6.5rem;
+        max-height: 2.15rem;
+        min-height: 1.2rem;
+        width: 100%;
+        object-fit: contain;
+        object-position: left top;
+      }
+
+      .variation--a5 .sponsorship__logo {
+        max-width: 6.4rem;
+        max-height: 2.12rem;
+        min-height: 1.2rem;
+      }
+
+      .block--image {
+        display: inline-block;
+        margin-bottom: 0.2332rem;
+        width: 100%;
+      }
+
+
+      .block--image + .block--quote {
+        margin-top: 0.3265rem;
+      }
+
+      .image {
+        position: relative;
+        width: 100%;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        overflow: hidden;
+        margin-top: 0.07rem; 
+        background: var(--rose);
+      }
+
+      .imageText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 0.236rem;   
+        text-transform: uppercase;
+        color: var(--white);
+      }
+
+      .image--noBg {
+        background: none;
+      }
+
+      .image__text {
+        padding: 0.15rem 0.1866rem 0rem 0rem;
+        background: var(--white);           
+      }
+
+      .variation--a5 .image__text {
+        padding: 0.08rem 0.1866rem 0rem 0rem;
+      }
+
+      .image__text--sponsorship {
+        padding-top: 0.17rem;
+      }
+
+      .variation--a5 .image__text--sponsorship {
+        padding-top: 0.14rem;
+      }
+
+    /*  .image__caption {
+        font-size: 0.168rem;       
+      }*/
+       .image__caption {
+        font-size: 11pt;   
+         line-height: 1.1;
+      }
+
+      .variation--a5 .image__caption {
+        font-size: 0.163rem;       
+      }
+
+      .image__caption--sponsorship {
+        font-size: 0.288rem;
+      }
+
+      .variation--a5 .image__caption--sponsorship {
+        font-size: 0.28rem;
+      }
+
+      .image__caption {
+        margin-bottom: 0.1399rem;
+      }
+
+      .image__caption:last-child {
+        margin-bottom: 0rem;
+      }
+
+      .block--tableSection {
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 0.3498rem;
+      }
+
+      .block--tableSecondary {
+        margin-bottom: 0.3032rem;
+      }
+
+      .variation--a5 .block--tableSecondary {
+        margin-bottom: 0.2rem;
+      }
+
+      .block--tableSection:first-child {
+        margin-top: 0;
+      }
+
+      .tableSection { width: 100%;  }
+
+      th { 
+        border-bottom: 0.0466rem solid var(--platinum);
+        text-align: left !important;
+      }
+
+      td {        
+        border-bottom: 0.0233rem solid var(--platinum);
+        word-break: break-all;
+        text-align: left !important;
+      }
+
+      .tableSection__title {
+        margin-bottom: 0.2933rem;
+        font-size: 0.33rem;
+        font-weight: 700;
+      }
+
+      .block--tableSecondary .tableSection__title {
+        margin-bottom: 0.0933rem;
+        font-size: 0.2332rem;
+        font-weight: bold;   
+        line-height: 1em;
+      }
+
+
+      .variation--a5 .block--tableSecondary .tableSection__title {
+        margin-bottom: 0.16rem;
+        font-size: 0.23rem;
+      }
+
+      .tableSection__row {
+        width: 100%;
+        padding-right: 0.16rem;
+        padding-bottom: 0.1rem;
+        padding-top: 0.1rem;
+        font-weight: 300;
+        font-size: 0.24rem;
+        text-align: center;     
+      }
+      tr {
+            vertical-align: top;
+      }
+      tr .tableSection__row:nth-last-child(n+2):nth-last-child(-n+2):first-child, .tableSection__row:nth-last-child(n+2):nth-last-child(-n+2):first-child ~ .tableSection__row { 
+        width: 50%;
+      }
+
+      tr .tableSection__row:nth-last-child(n+3):nth-last-child(-n+3):first-child, .tableSection__row:nth-last-child(n+3):nth-last-child(-n+3):first-child ~ .tableSection__row { 
+        width: 33.3%;
+      }
+
+      tr .tableSection__row:nth-last-child(n+4):nth-last-child(-n+4):first-child, .tableSection__row:nth-last-child(n+4):nth-last-child(-n+4):first-child ~ .tableSection__row { 
+        width: 25%;
+      }
+
+      tr .tableSection__row:nth-last-child(n+5):nth-last-child(-n+5):first-child, .tableSection__row:nth-last-child(n+5):nth-last-child(-n+5):first-child ~ .tableSection__row { 
+        width: 20%;
+      }
+
+      .block--tableSecondary .tableSection__row {
+        max-width: 1rem;
+        padding-right: 0.2rem;
+        padding-bottom: 0.0466rem;  
+        padding-top: 0.0466rem;
+        font-size: 0.2099rem;
+      }
+
+      .variation--a5 .block--tableSecondary .tableSection__row {
+        padding-top: 0.05rem;
+      }
+
+      .fit--threeColumnPage .tableSection__row {
+        padding-right: 0.12rem;
+      }
+
+      .tableSection__row:nth-child(1) {
+        text-align: center;   
+      }
+
+      .block--tableSecondary .tableSection__row:nth-child(1) {
+        text-align: left;   
+      }
+
+      .tableSection__row--heading {
+        padding: 0rem 0.16rem 0.12rem 0rem;
+        font-weight: bold;
+        font-size: 0.23rem;
+      }
+     
+
+      .block--tableSecondary .tableSection__row--heading {
+        font-weight: bold;
+        font-size: 0.1652rem;
+      }
+
+      .fit--threeColumnPage .block--tableSecondary .tableSection__row--heading {
+        font-weight: bold;
+        font-size: 0.159rem;
+      }
+
+      .block--quote {
+        padding-bottom: 0.07rem;
+        margin-bottom: 0.2332rem;   
+      }
+
+      .block--quote h3 {
+        margin-bottom: 0.1166rem;
+        font-size: 0.3498rem;   
+        line-height: 1.2em;
+      }
+
+      .variation--a5 .block--quote h3 {
+        margin-bottom: 0.13rem;
+        font-size: 0.342rem;
+      }
+
+      .block--quote p {
+        margin-bottom: 0.06rem;
+        font-size: 0.2682rem;  
+        line-height: 1.2em;
+      }
+
+      .variation--a5 .block--quote p {
+        margin-bottom: 0.07rem;
+        font-size: 0.263rem;  
+      }
+
+      .block--quote p:last-child,
+      .block--quote h3:last-child {
+        margin-bottom: 0;
+      }
+
+      .quotebox {
+        display: flex;
+        flex-direction: column;
+        padding: 0.1632rem;
+        background: var(--platinum-opacity);
+      }
+
+      .variation--a5 .quotebox {
+        padding: 0.14rem 0.16rem;
+      }
+
+      .quote__footer {
+        display: flex;        
+        font-size: 0.1632rem;   
+      }
+
+      .quote__info {
+        margin-top: 0.1866rem;
+      }
+
+      .quote__info p {
+        padding-bottom: 0.0466rem;
+        font-size: 0.2099rem; 
+        line-height: 1.2em;
+      }
+
+      .variation--a5 .quote__info p {
+        padding-bottom: 0;
+        font-size: 0.206rem; 
+        line-height: 1.2em;
+      }
+
+      .quote__info--primary {
+        margin-right: 0.0933rem;
+      }
+
+      .contactSection__container {
+        display: inline-block;
+        margin-top: 10pt;
+      }
+
+      .contactSection__container:first-child {  margin-top: 0; }
+
+      .contactSection__heading {
+        margin-bottom: 3pt;
+        font-size: 12pt;
+        font-weight: bold;        
+        color: var(--platinum);
+      } 
+
+      .contactSection {
+        font-size: 9pt;
+        font-weight: 300;
+      }
+
+      .contactSection__item { display: flex; }
+      .contactSection__label { width: 16pt;}
+      .socialSection {  margin-top: 5pt; }
+
+      .socialSection__item {
+        display: flex;
+        margin-bottom: 1.9pt;
+      }
+
+      .socialSection__icon {
+        width: 12pt;
+        height: 12pt;
+        margin-right: 5pt;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;       
+      }
+
+      .socialSection__icon--facebook { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/d1904bd7a92afd077cfe548a1505854d/fb-icon.svg'); } 
+      .socialSection__icon--twitter { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/3b40ad42be4f6f25216ad710f3f6a524/twitter-icon.svg'); }   
+      .socialSection__icon--instagram { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/924c3627c1db3fe9e65a829ac94bb6d2/instagram-icon.svg'); }    
+      .socialSection__icon--linkedin { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/12e7d7b7fafeda0583b85e9fe1f9d724/linkedin-icon.svg'); } 
+
+
+      .socialSection__text a,
+      .contactSection__value a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .outfitCricosCode {         
+        position: absolute;
+        left: 97.3%;
+        bottom: 0.3965rem;
+        transform: rotateZ(-90deg);
+        transform-origin: left bottom;
+        font-size: 0.1143rem;     
+        white-space: nowrap;
+      }
+
+      .anu_wayfinder_custom + .anu_wayfinder_college { margin-top: 0.05rem; }
+
+      .annotation {
+        padding: 0.14rem 0.2rem;
+        width: 5.88rem;
+        color: var(--white);
+        background-color: var(--black-opacity);
+      }
+
+      .variation--a5 .annotation {
+        padding: 0.14rem 0.2rem;
+        width: 5.75rem;
+      }
+
+      .annotation h1 {
+        margin-bottom: 0.21rem;
+        font-size: 0.291rem;
+        line-height: 1.45em;
+      }
+
+      .variation--a5 .annotation h1 {
+        margin-bottom: 0.12rem 0.2rem 0.14rem 0.2rem;
+        font-size: 0.2851rem;
+      }
+
+      .annotation p {
+        margin-bottom: 0.4em;
+        font-size: 0.164rem;
+        line-height: 1.3em;
+        font-weight: normal;
+      }
+
+      .variation--a5 .annotation p {
+        margin-bottom: 0.37rem;
+        font-size: 0.16rem;
+        line-height: 1.3em;
+        font-weight: normal;
+      }
+
+      .annotation h1:last-child,
+      .annotation p:last-child {
+        margin-bottom: 0;
+      }
+
+      .annotationPosition--left-upper,
+      .annotationPosition--left-center,
+      .annotationPosition--left-lower {
+        align-items: flex-start;
+      }
+
+      .annotationPosition--left-upper {
+        justify-content: flex-start;
+      }
+
+      .annotationPosition--left-center {
+        justify-content: center;
+      }
+
+      .annotationPosition--left-lower {
+        justify-content: flex-end;
+      }
+
+      .annotationPosition--right-upper,
+      .annotationPosition--right-center,
+      .annotationPosition--right-lower {
+        align-items: flex-end;
+      }
+
+      .annotationPosition--right-upper {
+        justify-content: flex-start;
+      }
+
+      .annotationPosition--right-center{
+        justify-content: center;
+      }
+
+      .annotationPosition--right-lower {
+        justify-content: flex-end;
+      }
+
+      .biography {
+        display: flex;
+        margin-left: -0.39rem;
+        margin-bottom: 0.32rem;
+      }
+
+      .variation--a5 .biography {
+        margin-bottom: 0.4rem;
+      }
+
+      .biography:last-child {
+        margin-bottom: 0;
+      }
+
+      .biography__row {
+        position: relative;
+        margin-left: 0.39rem;
+      }
+
+      .biography__image {
+        position: relative;
+        height: 1.98rem;
+        width: 1.69rem;
+        margin-top: 0.05rem;
+      }
+
+      .variation--a5 .biography__image {
+        height: 1.94rem;
+        width: 1.65rem;
+      }
+
+      .biography__image {
+        background: var(--pink);
+      }
+
+      .biography__imageText {
+        position: absolute;
+        top: 51%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 0.33rem;
+        font-weight: bold;
+        word-break: keep-all;
+        color: var(--rose);
+      }
+
+      .variation--a5 .biography__imageText {
+        top: 50%;
+      }
+
+      .biography__row--noBg .biography__imageText {
+        display: none;
+      }
+
+      .biography__heading {
+        margin-bottom: 0.11rem;
+        font-size: 0.327rem;
+        font-weight: bold;
+        line-height: 1.1em;
+      }
+
+      .variation--a5 .biography__heading {
+        font-size: 0.32rem;
+        line-height: 1.2em;
+      }
+
+      .biography__heading .tinymce_style--light {
+        color: var(--platinum);
+      }
+
+      .biography__heading .tinymce_style--dark {
+        color: var(--black);
+      }
+
+      .biography__text {
+        font-size: 0.202rem;
+        line-height: 1.3em;
+      }
+
+      .variation--a5 .biography__text {
+        font-size: 0.198rem;
+      }
+
+      .column {
+        width: 5.9rem;
+        margin-left: 0.3rem;
+      }
+
+      .note__line {
+        height: 0.61rem;
+        border-bottom: 0.02rem solid var(--dark-grey);
+      }
+
+      .variation--a5 .note__line {
+        height: 0.597rem;
+      }
+
+      .u-bold { font-weight: bold; }
+      .u-m-t-0 { margin-top: 0; }
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+      
+    
+      .is-export-mode .fit--oneColumnPage,
+      .is-export-mode .fit--contents,
+      .is-export-mode .fit--timetable,
+      .is-export-mode .fit--biographies,
+      .is-export-mode .fit--spanColumns,
+      .is-export-mode .fit--twoColumnPage,
+      .is-export-mode .fit--threeColumnPage,
+      .is-export-mode .fit--sponsorsPage { 
+        padding-bottom: 0rem; 
+      }
+
+      /********************************************** Multipage Cover **********************************************/
+      .template--multipageCover .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 0.9rem;
+      }
+
+      .theme--dark .template--multipageCover .fit--front,
+      .theme--dark .template--multipageCover .fit--contact { 
+        background: var(--primary);
+      }
+
+      .template--multipageCover .fit--contents { padding: 1.5rem 1.15rem; }
+      .template--multipageCover .fit--timetable { padding: 1.5rem 1rem; }
+      .template--multipageCover .fit--contact { padding: 2.95rem 1.245rem; }
+
+      .template--multipageCover .fit--contents.page--white,
+      .template--multipageCover .fit--contents.bg--white {
+        display: none;
+      }
+
+      .template--multipageCover .fit--contents.page--platinum,
+      .template--multipageCover .fit--contents.bg--platinum {
+        background-color: var(--edm-platinum);
+      }
+
+      .template--multipageCover .fit--contents.page--platinum .section,
+      .template--multipageCover .fit--contents.bg--platinum .section {
+        display: none;
+      }
+
+      .template--multipageCover .fit--contents.page--platinum .pageNumber__container,
+      .template--multipageCover .fit--contents.bg--platinum .pageNumber__container,
+      .template--multipageCover .fit--contact .pageNumber__container {
+        display: none;
+      }
+
+      .template--multipageCover .fit--twoColumnPage,
+      .template--multipageCover .fit--threeColumnPage {
+        display: block;
+        padding-top: 3rem;
+        padding-bottom: 1.1rem;
+      }
+
+      .template--multipageCover .header {
+        height: 2.16rem;
+        padding: 0.2rem 0.09rem;  
+      }
+
+      .template--multipageCover .logo {
+        display: none;
+        width: 3.8rem;
+      }
+
+      .theme--light .template--multipageCover .logo--dark,
+      .theme--dark .template--multipageCover .logo--light {
+        display: block;
+      }
+
+      .template--multipageCover .body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex: 1;        
+      }
+
+      .template--multipageCover .body__inner { 
+        position: relative;
+        width: 7rem; 
+        height: 8.45rem;
+      }
+
+      .template--multipageCover .body__inner:before {
+        content: '';
+        position: absolute;
+        left: -1.03rem;
+        top: 0.1rem;
+        display: block;
+        height: 100%;
+        width: 0.7rem;
+        background: var(--dark-grey);
+      }
+
+      .theme--dark .template--multipageCover .body__inner:before { background: {{{account.colors.charcoal}}}; }
+
+      .template--multipageCover .body--twoColumnPage,
+      .template--multipageCover .body--threeColumnPage {
+        display: block;
+        column-gap: 0.3rem;
+        -webkit-column-gap: 0.3rem;
+        -moz-column-gap: 0.3rem;
+        flex: 0 0 100%;
+        overflow: hidden;
+      }
+
+      .template--multipageCover .body--twoColumnPage { 
+        column-count: 2; 
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+      }
+
+      .template--multipageCover .body--threeColumnPage { 
+        column-count: 3; 
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+      }
+
+      .template--multipageCover .hero {
+        position: relative;
+        height: 8.45rem;
+        background: var(--rose);
+      }
+
+      .template--multipageCover .hero--hideContent { background: transparent; }
+
+      .template--multipageCover .hero__text {
+        position: absolute;
+        left: 4.6%;
+        top: 45%;
+        font-size: 0.44rem;
+        color: var(--white);
+        text-transform: uppercase;
+        letter-spacing: 4.9pt;
+      }
+
+      .theme--dark .template--multipageCover .hero__text { color: var(--primary); }
+      .template--multipageCover .hero--hideContent .hero__text { display: none; }
+
+      .template--multipageCover .hero__logo {
+        position: absolute;
+        bottom: -3.3px;
+        right: 2.6%;
+        width: 5.1rem;
+        z-index: 1;
+      }
+
+      .theme--light .template--multipageCover .hero__logoFill { fill: var(--white); }
+      .theme--dark  .template--multipageCover.hero__logoFill { fill: var(--primary); }
+
+      .template--multipageCover .hero__image {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .template--multipageCover .content__container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .template--multipageCover .heading {
+        margin-bottom: 0.19rem;
+        margin-top: 0.065rem;
+        line-height: 1.2em;  
+        letter-spacing: 0.12rem;
+      }      
+
+      .theme--dark .template--multipageCover .fit--front .heading,
+      .theme--dark .template--multipageCover .fit--contact .heading { 
+        color: var(--white);
+      }
+
+      .template--multipageCover .heading,
+      .template--multipageCover .subheading {
+        text-align: center;
+        font-size: 0.43rem;
+        text-transform: uppercase; 
+      }
+
+      .template--multipageCover .heading--contents {  margin-bottom: 1.24rem;}
+
+      .template--multipageCover .heading--contents,
+      .template--multipageCover .heading--timetable {
+        text-align: left;
+        line-height: 0.9em;
+      }
+
+      .template--multipageCover .heading--timetable { margin-bottom: 1.15rem; }
+      .template--multipageCover .heading--contact { text-align: left; }
+
+      .template--multipageCover .subheading {
+        line-height: 1.3em;
+        color: var(--platinum);
+      }
+
+      .template--multipageCover .subheading--1 { letter-spacing: 0.11rem; }
+
+      .template--multipageCover .subheading--2 {
+        font-weight: bold;
+        text-transform: none;
+      }
+
+      .template--multipageCover .footer,
+      .template--multipageCover .anu_wayfinder {  
+        padding-left: 0.01rem; 
+        font-size: 0.375rem;
+        line-height: 1.15em;
+      }
+
+      .template--multipageCover .fit--contact .anu_wayfinder {
+        padding-bottom: 0.2rem;
+        font-size: 0.28rem;
+        line-height: 1em;
+      }
+
+      .template--multipageCover .footer { padding-right: 6.3rem; }
+
+      
+      .template--multipageCover .contact { margin-bottom: 0.2rem; }
+
+      ..template--multipageCover contact__text { 
+        font-size: 0.28rem;
+        line-height: 1.25em;
+      }
+
+      .theme--dark .template--multipageCover .footer__label,
+      .theme--dark .template--multipageCover .anu_wayfinder .body p,
+      .theme--dark .template--multipageCover .contact__text,
+      .theme--dark .template--multipageCover .exportNumbe,
+      .theme--dark .template--multipageCover .fit--contact .anu_wayfinder {  
+        color: var(--white);
+      }
+
+      .template--multipageCover .contact__text--small { font-size: 0.135rem; }
+
+      .template--multipageCover .contact__group { 
+        display: flex;
+        align-items: center;
+      }
+
+      .template--multipageCover .contact__text--static { width: 0.4rem; }
+
+      .template--multipageCover .contact__icon {
+        display: none;
+        width: 0.24rem; 
+      }
+
+      .theme--dark .template--multipageCover .contact__icon--secondary,
+      .theme--light .template--multipageCover .contact__icon--primary { 
+        display: block;
+      }
+
+      .template--multipageCover .arts-social-sciences				{			color: {{{account.colors.arts---social-sciences}}};				}
+      .template--multipageCover .asia-the-pacific					{			color: {{{account.colors.asia-and-the-pacific}}};				}
+      .template--multipageCover .business-economics					{			color: {{{account.colors.business-and-economics}}};				}
+      .template--multipageCover .engineering-computer-science		{			color: {{{account.colors.engineering-and-computer-science}}};	}
+      .template--multipageCover .law								{			color: {{{account.colors.law}}};								}
+      .template--multipageCover .health-medicine					{			color: {{{account.colors.health-and-medicine}}};				}
+      .template--multipageCover .science							{			color: {{{account.colors.science}}};							}
+      .template--multipageCover .charcoalText						{			color: {{{account.colors.charcoal}}};							}
+      .theme--dark .template--multipageCover .charcoalText	  		{			color: {{{account.colors.white}}};							    }
+
+
+      .template--multipageCover .section {
+        position: relative;
+        flex: 1;
+      }
+
+      .template--multipageCover .table { 
+        display: flex; 
+        flex-direction: column;
+        width: 66.6%;
+        padding-left: 0.01rem;
+      }
+
+      .template--multipageCover .table__row {
+        display: flex;
+        height: 0.42rem;
+        align-items: flex-start;
+      }
+
+      .template--multipageCover .table__row + .table__row--subheading {
+        margin-top: 0.11rem;
+      }   
+
+      .template--multipageCover .table__column {  
+        padding: 0 0.1rem;
+        font-size: 0.229rem;
+        line-height: 1.2em;
+      }  
+
+      .template--multipageCover .table__column--header { 
+        font-size: 0.239rem;
+        font-weight: bold; 
+      }
+
+      .template--multipageCover .table__column--big { 
+        flex: 1; 
+        padding: 0;
+      }
+
+      .template--multipageCover .pageNumber__container {
+        position: absolute;
+        bottom: 0.62rem;
+        right: 0.7rem;
+        display: flex;
+        justify-content: flex-end;
+        width: 5rem;
+      }
+
+      .theme--dark .template--multipageCover .fit--contact .pageNumber,
+      .theme--dark .template--multipageCover .fit--contact .pageNumber__text {
+        color: var(--white);
+      }
+
+      .template--multipageCover .pageNumber ,
+      .template--multipageCover .pageNumber__text {
+        font-size: 0.16rem;
+        line-height: 1.2em;
+      }
+
+      .template--multipageCover .pageNumber { margin: 0 0.35rem; }
+
+      .template--multipageCover .event {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .template--multipageCover .event + .event { margin-top: 0.2rem; }
+
+      .template--multipageCover .event__row {
+        display: flex;
+        font-size: 0.2rem;
+        min-height: 0.36rem;
+        border-bottom: 1pt solid var(--platinum);
+      }
+
+      .template--multipageCover .event__row--subheading { 
+        align-items: flex-end;
+        padding-bottom: 0.03rem;
+        font-size: 0.17rem;
+        font-weight: bold;
+        border-bottom: 1.5pt solid var(--platinum);
+      }
+
+      .template--multipageCover .event__text {
+        display: flex;
+        align-items: center;
+        padding: 0 0.06rem;
+      }
+
+      .template--multipageCover .event__text h2 {
+        font-size: 0.36rem;
+        line-height: 1.2em;
+      }
+
+      .template--multipageCover .event__subheading { padding: 0.05rem 0 0.1rem; }
+      .template--multipageCover .event__text--heading {
+        font-size: 0.236rem;
+        font-weight: bold;
+      }   
+
+      .template--multipageCover .event__row--heading { 
+        min-height: 0.47rem;
+        border: none ;
+      }
+
+      .template--multipageCover .event__subheading h2 {
+        font-weight: bold;
+        color: var(--platinum);
+      }
+
+      .template--multipageCover .event__text:first-child { width: 6.69rem; }
+      .template--multipageCover .event__text:last-child { flex: 1; }
+
+      .template--multipageCover .exportNumber { 
+        position: absolute;
+        bottom: -0.13rem;
+        right: -3.3rem;
+        width: 5rem;
+        font-size: 0.12rem;
+        color: var(--primary);
+        transform: rotate(-90deg);
+      }
+
+      /* Code taken from Generic Flyer */
+
+      .template--multipageCover .block { margin-bottom: 0.1166rem; }
+
+      .template--multipageCover .block--text {
+        margin-bottom: 0.2332rem;
+        font-size: 0.2332rem;
+      }
+
+      .template--multipageCover .block--text .tinymce_style--dark {
+        color: var(--primary);
+      }
+
+      .template--multipageCover .block--text .tinymce_style--light {
+        color: var(--platinum);
+      }
+
+      .template--multipageCover .block--text h2 {
+        margin-bottom: 0.0933rem;
+        margin-top: 0.2332rem;
+        font-size: 0.36rem;
+        line-height: 1.2em;
+        font-weight: bold;
+        color: var(--platinum);
+      }
+
+      .template--multipageCover .block--text h2:first-child {
+        margin-top: 2mm;
+      }
+
+      .template--multipageCover .block--text p {
+        margin-bottom: 0.2332rem; 
+        font-weight: 300;
+        font-size: 0.236rem;   
+      }
+
+      .template--multipageCover .block--text ul {
+        margin-left: 0.3265rem;
+        margin-bottom: 0.1166rem;
+      }
+
+      .template--multipageCover .block--text li {
+        position: relative;
+        margin-bottom: 0.1166rem;
+        font-size: 0.236rem;    
+        font-weight: 300;
+      }
+
+      .template--multipageCover .block--text li::before {
+        content: ">";
+        position: absolute;
+        top: -0.0233rem;
+        left: -0.3265rem;
+        font-weight: bold;
+      }      
+
+      .template--multipageCover .block--text a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .template--multipageCover .block--text h2:last-child,
+      .template--multipageCover .block--text p:last-child,
+      .template--multipageCover .block--text a:last-child,
+      .template--multipageCover .block--text li:last-child {
+        margin-bottom: 0;
+      }
+
+      .template--multipageCover .block--image {
+        display: inline-block;
+        margin-bottom: 0.3032rem;
+        width: 100%;
+      }
+
+      .template--multipageCover .block--image .image {  height: 4.1744rem !important; }
+
+      .template--multipageCover .block--image + .block--quote {
+        margin-top: 0.3265rem;
+      }
+
+      .template--multipageCover .image {
+        position: relative;
+        height: 4.1744rem;
+        width: 100%;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        overflow: hidden;
+        margin-top: 0.07rem; 
+        background: var(--rose);
+      }
+
+      .template--multipageCover .imageText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 0.236rem;   
+        text-transform: uppercase;
+        color: var(--white);
+      }
+
+      .template--multipageCover .image--noBg {
+        background: none;
+      }
+
+      .template--multipageCover .image__text {
+        padding: 0.1866rem 0.1866rem;
+        background: var(--white);           
+      }
+
+      .template--multipageCover .image__caption {
+        font-size: 0.1632rem;       
+      }
+
+      .template--multipageCover .image__caption {
+        margin-bottom: 0.1399rem;
+      }
+
+      .template--multipageCover .block--tableSection {
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-top: 0.3498rem;
+        margin-bottom: 0.3498rem;
+      }
+
+      .template--multipageCover .block--tableSection:first-child {
+        margin-top: 0;
+      }
+
+      .template--multipageCover .tableSection { width: 100%;  }
+
+      .template--multipageCover th { border-bottom: 0.0466rem solid var(--platinum); }
+
+      .template--multipageCover td {        
+        border-bottom: 0.0233rem solid var(--platinum);
+        word-break: break-all;
+      }
+
+      .template--multipageCover .tableSection__title {
+        margin-bottom: 0.0933rem;
+        font-size: 0.2332rem;
+        font-weight: bold;   
+      }
+
+      .template--multipageCover .tableSection__row {
+        padding-right: 0.0933rem;
+        padding-bottom: 0.0466rem;  
+        padding-top: 0.0466rem;
+        font-weight: 300;
+        font-size: 0.2099rem;
+        text-align: center;     
+      }
+
+      .template--multipageCover .tableSection__row:nth-child(1) {
+        text-align: left;   
+      }
+
+      .template--multipageCover .tableSection__row--heading {
+        font-weight: bold;
+        font-size: 0.1632rem;
+      }
+
+      .template--multipageCover .block--quote {
+        padding-bottom: 0.1866rem;
+        margin-bottom: 0.2332rem;   
+      }
+
+      .template--multipageCover .block--quote h3 {
+        margin-bottom: 0.1166rem;
+        font-size: 0.3498rem;      
+      }
+
+      .template--multipageCover .block--quote p {
+        margin-bottom: 0.07rem;
+        font-size: 0.2682rem;  
+      }
+
+      .template--multipageCover .block--quote p:last-child,
+      .template--multipageCover .block--quote h3:last-child {
+        margin-bottom: 0;
+      }
+
+      .template--multipageCover .quotebox {
+        display: flex;
+        flex-direction: column;
+        padding: 0.1632rem;
+        background: var(--platinum);
+      }
+
+      .template--multipageCover .quote__footer {
+        display: flex;
+        margin-top: 0.1866rem;
+        font-size: 0.1632rem;   
+      }
+
+      .template--multipageCover .quote__info p {
+        padding-bottom: 0.0466rem;
+        font-size: 0.2099rem; 
+      }
+
+      .template--multipageCover .quote__info--primary {
+        margin-right: 0.0933rem;
+      }
+
+      .template--multipageCover .contactSection__container {
+        display: inline-block;
+        margin-top: 10pt;
+      }
+
+      .template--multipageCover .contactSection__container:first-child {  margin-top: 0; }
+
+      .template--multipageCover .contactSection__heading {
+        margin-bottom: 3pt;
+        font-size: 12pt;
+        font-weight: bold;        
+        color: var(--platinum);
+      } 
+
+      .template--multipageCover .contactSection {
+        font-size: 9pt;
+        font-weight: 300;
+      }
+
+      .template--multipageCover .contactSection__item { display: flex; }
+      .template--multipageCover .contactSection__label { width: 16pt;}
+      .template--multipageCover .socialSection {  margin-top: 5pt; }
+
+      .template--multipageCover .socialSection__item {
+        display: flex;
+        margin-bottom: 1.9pt;
+      }
+
+      .template--multipageCover .socialSection__icon {
+        width: 12pt;
+        height: 12pt;
+        margin-right: 5pt;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;       
+      }
+
+      .template--multipageCover .socialSection__icon--facebook { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/d1904bd7a92afd077cfe548a1505854d/fb-icon.svg'); } 
+      .template--multipageCover .socialSection__icon--twitter { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/3b40ad42be4f6f25216ad710f3f6a524/twitter-icon.svg'); }   
+      .template--multipageCover .socialSection__icon--instagram { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/924c3627c1db3fe9e65a829ac94bb6d2/instagram-icon.svg'); }    
+      .template--multipageCover .socialSection__icon--linkedin { background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/12e7d7b7fafeda0583b85e9fe1f9d724/linkedin-icon.svg'); } 
+
+
+      .template--multipageCover .socialSection__text a,
+      .template--multipageCover .contactSection__value a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .template--multipageCover .outfitCricosCode {         
+        position: absolute;
+        left: 97.3%;
+        bottom: 0.3965rem;
+        transform: rotateZ(-90deg);
+        transform-origin: left bottom;
+        font-size: 0.1143rem;     
+        white-space: nowrap;
+      }
+
+      .template--multipageCover .anu_wayfinder_custom + .anu_wayfinder_college { margin-top: 0.05rem; }
+
+      .template--multipageCover .u-bold { font-weight: bold; }
+      .template--multipageCover .u-m-t-0 { margin-top: 0; }
+
+      .exportID{
+        margin-left: 5px;
+      }
+      .body__inner {
+        display: flex;
+        flex-direction: column;
+      }
+      .variation--a5 {
+        --imageSize: var(--a5ImageSize);
+      }
+      .variation--a4 {
+        --imageSize: var(--a4ImageSize);
+      }
+      .page--contents .sponsorsPageChoice, .page--platinum .sponsorsPageChoice {
+        display: none;
+      }
+      .page--sponsors-page .sponsorsPageChoice {
+        display: block;
+      }
+      .page--sponsors-page .section {
+        display: none;
+      }
+     
+    
+      
+
+
+      /********************************************** Multipage Cover **********************************************/
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}
+                                         variation--{{{ANU_variation--mpgip}}}{{^ANU_variation--mpgip}}a4{{/ANU_variation--mpgip}}
+                                         theme--{{ANU_theme--mgip}}{{^ANU_theme--mgip}}light{{/ANU_theme--mgip}}
+                                         " data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+    </div><!-- end placeholderMaster -->
+
+    {{#collection.ANU_cover-page-and-inner-cover--mgip}}
+    <!--FRONT PAGE-->
+    <div class="page template--multipageCover">
+
+      <div class="bleed">
+
+        <div class="container fit fit--front">
+          <div class="header">
+            <img src="{{{account.logos.logo-gold}}}" class="logo logo--dark" /> <!-- logo -->
+            <img src="{{{account.logos.Logo}}}" class="logo logo--light" /> <!-- logo -->
+          </div> <!-- header -->
+          <div class="body">
+            <div class="hero hero--{{#ANU_feature-image--mgip}}hideContent{{/ANU_feature-image--mgip}}">
+              <svg class="hero__logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 218.5 73.2"><polygon class="hero__logoFill" points="144.4 73.1 144.4 0 123.1 0 123.1 39.1 122.9 39.1 101.6 0.1 78.6 0.1 78.6 73.2 99.8 73.1 99.8 33.2 100 33.2 122.4 73.1 144.4 73.1"/><path class="hero__logoFill" d="M532,602.3c12.6-3.6,18.9-12.9,18.9-28.2V529.2H528.4V569c0,7.5,0,16.8-10.7,16.8-11,0-11-9.3-11-16.8V529.2H484.2v44.9c0,15.3,6.3,24.6,18.9,28.2Z" transform="translate(-332.4 -529.2)"/><path class="hero__logoFill" d="M381.3,529.3h-22l-26.9,73.1,22.5-.1,3.3-10.4h23.2l3.1,10.4,23.4.1Zm-18.2,47,7.1-22.5h.2l6.6,22.5Z" transform="translate(-332.4 -529.2)"/></svg>
+              <div class="reposition-fix"> <div class="hero__image"> {{{ANU_feature-image--mgip}}} </div> <!-- hero__image --> </div> <!-- reposition-fix -->
+            </div> <!-- hero -->
+            <div class="content__container">
+              <div class="content">
+                {{#ANU_heading--mgip}} <div class="heading" data-max-line="2"> {{{ANU_heading--mgip}}} </div> <!-- heading -->  {{/ANU_heading--mgip}} 
+                {{#ANU_subheading--mgip}} 
+                <div class="subheading subheading--{{ANU_font-subheading-style--mgip}}{{^ANU_font-subheading-style--mgip}}1{{/ANU_font-subheading-style--mgip}}" data-max-line="3"> 
+                  {{{ANU_subheading--mgip}}} 
+                </div> <!-- heading -->
+                {{/ANU_subheading--mgip}}
+              </div> <!-- content -->
+            </div> <!-- content__container -->
+          </div> <!-- body -->
+          <div class="footer anu_wayfinder" data-max-line="10">         
+            {{#collection.ANU_wayfinder--mgip}}
+            {{#block.ANU_college--mgip}}
+            <div class="anu_wayfinder_college" data-name='{{ANU_college_content--mgip}}'></div>
+            {{/block.ANU_college--mgip}}
+            {{#block.ANU_custom--mgip}}
+            <div class="anu_wayfinder_custom" data-type="{{{ANU_wayfinder-type--mgip}}}" data-name="{{{ANU_wayfinder-name--mgip}}}"></div>
+            {{/block.ANU_custom--mgip}}
+            {{/collection.ANU_wayfinder--mgip}}
+          </div> <!-- footer -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    <!--COVER PAGE-->
+    <div class="page template--multipageCover">
+
+      <div class="bleed">
+
+        <div class="container fit fit--contents page--{{{ANU_content-or-background--mgip}}}{{^ANU_content-or-background--mgip}}content{{/ANU_content-or-background--mgip}}">
+          <div class="section">
+            <div data-max-height="dynamic">
+              <div class="heading heading--contents"> contents </div> <!-- heading -->
+              <div class="table">
+                {{#collection.ANU_content--mgip}}
+                {{#ANU_heading-column--mgip}}
+                <div class="table__row table__row--subheading"> 
+                  <div class="table__column table__column--big table__column--header" data-max-line="1"> {{{ANU_heading-column--mgip}}} </div> <!--table__column --> 
+                  {{#ANU_heading-number--mgip}}<div class="table__column table__column--header" data-max-line="1"> {{{ANU_heading-number--mgip}}} </div> <!--table__column --> {{/ANU_heading-number--mgip}}
+                </div> <!-- table__row -->
+                {{/ANU_heading-column--mgip}}
+                {{#spreadsheet.ANU_table-contents--mgip}}
+                <div class="table__row"> 
+                  <div class="table__column table__column--big" data-max-line="1"> {{{ANU_section-name--mgip}}} </div> <!--table__column --> 
+                  <div class="table__column" data-max-line="1"> {{{ANU_section-page-number--mgip}}} </div> <!--table__column --> 
+                </div> <!-- table__row -->
+                {{/spreadsheet.ANU_table-contents--mgip}}
+                {{/collection.ANU_content--mgip}}
+              </div> <!-- table -->
+              
+            </div> <!-- data-max-height -->
+             </div> <!-- section -->
+            <div class="body body--oneColumnPage sponsorsPageChoice">
+            <div data-max-height="dynamic">
+              {{#collection.ANU_content--mpgip}}
+              {{#block.ANU_copy--mpgip}}
+              <div class="block block--text">{{{ ANU_text--2mpgip }}}</div><!--block block--content-->
+              {{/block.ANU_copy--mpgip}}
+              {{#block.ANU_image--mpgip}}
+              <div class="block block--image block--imagePrimary">    
+                <div class="image" style="height: calc((var(--imageSize)*{{{ANU_photo-depth--mpgip}}}{{^ANU_photo-depth--mpgip}}100{{/ANU_photo-depth--mpgip}})/100);">   
+                  <div class="image__hero" style="height: calc((var(--imageSize)*{{{ANU_photo-depth--mpgip}}}{{^ANU_photo-depth--mpgip}}100{{/ANU_photo-depth--mpgip}})/100);">
+                    {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                  </div><!-- end hero__image -->
+                  {{{ ANU_image--mpgip }}}
+                </div><!--image-->                 
+                {{#ANU_caption--mpgip}}
+                <div class="image__text">
+                  <div class="image__caption" data-max-line="2">{{{ ANU_caption--mpgip }}}
+                  </div><!--image__caption-->
+                </div><!--image__text-->
+                {{/ANU_caption--mpgip}}
+              </div><!--block block--image-->
+              {{/block.ANU_image--mpgip}}
+
+              {{#block.ANU_sponsorship-listing--mpgip}}             
+              <div class="block block--sponsorship">
+                {{#ANU_heading--mpgip}}
+                <div class="sponsorship__heading" data-max-line="1">{{{ANU_heading--mpgip}}}</div> <!--sponsorship__heading-->
+                {{/ANU_heading--mpgip}}
+                {{#ANU_image--mpgip}}
+                <img class="sponsorship__logo" src="{{{ANU_image--mpgip}}}" /> <!--sponsorship__logo-->
+                {{/ANU_image--mpgip}}
+                {{#ANU_caption--mpgip}}
+                <div class="image__text image__text--sponsorship">
+                  <div class="image__caption image__caption--sponsorship" data-max-line="2">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                </div><!--image__text-->
+                {{/ANU_caption--mpgip}}
+              </div><!--block block--sponsorship-->
+              {{/block.ANU_sponsorship-listing--mpgip}}    
+              {{/collection.ANU_content--mpgip}}
+            </div><!-- data-max-height -->
+          </div> <!-- body -->
+         
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/collection.ANU_cover-page-and-inner-cover--mgip}}
+
+
+    {{#collection.ANU_internal-pages-additions--mpgip}}
+    <!--adding contents page -->
+    {{#block.ANU_contents--mgip}}
+       <div class="page template--multipageCover">
+
+      <div class="bleed">
+
+        <div class="container fit fit--contents page--content">
+          <div class="section">
+            <div data-max-height="dynamic">
+              <div class="heading heading--contents"> contents </div> <!-- heading -->
+              <div class="table">
+                
+                {{#ANU_heading-column--mgip}}
+                <div class="table__row table__row--subheading"> 
+                  <div class="table__column table__column--big table__column--header" data-max-line="1"> {{{ANU_heading-column--mgip}}} </div> <!--table__column --> 
+                  {{#ANU_heading-number--mgip}}<div class="table__column table__column--header" data-max-line="1"> {{{ANU_heading-number--mgip}}} </div> <!--table__column --> {{/ANU_heading-number--mgip}}
+                </div> <!-- table__row -->
+                {{/ANU_heading-column--mgip}}
+                {{#spreadsheet.ANU_table-contents--mgip}}
+                <div class="table__row"> 
+                  <div class="table__column table__column--big" data-max-line="1"> {{{ANU_section-name--mgip}}} </div> <!--table__column --> 
+                  <div class="table__column" data-max-line="1"> {{{ANU_section-page-number--mgip}}} </div> <!--table__column --> 
+                </div> <!-- table__row -->
+                {{/spreadsheet.ANU_table-contents--mgip}}
+                
+              </div> <!-- table -->
+              
+            </div> <!-- data-max-height -->
+             </div> <!-- section -->
+           </div> <!-- Container -->
+             </div> <!-- Bleed -->
+         </div> <!-- Page -->
+    {{/block.ANU_contents--mgip}}
+    <!--ending contents page -->
+    {{#block.ANU_notes--mpgip}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--notes">
+          <div class="section">
+            <div class="heading heading--notes"> Notes</div> <!-- heading -->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+            <div class="note__line"></div> <!--note__line-->
+          </div> <!--section-->
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->     
+        </div><!--container fit-->
+
+      </div><!--bleed-->   
+    </div><!--page-->
+    {{/block.ANU_notes--mpgip}}
+
+    <!--TIMETABLE PAGE-->
+    {{#block.ANU_timetable-page--mpgip}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--timetable">
+          <div class="section">
+            <div data-max-height="dynamic">
+              {{#ANU_timetable-page-heading--mpgip}}
+              <div class="heading heading--timetable" data-max-line="2"> {{{ANU_timetable-page-heading--mpgip}}} </div> <!-- heading -->
+              {{/ANU_timetable-page-heading--mpgip}}
+              <div class="venue-location"> Venue: {{{event-venue}}} </div>
+             
+              {{#collection.event-table--mpgip}}
+              <div class="event"> 
+                 <div class="dayHeading" style="color: var(--{{{day-heading-colour}}});">{{{day-heading}}}</div>
+                <div class="event__row event__row--subheading {{^ANU_table-heading-left--mpgip}}noLeftHeading{{/ANU_table-heading-left--mpgip}} {{^ANU_table-heading-right--mpgip}}noRightHeading{{/ANU_table-heading-right--mpgip}}" style="grid-template-columns: {{{event-column1-width}}}% 1fr;"> 
+                  <div class="event__text event__text--subheading" data-max-line="1" > {{{ANU_table-heading-left--mpgip}}} </div> <!-- event__heading -->
+                  <div class="event__text event__text--subheading" data-max-line="1" > {{{ANU_table-heading-right--mpgip}}} </div> <!-- event__heading -->
+                </div> <!-- event__row -->
+                {{#collection.event-row--mpgip}}
+                <div class="event__row" style="grid-template-columns: {{{event-column1-width}}}% 1fr;"> 
+                  <div class="event__text" data-max-height="css">
+                    {{{ANU_event-time--mpgip}}}
+                  </div> <!-- event__text -->
+                  <div class="event__text" data-max-height="css"> 
+                    <div class="event__information"> {{{ANU_event-information--mpgip}}}</div> <!-- event__information -->
+                  </div> <!-- event__text -->
+                </div> <!-- event__row -->
+                {{/collection.event-row--mpgip}}
+              </div> <!-- timetable -->
+              {{/collection.event-table--mpgip}}
+            </div> <!-- data-max-height -->
+          </div> <!-- section -->
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->     
+        </div><!--container fit-->
+
+      </div><!--bleed-->   
+    </div><!--page-->
+    {{/block.ANU_timetable-page--mpgip}}
+
+    {{#block.ANU_two-column-page--mpgip}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--twoColumnPage">
+          <div class="header header--twoColumnPage"> 
+            {{#ANU_two-column-page-heading--mpgip}}
+            <div class="heading heading--twoColumnPage" data-max-line="2"> {{{ANU_two-column-page-heading--mpgip}}} </div> <!-- heading -->
+            {{/ANU_two-column-page-heading--mpgip}}
+          </div> <!-- header -->
+          <div class="body body--twoColumnPage">   
+            <div class="dynamic__container" data-max-height="dynamic">
+              <div class="body__inner body__inner--twoColumnPage">
+                {{#collection.ANU_column-left-content--mpgip}}
+                {{#block.ANU_copy--mpgip}}
+                <div class="block block--text block--textSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">{{{ ANU_text--mpgip }}}</div><!--block block--content-->
+                {{/block.ANU_copy--mpgip}}
+                {{#block.ANU_image--mpgip}}
+                <div class="block block--image" style="margin-bottom: {{{ANU_block-space}}}rem;">                
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->                 
+                  {{#ANU_caption--mpgip}}
+                  <div class="image__text">
+                    <div class="image__caption" data-max-line="9">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                  </div><!--image__text-->
+                  {{/ANU_caption--mpgip}}
+                </div><!--block block--image-->
+                {{/block.ANU_image--mpgip}}
+                {{#block.ANU_table--mpgip}}
+                <div class="block block--tableSection block--tableSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="tableSection__title" data-max-line="1">{{{ ANU_title--mpgip }}}</div><!--table__title-->  
+                  <table class="tableSection">
+                    <tr>
+                      {{#ANU_table-heading-1--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table1-col1-width}}}%"> {{{ANU_table-heading-1--mpgip}}} </th>
+                      {{/ANU_table-heading-1--mpgip}}
+                      {{#ANU_table-heading-2--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table1-col2-width}}}%"> {{{ANU_table-heading-2--mpgip}}}</th>
+                      {{/ANU_table-heading-2--mpgip}}
+                      {{#ANU_table-heading-3--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table1-col3-width}}}%"> {{{ANU_table-heading-3--mpgip}}} </th>
+                      {{/ANU_table-heading-3--mpgip}}
+                      {{#ANU_table-heading-4--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table1-col4-width}}}%"> {{{ANU_table-heading-4--mpgip}}} </th>
+                      {{/ANU_table-heading-4--mpgip}}
+                      {{#ANU_table-heading-5--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table1-col5-width}}}%"> {{{ANU_table-heading-5--mpgip}}} </th>
+                      {{/ANU_table-heading-5--mpgip}}
+                    </tr>
+                    {{#spreadsheet.ANU_table-content--mpgip}}
+                    <tr>
+                      {{#ANU_table-heading-1--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table1-col1-width}}}%">{{ANU_bachelor-of--mpgip}}</td>
+                      {{/ANU_table-heading-1--mpgip}}
+                      {{#ANU_table-heading-2--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table1-col2-width}}}%">{{ANU_length--mpgip}}</td>
+                      {{/ANU_table-heading-2--mpgip}}
+                      {{#ANU_table-heading-3--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table1-col3-width}}}%">{{ANU_rank--mpgip}}</td>
+                      {{/ANU_table-heading-3--mpgip}}
+                      {{#ANU_table-heading-4--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table1-col4-width}}}%">{{ANU_op--mpgip}}</td>
+                      {{/ANU_table-heading-4--mpgip}}
+                      {{#ANU_table-heading-5--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table1-col5-width}}}%">{{ANU_ib--mpgip}}</td>
+                      {{/ANU_table-heading-5--mpgip}}
+                    </tr>
+                    {{/spreadsheet.ANU_table-content--mpgip}}
+                  </table><!--table-->
+                </div><!--block block--table-->         
+                {{/block.ANU_table--mpgip}}
+                {{#block.ANU_quote--mpgip}}
+                {{#ANU_content--mpgip}}               
+                <div class="block block--quote" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->
+                  <div class="quotebox quotebox--secondary">  
+                    <div class="quote">{{{ ANU_content--mpgip }}}</div><!--quote-->
+                    <div class="quote__footer">
+                      {{#ANU_name--mpgip}} <div class="quote__info quote__info--primary">{{{ ANU_name--mpgip }}}</div>{{/ANU_name--mpgip}}<!--quote__info-->
+                    </div><!--quote__footer-->
+                  </div>
+                </div><!--block block--quote-->
+                {{/ANU_content--mpgip}}
+                {{/block.ANU_quote--mpgip}}
+                {{/collection.ANU_column-left-content--mpgip}}
+              </div> <!--body__inner-->
+
+              <div class="body__inner body__inner--twoColumnPage">
+                {{#collection.ANU_column-right-content--mpgip}}     
+                {{#block.ANU_copy--mpgip}}
+                <div class="block block--text block--textSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">{{{ ANU_text--mpgip }}}</div><!--block block--content-->
+                {{/block.ANU_copy--mpgip}}
+                {{#block.ANU_image--mpgip}}
+                <div class="block block--image" style="margin-bottom: {{{ANU_block-space}}}rem;">                
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->                 
+                  {{#ANU_caption--mpgip}}
+                  <div class="image__text">
+                    <div class="image__caption" data-max-line="9">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                  </div><!--image__text-->
+                  {{/ANU_caption--mpgip}}
+                </div><!--block block--image-->
+                {{/block.ANU_image--mpgip}}
+                {{#block.ANU_table--mpgip}}
+                <div class="block block--tableSection block--tableSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="tableSection__title" data-max-line="1">{{{ ANU_title--mpgip }}}</div><!--table__title-->  
+                  <table class="tableSection">
+                    <tr>
+                      {{#ANU_table-heading-1--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col1-width}}}%"> {{{ANU_table-heading-1--mpgip}}} </th>
+                      {{/ANU_table-heading-1--mpgip}}
+                      {{#ANU_table-heading-2--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col2-width}}}%"> {{{ANU_table-heading-2--mpgip}}} </th>
+                      {{/ANU_table-heading-2--mpgip}}
+                      {{#ANU_table-heading-3--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col3-width}}}%"> {{{ANU_table-heading-3--mpgip}}} </th>
+                      {{/ANU_table-heading-3--mpgip}}
+                      {{#ANU_table-heading-4--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col4-width}}}%"> {{{ANU_table-heading-4--mpgip}}} </th>
+                      {{/ANU_table-heading-4--mpgip}}
+                      {{#ANU_table-heading-5--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col5-width}}}%"> {{{ANU_table-heading-5--mpgip}}} </th>
+                      {{/ANU_table-heading-5--mpgip}}
+                    </tr>
+                    {{#spreadsheet.ANU_table-content--mpgip}}
+                    <tr>
+                      {{#ANU_table-heading-1--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col1-width}}}%">{{ANU_bachelor-of--mpgip}}</td>
+                      {{/ANU_table-heading-1--mpgip}}
+                      {{#ANU_table-heading-2--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col2-width}}}%">{{ANU_length--mpgip}}</td>
+                      {{/ANU_table-heading-2--mpgip}}
+                      {{#ANU_table-heading-3--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col3-width}}}%">{{ANU_rank--mpgip}}</td>
+                      {{/ANU_table-heading-3--mpgip}}
+                      {{#ANU_table-heading-4--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col4-width}}}%">{{ANU_op--mpgip}}</td>
+                      {{/ANU_table-heading-4--mpgip}}
+                      {{#ANU_table-heading-5--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col5-width}}}%">{{ANU_ib--mpgip}}</td>
+                      {{/ANU_table-heading-5--mpgip}}
+                    </tr>
+                    {{/spreadsheet.ANU_table-content--mpgip}}
+                  </table><!--table-->
+                </div><!--block block--table-->         
+                {{/block.ANU_table--mpgip}}
+                {{#block.ANU_quote--mpgip}}
+                {{#ANU_content--mpgip}}               
+                <div class="block block--quote" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->
+                  <div class="quotebox quotebox--secondary">  
+                    <div class="quote">{{{ ANU_content--mpgip }}}</div><!--quote-->
+                    <div class="quote__footer">
+                      {{#ANU_name--mpgip}} <div class="quote__info quote__info--primary">{{{ ANU_name--mpgip }}}</div>{{/ANU_name--mpgip}}<!--quote__info-->
+                    </div><!--quote__footer-->
+                  </div>
+                </div><!--block block--quote-->
+                {{/ANU_content--mpgip}}
+                {{/block.ANU_quote--mpgip}} 
+                {{/collection.ANU_column-right-content--mpgip}}
+              </div> <!--body__inner-->
+            </div><!-- data-max-height -->
+          </div> <!-- body -->
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->           
+        </div><!--container fit-->
+
+      </div><!--bleed-->   
+    </div><!--page-->
+    {{/block.ANU_two-column-page--mpgip}}
+    {{#block.ANU_three-column-page--mpgip}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--threeColumnPage">
+          <div class="header header--threeColumnPage"> 
+            {{#ANU_three-column-page-heading--mpgip}}
+            <div class="heading heading--threeColumnPage" data-max-line="2"> {{{ANU_three-column-page-heading--mpgip}}} </div> <!-- heading -->
+            {{/ANU_three-column-page-heading--mpgip}}
+          </div> <!-- header -->
+          <div class="body body--threeColumnPage">   
+            <div class="dynamic__container" data-max-height="dynamic">
+              <div class="body__inner body__inner--threeColumnPage">
+                {{#collection.ANU_column-left-content--mpgip}}
+                {{#block.ANU_copy--mpgip}}
+                <div class="block block--text block--textSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">{{{ ANU_text--2mpgip }}}</div><!--block block--content-->
+                {{/block.ANU_copy--mpgip}}
+                {{#block.ANU_image--mpgip}}
+                <div class="block block--image" style="margin-bottom: {{{ANU_block-space}}}rem;">                
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->                 
+                  {{#ANU_caption--mpgip}}
+                  <div class="image__text">
+                    <div class="image__caption" data-max-line="9">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                  </div><!--image__text-->
+                  {{/ANU_caption--mpgip}}
+                </div><!--block block--image-->
+                {{/block.ANU_image--mpgip}}
+                {{#block.ANU_table--mpgip}}
+                <div class="block block--tableSection block--tableSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="tableSection__title" data-max-line="1">{{{ ANU_2title--mpgip }}}</div><!--table__title-->  
+                  <table class="tableSection">
+                    <tr>
+                      {{#ANU_2table-heading-1--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col1-width}}}%"> {{{ANU_2table-heading-1--mpgip}}} </th>
+                      {{/ANU_2table-heading-1--mpgip}}
+                      {{#ANU_2table-heading-2--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col2-width}}}%"> {{{ANU_2table-heading-2--mpgip}}} </th>
+                      {{/ANU_2table-heading-2--mpgip}}
+                      {{#ANU_2table-heading-3--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col3-width}}}%"> {{{ANU_2table-heading-3--mpgip}}} </th>
+                      {{/ANU_2table-heading-3--mpgip}}
+                      {{#ANU_2table-heading-4--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col4-width}}}%"> {{{ANU_2table-heading-4--mpgip}}} </th>
+                      {{/ANU_2table-heading-4--mpgip}}
+                      {{#ANU_2table-heading-5--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col5-width}}}%"> {{{ANU_2table-heading-5--mpgip}}} </th>
+                      {{/ANU_2table-heading-5--mpgip}}
+                    </tr>
+                    {{#spreadsheet.ANU_table-content--mpgip}}
+                    <tr>
+                      {{#ANU_2table-heading-1--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col1-width}}}%">{{ANU_bachelor-of--mpgip}}</td>
+                      {{/ANU_2table-heading-1--mpgip}}
+                      {{#ANU_2table-heading-2--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col2-width}}}%">{{ANU_length--mpgip}}</td>
+                      {{/ANU_2table-heading-2--mpgip}}
+                      {{#ANU_2table-heading-3--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col3-width}}}%">{{ANU_rank--mpgip}}</td>
+                      {{/ANU_2table-heading-3--mpgip}}
+                      {{#ANU_2table-heading-4--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col4-width}}}%">{{ANU_op--mpgip}}</td>
+                      {{/ANU_2table-heading-4--mpgip}}
+                      {{#ANU_2table-heading-5--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col5-width}}}%">{{ANU_ib--mpgip}}</td>
+                      {{/ANU_2table-heading-5--mpgip}}
+                    </tr>
+                    {{/spreadsheet.ANU_table-content--mpgip}}
+                  </table><!--table-->
+                </div><!--block block--table-->         
+                {{/block.ANU_table--mpgip}}
+                {{#block.ANU_quote--mpgip}}
+                {{#ANU_content--mpgip}}               
+                <div class="block block--quote" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->
+                  <div class="quotebox quotebox--secondary">  
+                    <div class="quote">{{{ ANU_content--mpgip }}}</div><!--quote-->
+                    <div class="quote__footer">
+                      {{#ANU_name--mpgip}} <div class="quote__info quote__info--primary">{{{ ANU_name--mpgip }}}</div>{{/ANU_name--mpgip}}<!--quote__info-->
+                    </div><!--quote__footer-->
+                  </div>
+                </div><!--block block--quote-->
+                {{/ANU_content--mpgip}}
+                {{/block.ANU_quote--mpgip}}
+                {{/collection.ANU_column-left-content--mpgip}}
+              </div> <!--body__inner-->
+
+              <div class="body__inner body__inner--threeColumnPage">
+                {{#collection.ANU_column-center-content--mpgip}}     
+                {{#block.ANU_copy--mpgip}}
+                <div class="block block--text block--textSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">{{{ ANU_2text--mpgip }}}</div><!--block block--content-->
+                {{/block.ANU_copy--mpgip}}
+                {{#block.ANU_image--mpgip}}
+                <div class="block block--image" style="margin-bottom: {{{ANU_block-space}}}rem;">                
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->                 
+                  {{#ANU_caption--mpgip}}
+                  <div class="image__text">
+                    <div class="image__caption" data-max-line="9">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                  </div><!--image__text-->
+                  {{/ANU_caption--mpgip}}
+                </div><!--block block--image-->
+                {{/block.ANU_image--mpgip}}
+                {{#block.ANU_table--mpgip}}
+                <div class="block block--tableSection block--tableSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="tableSection__title" data-max-line="1">{{{ ANU_2title--mpgip }}}</div><!--table__title-->  
+                  <table class="tableSection">
+                    <tr>
+                      {{#ANU_3table-heading-1--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col1-width}}}%"> {{{ANU_3table-heading-1--mpgip}}} </th>
+                      {{/ANU_3table-heading-1--mpgip}}
+                      {{#ANU_3table-heading-2--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col2-width}}}%"> {{{ANU_3table-heading-2--mpgip}}} </th>
+                      {{/ANU_3table-heading-2--mpgip}}
+                      {{#ANU_3table-heading-3--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col3-width}}}%"> {{{ANU_3table-heading-3--mpgip}}} </th>
+                      {{/ANU_3table-heading-3--mpgip}}
+                      {{#ANU_3table-heading-4--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col4-width}}}%"> {{{ANU_3table-heading-4--mpgip}}} </th>
+                      {{/ANU_3table-heading-4--mpgip}}
+                      {{#ANU_3table-heading-5--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col5-width}}}%"> {{{ANU_3table-heading-5--mpgip}}} </th>
+                      {{/ANU_3table-heading-5--mpgip}}
+                    </tr>
+                    {{#spreadsheet.ANU_table-content--mpgip}}
+                    <tr>
+                      {{#ANU_3table-heading-1--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col1-width}}}%">{{ANU_bachelor-of--mpgip}}</td>
+                      {{/ANU_3table-heading-1--mpgip}}
+                      {{#ANU_3table-heading-2--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col2-width}}}%">{{ANU_length--mpgip}}</td>
+                      {{/ANU_3table-heading-2--mpgip}}
+                      {{#ANU_3table-heading-3--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col3-width}}}%">{{ANU_rank--mpgip}}</td>
+                      {{/ANU_3table-heading-3--mpgip}}
+                      {{#ANU_3table-heading-4--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col4-width}}}%">{{ANU_op--mpgip}}</td>
+                      {{/ANU_3table-heading-4--mpgip}}
+                      {{#ANU_3table-heading-5--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col5-width}}}%">{{ANU_ib--mpgip}}</td>
+                      {{/ANU_3table-heading-5--mpgip}}
+                    </tr>
+                    {{/spreadsheet.ANU_table-content--mpgip}}
+                  </table><!--table-->
+                </div><!--block block--table-->         
+                {{/block.ANU_table--mpgip}}
+                {{#block.ANU_quote--mpgip}}
+                {{#ANU_content--mpgip}}               
+                <div class="block block--quote" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->
+                  <div class="quotebox quotebox--secondary">  
+                    <div class="quote">{{{ ANU_content--mpgip }}}</div><!--quote-->
+                    <div class="quote__footer">
+                      {{#ANU_name--mpgip}} <div class="quote__info quote__info--primary">{{{ ANU_name--mpgip }}}</div>{{/ANU_name--mpgip}}<!--quote__info-->
+                    </div><!--quote__footer-->
+                  </div>
+                </div><!--block block--quote-->
+                {{/ANU_content--mpgip}}
+                {{/block.ANU_quote--mpgip}} 
+                {{/collection.ANU_column-center-content--mpgip}}
+              </div> <!--body__inner-->
+
+              <div class="body__inner body__inner--threeColumnPage">
+                {{#collection.ANU_column-right-content--mpgip}}     
+                {{#block.ANU_copy--mpgip}}
+                <div class="block block--text block--textSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">{{{ ANU_2text--mpgip }}}</div><!--block block--content-->
+                {{/block.ANU_copy--mpgip}}
+                {{#block.ANU_image--mpgip}}
+                <div class="block block--image" style="margin-bottom: {{{ANU_block-space}}}rem;">                
+                  <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_image-depth--mpgip}}}{{^ANU_image-depth--mpgip}}100{{/ANU_image-depth--mpgip}})/100)">
+                      {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_image--mpgip }}}</div><!--image-->                 
+                  {{#ANU_caption--mpgip}}
+                  <div class="image__text">
+                    <div class="image__caption" data-max-line="3">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                  </div><!--image__text-->
+                  {{/ANU_caption--mpgip}}
+                </div><!--block block--image-->
+                {{/block.ANU_image--mpgip}}
+                {{#block.ANU_table--mpgip}}
+                <div class="block block--tableSection block--tableSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="tableSection__title" data-max-line="1">{{{ ANU_2title--mpgip }}}</div><!--table__title-->  
+                  <table class="tableSection">
+                    <tr>
+                      {{#ANU_2table-heading-1--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col1-width}}}%"> {{{ANU_2table-heading-1--mpgip}}} </th>
+                      {{/ANU_2table-heading-1--mpgip}}
+                      {{#ANU_2table-heading-2--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col2-width}}}%"> {{{ANU_2table-heading-2--mpgip}}} </th>
+                      {{/ANU_2table-heading-2--mpgip}}
+                      {{#ANU_2table-heading-3--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col3-width}}}%"> {{{ANU_2table-heading-3--mpgip}}} </th>
+                      {{/ANU_2table-heading-3--mpgip}}
+                      {{#ANU_2table-heading-4--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col4-width}}}%"> {{{ANU_2table-heading-4--mpgip}}} </th>
+                      {{/ANU_2table-heading-4--mpgip}}
+                      {{#ANU_2table-heading-5--mpgip}}
+                      <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col5-width}}}%"> {{{ANU_2table-heading-5--mpgip}}} </th>
+                      {{/ANU_2table-heading-5--mpgip}}
+                    </tr>
+                    {{#spreadsheet.ANU_table-content--mpgip}}
+                    <tr>
+                      {{#ANU_2table-heading-1--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col1-width}}}%">{{ANU_bachelor-of--mpgip}}</td>
+                      {{/ANU_2table-heading-1--mpgip}}
+                      {{#ANU_2table-heading-2--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col2-width}}}%">{{ANU_length--mpgip}}</td>
+                      {{/ANU_2table-heading-2--mpgip}}
+                      {{#ANU_2table-heading-3--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col3-width}}}%">{{ANU_rank--mpgip}}</td>
+                      {{/ANU_2table-heading-3--mpgip}}
+                      {{#ANU_2table-heading-4--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col4-width}}}%">{{ANU_op--mpgip}}</td>
+                      {{/ANU_2table-heading-4--mpgip}}
+                      {{#ANU_2table-heading-5--mpgip}}
+                      <td class="tableSection__row" style="width: {{{table2-col5-width}}}%">{{ANU_ib--mpgip}}</td>
+                      {{/ANU_2table-heading-5--mpgip}}
+                    </tr>
+                    {{/spreadsheet.ANU_table-content--mpgip}}
+                  </table><!--table-->
+                </div><!--block block--table-->         
+                {{/block.ANU_table--mpgip}}
+                {{#block.ANU_quote--mpgip}}
+                {{#ANU_2content--mpgip}}               
+                <div class="block block--quote" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                  <div class="image {{#ANU_2image--mpgip }}image--noBg{{/ANU_2image--mpgip}}" style="height: calc((4.1744rem*{{{ANU_2image-depth--mpgip}}}{{^ANU_2image-depth--mpgip}}100{{/ANU_2image-depth--mpgip}})/100)">   
+                    <div class="image__hero" style="height: calc((4.1744rem*{{{ANU_2image-depth--mpgip}}}{{^ANU_2image-depth--mpgip}}100{{/ANU_2image-depth--mpgip}})/100)">
+                      {{^ANU_2image--mpgip}}<div class="imageText">Image</div>{{/ANU_2image--mpgip}} 
+                    </div><!-- end hero__image -->
+                    {{{ ANU_2image--mpgip }}}</div><!--image-->
+                  <div class="quotebox quotebox--secondary">  
+                    <div class="quote">{{{ ANU_2content--mpgip }}}</div><!--quote-->
+                    <div class="quote__footer">
+                      {{#ANU_2name--mpgip}} <div class="quote__info quote__info--primary">{{{ ANU_2name--mpgip }}}</div>{{/ANU_2name--mpgip}}<!--quote__info-->
+                    </div><!--quote__footer-->
+                  </div>
+                </div><!--block block--quote-->
+                {{/ANU_2content--mpgip}}
+                {{/block.ANU_quote--mpgip}} 
+                {{/collection.ANU_column-right-content--mpgip}}
+              </div> <!--body__inner-->   
+            </div><!-- data-max-height -->
+          </div> <!-- body -->
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->          
+        </div><!--container fit-->
+      </div><!--bleed-->   
+    </div><!--page-->
+    {{/block.ANU_three-column-page--mpgip}}
+
+    {{#block.ANU_one-column-page--mpgip}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--oneColumnPage">
+          <div class="header header--oneColumnPage"> 
+            {{#ANU_one-column-page-heading--mpgip}}
+            <div class="heading heading--oneColumnPage" data-max-line="2"> {{{ANU_one-column-page-heading--mpgip}}} </div> <!-- heading -->
+            {{/ANU_one-column-page-heading--mpgip}}
+          </div> <!-- header -->
+          <div class="body body--oneColumnPage">
+            <div data-max-height="dynamic">
+              {{#collection.ANU_content--mpgip}}
+              {{#block.ANU_copy--mpgip}}
+              <div class="block block--text" style="margin-bottom: {{{ANU_block-space}}}rem;">{{{ ANU_text--2mpgip }}}</div><!--block block--content-->
+              {{/block.ANU_copy--mpgip}}
+              {{#block.ANU_image--mpgip}}
+              <div class="block block--image block--imagePrimary" style="margin-bottom: {{{ANU_block-space}}}rem;">    
+                <div class="image" style="height: calc((var(--imageSize)*{{{ANU_photo-depth--mpgip}}}{{^ANU_photo-depth--mpgip}}100{{/ANU_photo-depth--mpgip}})/100);">   
+                  <div class="image__hero" style="height: calc((var(--imageSize)*{{{ANU_photo-depth--mpgip}}}{{^ANU_photo-depth--mpgip}}100{{/ANU_photo-depth--mpgip}})/100);">
+                    {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                  </div><!-- end hero__image -->
+                  {{{ ANU_image--mpgip }}}
+                </div><!--image-->                 
+                {{#ANU_caption--mpgip}}
+                <div class="image__text">
+                  <div class="image__caption" data-max-line="2">{{{ ANU_caption--mpgip }}}
+                  </div><!--image__caption-->
+                </div><!--image__text-->
+                {{/ANU_caption--mpgip}}
+              </div><!--block block--image-->
+              {{/block.ANU_image--mpgip}}
+
+              {{#block.ANU_sponsorship-listing--mpgip}}             
+              <div class="block block--sponsorship" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                {{#ANU_heading--mpgip}}
+                <div class="sponsorship__heading" data-max-line="1">{{{ANU_heading--mpgip}}}</div> <!--sponsorship__heading-->
+                {{/ANU_heading--mpgip}}
+                {{#ANU_image--mpgip}}
+                <img class="sponsorship__logo" src="{{{ANU_image--mpgip}}}" /> <!--sponsorship__logo-->
+                {{/ANU_image--mpgip}}
+                {{#ANU_caption--mpgip}}
+                <div class="image__text image__text--sponsorship">
+                  <div class="image__caption image__caption--sponsorship" data-max-line="2">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                </div><!--image__text-->
+                {{/ANU_caption--mpgip}}
+              </div><!--block block--sponsorship-->
+              {{/block.ANU_sponsorship-listing--mpgip}}    
+              {{/collection.ANU_content--mpgip}}
+            </div><!-- data-max-height -->
+          </div> <!-- body -->
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->          
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.ANU_one-column-page--mpgip}}
+    
+    <!--TIMETABLE PAGE-->
+    {{#block.ANU_annotated-image-page--mpg}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--annotation">
+          <div class="backgroundImage"><div class="reposition-fix">{{{ANU_background-image--mpgip}}}</div></div> <!--backgroundImage-->
+          {{#ANU_annotation-text--mpgip}}
+          <div class="body body--annotation annotationPosition--{{{ANU_annotation-position--mpgip}}}{{^ANU_annotation-position--mpgip}}left-center{{/ANU_annotation-position--mpgip}}">
+            <div data-max-height="dynamic">
+              <div class="annotation">{{{ANU_annotation-text--mpgip}}}</div> <!--annotation-->
+            </div>
+          </div> <!--body--annotation-->
+          {{/ANU_annotation-text--mpgip}}
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->       
+        </div><!--container fit-->
+
+      </div><!--bleed-->   
+    </div><!--page-->
+    {{/block.ANU_annotated-image-page--mpg}}
+
+    {{#block.ANU_biographies-page--mpgip}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--biographies">
+          <div class="header header--biographies"> 
+            {{#ANU_biographies-page-heading--mpgip}}
+            <div class="heading heading--biographies" data-max-line="2">{{{ANU_biographies-page-heading--mpgip}}} </div> <!-- heading -->
+            {{/ANU_biographies-page-heading--mpgip}}
+          </div> <!-- header -->
+          <div class="body body--biographies">
+            <div class="dynamic__container" data-max-height="dynamic">
+              {{#collection.ANU_biography--mpgip}}
+              {{#block.ANU_biography-listing--mpgip}}
+              <div class="biography">
+                <div class="biography__row{{#ANU_photo--mpgip}} biography__row--noBg{{/ANU_photo--mpgip}}">
+                  <div class="biography__image">
+                    <div class="reposition-fix">{{{ANU_photo--mpgip}}}</div>
+                    <div class="biography__imageText">image</div> <!--biography__text-->
+                  </div>
+                </div> <!--biography__row-->
+                <div class="biography__row biography__row--secondary">
+                  {{#ANU_heading--mpgip}}
+                  <div class="biography__heading" data-max-line="2">{{{ANU_heading--mpgip}}}</div> <!--biography__heading-->
+                  {{/ANU_heading--mpgip}}
+                  {{#ANU_body-text--mpgip}}
+                  <div class="biography__text" >{{{ANU_body-text--mpgip}}}</div> <!--biography__text-->
+                  {{/ANU_body-text--mpgip}}
+                </div> <!--biography__row-->
+              </div> <!--biography-->
+              {{/block.ANU_biography-listing--mpgip}}
+              {{/collection.ANU_biography--mpgip}}
+            </div><!-- data-max-height -->
+          </div> <!-- body -->
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->          
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.ANU_biographies-page--mpgip}}
+
+    {{#block.ANU_span-columns-page--mpgip}}
+    <div class="page js-page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--spanColumns">
+          <div class="header header--spanColumns"> 
+            {{#ANU_span-columns-page-heading--mpgip}}
+            <div class="heading heading--spanColumns" data-max-line="2"> {{{ANU_span-columns-page-heading--mpgip}}} </div> <!-- heading -->
+            {{/ANU_span-columns-page-heading--mpgip}}
+          </div> <!-- header -->
+          <div class="body">   
+            <div class="dynamic__container" data-max-height="dynamic">
+              {{#collection.ANU_content--mpgip}}
+              {{#block.ANU_copy--mpgip}}
+              <div class="block block--text" style="margin-bottom: {{{ANU_block-space}}}rem;">{{{ ANU_text--mpgip }}}</div><!--block block--content-->
+              {{/block.ANU_copy--mpgip}}            
+              {{#block.ANU_columns--mpgip}}
+              <div class="block block--text block--textColumn" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                <div class="column column--left">{{{ANU_left-column-copy--mpgip}}}</div> <!--column-->
+                <div class="column column--right">{{{ANU_right-column-copy--mpgip}}}</div> <!--column-->
+              </div><!--block block--content-->
+              {{/block.ANU_columns--mpgip}}
+              {{#block.ANU_image--mpgip}}
+              <div class="block block--image block--imageSecondary" style="margin-bottom: {{{ANU_block-space}}}rem;">                
+                <div class="image {{#ANU_image--mpgip }}image--noBg{{/ANU_image--mpgip}}" style="height: calc((6.52rem*{{{photo-depth}}})/100);">   
+                  <div class="image__hero" style="height: calc((6.52rem*{{{photo-depth}}}{{^photo-depth}}100{{/photo-depth}})/100);">
+                    {{^ANU_image--mpgip}}<div class="imageText">Image</div>{{/ANU_image--mpgip}} 
+                  </div><!-- end hero__image -->
+                  {{{ ANU_image--mpgip }}}
+                </div><!--image-->                 
+                {{#ANU_caption--mpgip}}
+                <div class="image__text">
+                  <div class="image__caption" data-max-line="4">{{{ ANU_caption--mpgip }}}</div><!--image__caption-->
+                </div><!--image__text-->
+                {{/ANU_caption--mpgip}}
+              </div><!--block block--image-->
+              {{/block.ANU_image--mpgip}}
+              {{#block.ANU_table--mpgip}}
+              <div class="block block--tableSection" style="margin-bottom: {{{ANU_block-space}}}rem;">
+                <div class="tableSection__title" data-max-line="1">{{{ ANU_2title--mpgip }}}</div><!--table__title-->  
+                <table class="tableSection">
+                  <tr>
+                    {{#ANU_table-heading-1--mpgip}}
+                    <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col1-width}}}%"> {{{ANU_table-heading-1--mpgip}}} </th>
+                    {{/ANU_table-heading-1--mpgip}}
+                    {{#ANU_table-heading-2--mpgip}}
+                    <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col2-width}}}%" > {{{ANU_table-heading-2--mpgip}}} </th>
+                    {{/ANU_table-heading-2--mpgip}}
+                    {{#ANU_table-heading-3--mpgip}}
+                    <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col3-width}}}%"> {{{ANU_table-heading-3--mpgip}}} </th>
+                    {{/ANU_table-heading-3--mpgip}}
+                    {{#ANU_table-heading-4--mpgip}}
+                    <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col4-width}}}%"> {{{ANU_table-heading-4--mpgip}}} </th>
+                    {{/ANU_table-heading-4--mpgip}}
+                    {{#ANU_table-heading-5--mpgip}}
+                    <th class="tableSection__row tableSection__row--heading" style="width: {{{table2-col5-width}}}%"> {{{ANU_table-heading-5--mpgip}}} </th>
+                    {{/ANU_table-heading-5--mpgip}}
+                  </tr>
+                  {{#spreadsheet.ANU_table-content--mpgip}}
+                  <tr>
+                    {{#ANU_table-heading-1--mpgip}}
+                    <td class="tableSection__row" style="width: {{{table2-col1-width}}}%">{{ANU_bachelor-of--mpgip}}</td>
+                    {{/ANU_table-heading-1--mpgip}}
+                    {{#ANU_table-heading-2--mpgip}}
+                    <td class="tableSection__row" style="width: {{{table2-col2-width}}}%">{{ANU_length--mpgip}}</td>
+                    {{/ANU_table-heading-2--mpgip}}
+                    {{#ANU_table-heading-3--mpgip}}
+                    <td class="tableSection__row" style="width: {{{table2-col3-width}}}%">{{ANU_rank--mpgip}}</td>
+                    {{/ANU_table-heading-3--mpgip}}
+                    {{#ANU_table-heading-4--mpgip}}
+                    <td class="tableSection__row" style="width: {{{table2-col4-width}}}%">{{ANU_op--mpgip}}</td>
+                    {{/ANU_table-heading-4--mpgip}}
+                    {{#ANU_table-heading-5--mpgip}}
+                    <td class="tableSection__row" style="width: {{{table2-col5-width}}}%">{{ANU_ib--mpgip}}</td>
+                    {{/ANU_table-heading-5--mpgip}}
+                  </tr>
+                  {{/spreadsheet.ANU_table-content--mpgip}}
+                </table><!--table-->
+              </div><!--block block--table-->         
+              {{/block.ANU_table--mpgip}}
+              {{/collection.ANU_content--mpgip}}
+            </div><!-- data-max-height -->
+          </div> <!-- body -->
+          <div class="pageNumber__container js-pageNumber__container"> 
+            <div class="pageNumber js-pageNumber"> 1 </div> <!-- pageNumber -->
+            <div class="pageFootnote js-pageFootnote" data-max-line="1"></div> <!-- pageNumber -->
+          </div> <!-- pageMumber__container -->          
+        </div><!--container fit-->
+      </div><!--bleed-->   
+    </div><!--page-->
+    {{/block.ANU_span-columns-page--mpgip}}
+    {{/collection.ANU_internal-pages-additions--mpgip}}
+
+    {{#collection.ANU_inner-cover-back-and-outer-back-cover--mpgip}}
+    <div class="page template--multipageCover">
+
+      <div class="bleed">
+
+        <div class="container fit fit--contents bg--{{{ANU_background-colour--mpgip}}}{{^ANU_background-colour--mpgip}}white{{/ANU_background-colour--mpgip}}">   
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    <div class="page template--multipageCover">
+
+      <div class="bleed">
+
+        <div class="container fit fit--contact">
+          <div class="body">
+            <div class="body__inner" data-max-height="dynamic">
+              <div class="heading heading--contact"> contact us </div> <!-- heading -->
+              <div class="contact__container">
+                {{#collection.ANU_contact-details--mpgip}}
+                <div class="contact"> 
+                  {{#ANU_college_title--mpgip}}
+                  <div class="anu_wayfinder" data-max-line="7">         
+                    <div>{{{ANU_college_title--mpgip}}}</div>
+                  </div><!-- end  -->
+                  {{/ANU_college_title--mpgip}}
+                  <div class="contact__text" data-max-line="3"> {{{ANU_college-postal-address--mpgip}}}</div> <!-- contact__text -->
+                  {{#ANU_college-phone-text--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> T </div> <!-- contact__text --> 
+                    <div class="contact__text" data-max-line="1"> {{{ANU_college-phone-text--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-phone-text--mpgip}}
+                  {{#ANU_college-fax--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> F </div> <!-- contact__text --> 
+                    <div class="contact__text" data-max-line="1"> {{{ANU_college-fax--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-fax--mpgip}}
+                  {{#ANU_college-email--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> E </div> <!-- contact__text --> 
+                    <div class="contact__text" data-max-line="1"> {{{ANU_college-email--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-email--mpgip}}
+                  {{#ANU_college-web-address--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> W </div> <!-- contact__text --> 
+                    <div class="contact__text" style="color:#0463c0;" data-max-line="1"> {{{ANU_college-web-address--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-web-address--mpgip}}
+                  {{#ANU_college-facebook--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> 
+                      <img src="https://files.outfit.io/media_library_items/54244/fb-icon.png" class="contact__icon contact__icon--primary"/>
+                      <img src="https://files.outfit.io/media_library_items/94337/fb-icon-2.png" class="contact__icon contact__icon--secondary"/>
+                    </div> <!-- contact__text --> 
+                    <div class="contact__text" style="color:#0463c0;" data-max-line="1"> {{{ANU_college-facebook--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-facebook--mpgip}}
+                  {{#ANU_college-instagram--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> 
+                      <img src="https://files.outfit.io/media_library_items/54245/instagram-icon.png" class="contact__icon contact__icon--primary"/> 
+                      <img src="https://files.outfit.io/media_library_items/94341/instagram-icon-2.png" class="contact__icon contact__icon--secondary"/>
+                    </div> <!-- contact__text --> 
+                    <div class="contact__text" style="color:#0463c0;" data-max-line="1"> {{{ANU_college-instagram--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-instagram--mpgip}}
+                  {{#ANU_college-twitter--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> 
+                      <img src="https://files.outfit.io/media_library_items/54246/twitter-icon.png" class="contact__icon contact__icon--primary"/> 
+                      <img src="https://files.outfit.io/media_library_items/94339/twitter-icon-2.png" class="contact__icon contact__icon--secondary"/>
+                    </div> <!-- contact__text --> 
+                    <div class="contact__text" style="color:#0463c0;" data-max-line="1"> {{{ANU_college-twitter--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-twitter--mpgip}}
+                  {{#ANU_college-linkedln--mpgip}}
+                  <div class="contact__group">
+                    <div class="contact__text contact__text--static"> 
+                      <img src="https://files.outfit.io/media_library_items/52929/inst%2520icon.svg" class="contact__icon contact__icon--primary"/> 
+                      <img src="https://files.outfit.io/media_library_items/132530/Untitled%2520%25282%2529.png" class="contact__icon contact__icon--secondary"/>
+                    </div> <!-- contact__text --> 
+                    <div class="contact__text" style="color:#0463c0;" data-max-line="1"> {{{ANU_college-linkedln--mpgip}}} </div> <!-- contact__text --> 
+                  </div> <!-- contact__group -->
+                  {{/ANU_college-linkedln--mpgip}}
+                </div> <!-- contact -->
+                {{/collection.ANU_contact-details--mpgip}}
+               <div class="contact__text contact__text--small"> {{{account.snippets.cricosCode}}} </div> <!-- contact__text -->
+              </div> <!-- contact__container -->
+            </div> <!-- body__inner -->
+            <div class="exportNumber" data-max-line="1"> {{#metadata}}OF_EXPORTID: {{export_id}}{{/metadata}}akjfbkahdahks </div> <!-- exportNumber --> 
+          </div> <!-- body -->       
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/collection.ANU_inner-cover-back-and-outer-back-cover--mpgip}}
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script src="https://outfit-assets-production.s3.amazonaws.com/scripts/clients/anu/anu-wayfinder/wayfinder_v1.0.js"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+      maxLineCheck();
+      maxHeightCheck();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+        if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      function injectFooter() {
+        const pageContainers = document.querySelectorAll('.pageNumber__container');
+        pageContainers.forEach((pageContainer, index) => {
+          if(index%2 == 1){
+            pageContainer.classList.add("right");
+          } else{
+            pageContainer.classList.add("left");
+          }
+          
+          const pageNumber = pageContainer.querySelector('.js-pageNumber');
+          pageNumber.innerText = index + 1;
+          
+          const value = "{{{ANU_page-footnote--mpgip}}}";
+          const footnote = pageContainer.querySelector('.js-pageFootnote');
+          footnote.innerText = value;
+        });
+      }
+
+
+      detectSystem();
+      injectFooter();
+
+    </script>
+    <script type="text/javascript">
+      // Add many fallbacks for Print Ready
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.dispatchEvent(new Event('printready'));
+      });
+
+      setTimeout(function() {
+        document.dispatchEvent(new Event('printready'));
+      }, 5000);
+
+      document.dispatchEvent(new Event('printready'));
+    </script>
+
+  </body>
+</html>
