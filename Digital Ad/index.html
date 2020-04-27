@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html data-sign="OSL" gif-screencast>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+      {{{account.snippets.timelineControllerCSS}}}
+
+      :root {
+        --black: #000;
+        --white: #fff;
+        --platinum: {{{account.colors.platinum}}};
+      }
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 10px;
+        word-break: break-word;
+        color: var(--white);
+        font-weight: bold;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .bleed {
+        top: 0mm!important;
+        right: 0mm!important;
+        bottom: 0mm!important;
+        left: 0mm!important;
+      }
+
+      .placeholder__container {
+        top: 0mm;
+        left: 0mm;
+        right: 0mm;
+        bottom: 0mm;
+      }
+
+      .frame {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;      
+        flex-direction: column;    
+        padding: 27px 24px 27px;
+        background-color: var(--black);
+        opacity: 0;
+      }
+
+      .frame--start { opacity: 1; }
+
+      .layoutSize--300x250 .frame {
+        padding: 27px 24px 27px;
+      }
+
+      .layoutSize--728x90 .frame {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 23px 12px;
+      }   
+
+      .layoutSize--728x90.has-feature-image .frame--start,
+      .layoutSize--728x90.toggleImage--frame-1-2.has-feature-image .frame--middle  {
+        padding: 12px 23px 12px 284px;
+      }
+
+      .layoutSize--160x600 .frame {
+        padding: 35px 23px 61px 23px;
+      }  
+
+      .layoutSize--120x600 .frame {
+        display: flex;
+        padding: 17px 8px 43px 8px;
+      }  
+
+      .layoutSize--300x600 .frame {
+        padding: 27px 28px 27px;
+      }  
+
+      .layoutSize--300x50 .frame,
+      .layoutSize--320x50 .frame {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 9px 27px 9px 10px;    
+      }   
+
+      .layoutSize--300x50.has-feature-image .frame--start,
+      .layoutSize--300x50.toggleImage--frame-1-2.has-feature-image .frame--middle,
+      .layoutSize--320x50.has-feature-image .frame--start,
+      .layoutSize--320x50.toggleImage--frame-1-2.has-feature-image .frame--middle {
+        padding: 9px 27px 9px 144px;
+      } 
+
+      .layoutSize--970x250 .frame {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 39px 60px 39px 54px;     
+      }
+
+      .layoutSize--970x250.has-feature-image .frame--start,
+      .layoutSize--970x250.toggleImage--frame-2.has-feature-image .frame--middle {
+        padding: 39px 60px 39px 380px;
+      }
+
+      .frame__bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+
+      .layoutSize--728x90 .frame__bg {
+        right: auto;
+        width: 240px;
+      }
+
+      .layoutSize--300x50 .frame__bg,
+      .layoutSize--320x50 .frame__bg {
+        right: auto;
+        width: 123px;
+      }    
+
+      .layoutSize--970x250 .frame__bg {
+        right: auto;
+        width: 324px;
+      }   
+
+      .toggleImage--frame-1 .frame--middle .frame__bg,
+      .toggleImage--frame-1 .frame--new .frame__bg,
+      .toggleImage--frame-2 .frame--new .frame__bg {
+        display: none;
+      }
+
+      .logo__container {
+        position: relative;
+        display: flex;
+        font-size: 0;    
+      }
+
+      .layoutSize--300x250 .logo__container {
+        display: block;
+        margin-bottom: 29px;
+        padding-left: 2px;
+      }
+
+      .layoutSize--728x90 .logo__container {
+        height: 100%;
+        align-items: center;
+        margin-right: 41px;
+        padding-right: 51px;     
+        border-right: 1px solid var(--white);      
+      }
+
+      .layoutSize--160x600 .logo__container {
+        display: block;
+        margin-bottom: 83px;
+      }
+
+      .layoutSize--120x600 .logo__container {
+        display: block;
+        margin: 0 auto 102px;
+      }
+
+      .layoutSize--300x600 .logo__container {
+        display: block;
+        margin-bottom: 155px;	
+      }
+
+      .layoutSize--300x50 .logo__container,
+      .layoutSize--320x50 .logo__container {
+        height: 100%;
+        align-items: center;
+        margin-right: 21.1px;
+        padding-right: 22px;  
+        border-right: 1px solid var(--white);   
+      }
+
+      .layoutSize--970x250 .logo__container {
+        height: 100%;
+        align-items: center;
+        margin-right: 58px;
+        padding-right: 56px;      
+        border-right: 2px solid var(--white);      
+      }
+
+      .has-feature-image .frame--start .logo__container {
+        display: none;
+      }
+
+      .has-feature-image .frame--middle .logo__container,
+      .has-feature-image .frame--new .logo__container {
+        visibility: hidden;
+      }
+
+      .layoutSize--970x250.has-feature-image .frame--middle .logo__container,
+      .layoutSize--300x600.has-feature-image .frame--middle .logo__container,
+      .layoutSize--300x600.has-feature-image .frame--new .logo__container,
+      .layoutSize--300x250.has-feature-image .frame--middle .logo__container,
+      .layoutSize--300x250.has-feature-image .frame--new .logo__container,
+      .layoutSize--120x600.has-feature-image .frame--middle .logo__container,
+      .layoutSize--120x600.has-feature-image .frame--new .logo__container,
+      .layoutSize--160x600.has-feature-image .frame--middle .logo__container,
+      .layoutSize--160x600.has-feature-image .frame--new .logo__container {
+        display: none;
+      }
+
+      .toggleImage--frame-1.has-feature-image .frame--middle .logo__container,
+      .toggleImage--frame-1.has-feature-image .frame--new .logo__container,
+      .toggleImage--frame-2.has-feature-image .frame--new .logo__container {
+        display: flex;
+        visibility: visible;
+      }
+
+      .logo {
+        display: none;
+        width: 145px;
+      }
+
+      .layoutSize--300x250 .logo {
+        width: 145px;
+      }
+
+      .layoutSize--728x90 .logo {
+        width: 168px;
+      }
+
+      .layoutSize--160x600 .logo {
+        width: 84px;
+        margin-left: 11px;
+      }
+
+      .layoutSize--120x600 .logo {
+        width: 84px;
+      }
+
+      .layoutSize--300x600 .logo {
+        width: 133px;
+      }
+
+      .layoutSize--300x50 .logo,
+      .layoutSize--320x50 .logo {
+        width: 90px;
+      }
+
+      .layoutSize--970x250 .logo {
+        width: 210px;
+      }
+
+      .layoutSize--300x250 .logo--primary, 
+      .layoutSize--728x90 .logo--primary,
+      .layoutSize--300x600 .logo--primary,
+      .layoutSize--300x50 .logo--primary,
+      .layoutSize--320x50 .logo--primary,
+      .layoutSize--970x250 .logo--primary {
+        display: block;
+      }
+
+      .layoutSize--160x600 .logo--secondary,
+      .layoutSize--120x600 .logo--secondary {
+        display: block;
+      }
+
+      .content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1; 
+      }
+
+      .layoutSize--300x50 .content,
+      .layoutSize--320x50 .content,
+      .layoutSize--970x250 .content {
+        height: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      } 
+
+      .layoutSize--728x90 .content {
+        height: 100%;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .layoutSize--728x90 .content__inner,
+      .layoutSize--300x50 .content__inner,
+      .layoutSize--320x50 .content__inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .layoutSize--970x250 .content__inner {
+        justify-content: center;
+      }
+
+      .heading { font-size: 26.5px; }
+
+      .layoutSize--300x250 .heading { font-size: 26.5px; }
+      .layoutSize--728x90 .heading { font-size: 23.4px; }
+      .layoutSize--160x600 .heading { font-size: 26.5px; }
+      .layoutSize--120x600 .heading { font-size: 18.5px; }
+      .layoutSize--320x50 .heading { font-size: 12.2px; }
+      .layoutSize--300x50 .heading { font-size: 12.2px; }
+      .layoutSize--300x600 .heading { font-size: 38px; }
+      .layoutSize--970x250 .heading { font-size: 41px; }
+
+      .layoutSize--300x250 .heading { margin-bottom: 16px; }
+      .layoutSize--728x90 .heading { flex: 1; }
+
+      .layoutSize--160x600 .heading {
+        flex: 1;
+        margin-bottom: 15px;
+      }
+
+      .layoutSize--120x600 .heading { flex: 1;   }
+
+
+      .layoutSize--300x600 .heading {
+        margin-bottom: 23px;
+        font-size: 38px;
+      }
+
+
+      .layoutSize--300x50 .heading {
+        display: flex;
+        align-items: center;
+        flex: 1;
+      }      
+
+      .layoutSize--970x250 .heading {
+        margin: 5px 0;  
+      }
+
+
+      .heading h1 { 
+        font-size: 1em;
+        font-weight: bold; 
+      }
+
+      .heading h2 { 
+        font-size: 0.68em;
+        font-weight: normal
+      }
+
+      .heading h1 strong {
+        color: var(--platinum);
+      }
+
+      .heading h2 strong {
+        font-weight: normal;
+        color: var(--platinum);
+      }
+
+      .heading__inner { line-height: 1.2em;}
+
+      .heading__inner--new { line-height: 1em; }
+
+      .layoutSize--300x50 .heading__inner,
+      .layoutSize--320x50 .heading__inner,
+      .layoutSize--120x600 .heading__inner {
+        line-height: 1.3em;
+      }
+
+      .layoutSize--970x250 .heading__inner {
+        max-height: 172px;
+      }
+
+      .layoutSize--970x250 .heading__inner--hasCta {
+        max-height: 115px;
+      }
+
+      .layoutSize--120x600 .heading__inner {
+        max-height: 265px;
+      }
+
+      .layoutSize--320x50 .heading__inner {
+        max-height: 32px;
+      }
+
+      .layoutSize--300x50 .heading__inner {
+        max-height: 32px;
+      }
+
+      .layoutSize--300x600 .heading__inner {
+        max-height: 344px;
+      }
+
+      .layoutSize--300x600 .heading__inner--hasCta {
+        max-height: 280px;
+      }
+
+      .layoutSize--160x600 .heading__inner {
+        max-height: 292px;
+      }
+
+      .layoutSize--160x600 .heading__inner--hasCta {
+        max-height: 250px;
+      }
+
+      .layoutSize--728x90 .heading__inner {
+        max-height: 66px;
+      }
+
+      .layoutSize--300x250 .heading__inner {
+        max-height: 115px;
+      }
+
+      .layoutSize--300x250 .heading__inner--hasCta {
+        max-height: 65px;
+      }
+
+      h1 {
+        font-size: 1em;
+        line-height: 1.2em;
+        font-weight: bold;
+      }
+
+
+      p {
+        font-size: 0.6em;
+        line-height: 1.2em;
+      }
+
+
+      .cta {
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 31px;
+        max-width: 140.5px;
+        min-width: 66.5px;
+        text-decoration: none;
+        text-align: center;
+        line-height: 1.3em;
+        background: var(--platinum);
+        color: var(--black);      
+      }
+
+
+      .layoutSize--300x250 .cta {
+        max-width: 145px;
+        height: 35px;
+        padding: 0px 13px;
+        font-size: 14.4px;    
+      }
+
+      .layoutSize--728x90 .cta {
+        min-width: 115px;
+        height: 34px;
+        padding: 0px 15px;
+        font-size: 12.7px; 
+      }
+
+      .is-mac .layoutSize--728x90 .cta {
+        padding-top: 9px;
+        padding-bottom: 5px;        
+      }
+
+      .layoutSize--160x600 .cta {
+        max-width: 107px;
+        font-size: 14.4px;    
+      }
+
+      .layoutSize--120x600 .cta {
+        max-width: 95px;
+        font-size: 10px;      
+      }
+
+      .layoutSize--300x600 .cta {
+        max-width: 170px;
+        font-size: 20.7px;    
+      }
+
+      .layoutSize--300x50 .cta,
+      .layoutSize--320x50 .cta {
+        display: none; 
+      }
+
+      .layoutSize--970x250 .cta {
+        max-width: 200px;
+        margin: 10px 0;
+        font-size: 22.3px;
+      }
+
+      .layoutSize--160x600 .cta,
+      .layoutSize--120x600 .cta {
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+
+      .layoutSize--300x600 .cta,
+      .layoutSize--970x250 .cta {
+        padding: 0px 20px;
+        line-height: 1.2em;
+        height: 53px;
+      }
+
+      .is-mac.layoutSize--300x600 .cta,
+      .is-mac.layoutSize--970x250 .cta {
+        padding: 9px 20px 1px;
+      }      
+
+      .cricos {
+        display: none;
+        position: absolute;
+        bottom: 7px;
+        right: 11.3px;
+        font-size: 6px;
+        font-weight: normal;
+        color: var(--white);
+      }
+
+      .layoutSize--728x90 .cricos--primary,
+      .layoutSize--160x600 .cricos--primary,
+      .layoutSize--120x600 .cricos--primary,
+      .layoutSize--300x250 .cricos--primary,
+      .layoutSize--300x600 .cricos--primary {
+        display: block;
+      }
+
+      .layoutSize--300x50 .cricos--secondary,
+      .layoutSize--320x50 .cricos--secondary,
+      .layoutSize--970x250 .cricos--primary {
+        display: block;
+      }
+
+      .layoutSize--728x90 .cricos--primary {
+        right: 22.3px;
+      }
+
+      .layoutSize--160x600 .cricos,
+      .layoutSize--120x600 .cricos  {
+        bottom: 5px;
+      } 
+
+      .layoutSize--300x600 .cricos {
+        left: 29px;
+        right: auto;
+        font-size: 9px;
+      } 
+
+      .layoutSize--300x50 .cricos,
+      .layoutSize--320x50 .cricos,
+      .layoutSize--970x250 .cricos {
+        transform-origin: left bottom;
+        white-space: nowrap;
+        left: 100%;
+        right: auto;
+      }
+
+      .layoutSize--300x50 .cricos {     
+        bottom: 0px;
+        width: 50px;
+        transform: rotate(270deg) translateY(-4px);     
+        font-size: 7.6px;
+        line-height: 1.1em;
+        text-align: center;
+      }
+
+      .layoutSize--320x50 .cricos {
+        width: 50px;
+        bottom: 0px;
+        transform: rotate(270deg) translateY(-4px);
+        font-size: 7.6px;
+        line-height: 1.1em;
+        text-align: center;
+      }
+
+      .layoutSize--970x250 .cricos {     
+        bottom: 14px;
+        width: 150px;  
+        transform: rotate(270deg) translateY(-8px);         
+        transform-origin: left bottom;
+        font-size: 8.6px;
+        line-height: 1.1em; 
+      }
+
+      .js-inject-src {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+      }
+
+      .controlsContainer button {
+        background-color: rgba(0,0,0,0);
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        width: 1rem;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+
+    </style>
+  </head>
+
+  <!--
+  {{ placeholder-toggle-new }}
+  {{ placeholder-opacity }}
+  {{ placeholder-image-1 }}
+  {{ANU_layout-size--dlad}}
+  {{ANU_toogle-third-frame--dlad}}
+  {{ANU_toggle-feature-image--dlad}}
+  {{{ANU_feature-image--dlad}}}
+  {{{ANU_frame-1-header--dlad}}}
+  {{ANU_frame-1-header-size--dlad}}
+  {{{ANU_frame-2-header--dlad}}}
+  {{ANU_frame-2-header-size--dlad}}
+  {{{ANU_frame-4-header--dlad}}}  
+  {{ANU_frame-4-content-size--dlad}}
+  {{{ANU_frame-3-header--dlad}}}  
+  {{ANU_frame-3-header-size--dlad}}
+  {{{ANU_cta-text--dlad}}}
+  {{ANU_CTA-URL--dlad}}
+-->
+
+  <body style="background: white">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="js-inject-src" data-target-id="bg-image">{{{ANU_feature-image--dlad}}}</div>
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="frame frame--start js-frame--hide js-frame--show">
+            <div class="frame__bg">
+              <div class="reposition-fix" data-target="bg-image"></div>
+            </div><!--frame__bg-->
+            <div class="logo__container logo__container--hide">
+              <img src="{{{account.logos.Logo}}}" class="logo logo--primary"><!--logo-->
+              <img src="https://files.outfit.io/media_library_items/104030/reversed-stacked.svg" class="logo logo--secondary"><!--logo-->
+            </div><!--logo__container-->
+            <div class="content">
+              <div class="heading">
+                <div class="heading__inner" style="font-size: {{ANU_frame-1-header-size--dlad}}%;" data-max-height="css">
+                  {{{ANU_frame-1-header--dlad}}}
+                </div><!--heading__inner-->
+              </div><!--heading-->
+            </div><!--content-->
+          </div><!--frame--start-->
+
+          <div class="frame frame--middle js-frame--hide js-frame--show">
+            <div class="frame__bg">
+              <div class="reposition-fix" data-target="bg-image"></div>
+            </div><!--frame__bg-->
+            <div class="logo__container logo__container--hide">
+              <img src="{{{account.logos.Logo}}}" class="logo logo--primary"><!--logo-->
+              <img src="https://files.outfit.io/media_library_items/104030/reversed-stacked.svg" class="logo logo--secondary"><!--logo-->
+            </div><!--logo__container-->
+            <div class="content">
+              <div class="heading">
+                <div class="heading__inner" style="font-size: {{ANU_frame-2-header-size--dlad}}%;" data-max-height="css">
+                  {{{ANU_frame-2-header--dlad}}}
+                </div><!--heading__inner-->
+              </div><!--heading-->
+            </div><!--content-->
+          </div><!--frame--middle-->
+
+          <div class="frame frame--new js-frame--show">
+            <div class="frame__bg">
+              <div class="reposition-fix" data-target="bg-image"></div>
+            </div><!--frame__bg-->
+            <div class="logo__container logo__container--hide">
+              <img src="{{{account.logos.Logo}}}" class="logo logo--primary"><!--logo-->
+              <img src="https://files.outfit.io/media_library_items/104030/reversed-stacked.svg" class="logo logo--secondary"><!--logo-->
+            </div><!--logo__container-->
+            <div class="content">
+              <div class="heading">
+                <div class="heading__inner heading__inner--new" style="font-size: {{ANU_frame-4-content-size--dlad}}%;" data-max-height="css">
+                  {{{ANU_frame-4-header--dlad}}}
+                </div><!--heading__inner-->
+              </div><!--heading-->
+            </div><!--content-->
+          </div><!--frame--new-->          
+
+          <div class="frame frame--end js-frame--hide js-frame--show">
+            <div class="logo__container">
+              <img src="{{{account.logos.Logo}}}" class="logo logo--primary"><!--logo-->
+              <img src="https://files.outfit.io/media_library_items/104030/reversed-stacked.svg" class="logo logo--secondary"><!--logo-->
+            </div><!--logo__container-->
+            <div class="content">
+              <div class="heading">
+                <div class="heading__inner heading__inner--{{#ANU_cta-text--dlad}}hasCta{{/ANU_cta-text--dlad}}" style="font-size: {{ANU_frame-3-header-size--dlad}}%;" data-max-height="css">
+                  {{{ANU_frame-3-header--dlad}}}
+                </div> <!--heading__inner-->
+              </div><!--heading-->
+              {{#ANU_cta-text--dlad}}<a href="{{ANU_CTA-URL--dlad}}" class="cta"><span class="textFit">{{{ANU_cta-text--dlad}}}</span></a>{{/ANU_cta-text--dlad}}        
+            </div><!--content-->
+            <div class="cricos cricos--primary">CRICOS #00120C</div><!--cricos-->
+            <div class="cricos cricos--secondary">CRICOS<br> #00120C</div><!--cricos-->
+          </div><!--frame--start-->
+
+        </div><!--bleed-->
+      </div><!--container fit-->
+      {{{account.snippets.timelineControllerHTML}}}
+    </div><!--page-->
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}");{{ /placeholder-toggle-new }}
+      {{ #ANU_layout-size--dlad }}document.body.classList.add("layoutSize--{{ANU_layout-size--dlad}}{{^ANU_layout-size--dlad}}300x250{{/ANU_layout-size--dlad}}"); {{ /ANU_layout-size--dlad}}
+      {{ #ANU_toggle-feature-image--dlad }}document.body.classList.add("toggleImage--{{ANU_toggle-feature-image--dlad}}{{^ANU_toggle-feature-image--dlad}}frame-1{{/ANU_toggle-feature-image--dlad}}"); {{ /ANU_toggle-feature-image--dlad }}
+      {{ #ANU_feature-image--dlad }}document.body.classList.add("{{#ANU_feature-image--dlad}}has-feature-image{{/ANU_feature-image--dlad}}"); {{ /ANU_feature-image--dlad }}
+    </script>
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <!-- Adding GSAP TweenLite and TimelineLite -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/plugins/CSSPlugin.min.js"></script>    
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+        if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      function injectDynamicContent() {
+        const sources = document.querySelectorAll('.js-inject-src');
+        sources.forEach(source => {
+          const targetID = source.dataset.targetId;
+          const targets = document.querySelectorAll(`[data-target="${targetID}"]`);
+
+          targets.forEach(target => {
+            const imageCheck = ( source.dataset.isImage == 'true' );
+
+            if ( imageCheck ) {
+              target.src = `${source.innerText}`;
+            } else {
+              target.innerHTML = source.innerHTML;
+            }
+          });
+        });
+      }
+
+      var tl;
+
+      function slideShow() {
+        const frames = document.querySelectorAll('.js-frame--{{ANU_toogle-third-frame--dlad}}{{^ANU_toogle-third-frame--dlad}}show{{/ANU_toogle-third-frame--dlad}}');
+        tl = new TimelineLite();
+        TweenLite.ticker.fps(40);
+        //let delay;
+        let count = 0;
+        let frameNumber;
+
+        if ('{{ANU_toogle-third-frame--dlad}}{{^ANU_toogle-third-frame--dlad}}show{{/ANU_toogle-third-frame--dlad}}' === 'show') {
+          frameNumber = 3;                                                                        
+        } else {
+          frameNumber = 2; 
+        }
+
+        console.log(frameNumber)
+
+
+        function startOver() {
+          setTimeout(() => {
+            count++;
+            if ( count >  frameNumber) {
+              document.dispatchEvent(new Event('gifready'));
+            } else {
+              tl.restart();
+            }
+          }, 5000);
+        }
+
+        frames.forEach((frame, i) => {
+          ( i == 0 ) ? delay = 0 : delay = 3;
+          tl.to(frame, 0, { opacity: 1, delay: delay });
+        });
+
+        tl.eventCallback("onComplete", startOver);
+
+        // Adding a pause when any input is changed 
+        // And playing on click if the animation is paused
+        /*
+        document.body.addEventListener('click', () => {
+          if ( tl.paused() ) {
+            tl.play();
+          } else {
+            tl.pause();
+          }
+        });*/
+
+      }
+
+      slideShow(); 
+      {{{account.snippets.timelineControllerJS}}}   
+      injectDynamicContent();  
+      detectSystem();
+
+    </script>
+
+
+  </body>
+</html>
