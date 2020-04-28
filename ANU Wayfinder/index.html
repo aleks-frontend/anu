@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html data-sign="OS?">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+    
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 16pt;
+        color: #000;
+      }
+
+
+
+      .container{
+        padding: 35px;
+      }
+
+      .wayfinder{
+        font-size: 1em;
+      }
+
+
+      /* Wayfinder colors */
+      .arts-social-sciences				{			color: {{{account.colors.arts---social-sciences}}};				}
+      .asia-the-pacific					{			color: {{{account.colors.asia-and-the-pacific}}};				}
+      .business-economics				{			color: {{{account.colors.business-and-economics}}};				}
+      .engineering-computer-science		{			color: {{{account.colors.engineering-and-computer-science}}};	}
+      .law								{			color: {{{account.colors.law}}};								}
+      .health-medicine					{			color: {{{account.colors.health-and-medicine}}};				}
+      .science							{			color: {{{account.colors.science}}};							}
+      .charcoalText						{			color: {{{account.colors.charcoal}}};							}
+      
+      {{{account.snippets.wayfinderCSS}}}
+
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white">
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="wayfinder" data-max-line="8"></div>
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = false;
+    </script>
+    
+
+
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      		{{{account.snippets.wayfinderJS}}}
+      
+      
+            {{#collection.ANU_wayfinder}}
+            {{#block.ANU_college}}
+            wayfinderAddCollege('{{{ANU_college_content}}}', true);
+            //<div class="anu_wayfinder_college" data-name='{{ANU_college_content}}'></div>
+            {{/block.ANU_college}}
+            {{#block.ANU_custom}}
+            wayfinderAddCustom("{{{wayfinderType}}}", "{{{wayfinderName}}}");
+            //<div class="anu_wayfinder_custom" data-type="{{{wayfinderType}}}" data-name="{{{wayfinderName}}}"></div>
+            {{/block.ANU_custom}}
+            {{/collection.ANU_wayfinder}}   
+
+
+
+
+
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+        if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();      
+
+    </script>
+
+
+  </body>
+</html>
