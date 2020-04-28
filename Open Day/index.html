@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html data-sign="OSB">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+
+      :root {
+        --black: {{{account.colors.rich-black}}};
+        --white: {{{account.colors.white}}};
+        --platinum: {{{account.colors.platinum}}};
+      }
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 11pt;
+        color: #fff;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit { 
+        display: flex; 
+        background: var(--black);
+      }
+
+      .layoutSize--twInstagram .fit,
+      .layoutSize--fbPost .fit {
+        flex-direction: column;
+      }
+
+      .hero {
+        position: relative;
+        width: 15rem;
+      }      
+
+      .layoutSize--fbCover .hero { width: 12.6rem; }   
+
+      .layoutSize--twInstagram .hero {
+        width: auto;
+        height: 12.15rem;
+      }
+
+      .layoutSize--fbPost .hero {
+        width: auto;
+        height: 15.6rem;
+      }
+
+      .body { 
+        display: flex;
+        align-items: center;
+        flex: 1;
+        justify-content: center;
+        padding: 0 1.2rem 0 1.45rem;
+      }
+      
+      .body .copy{
+        max-height: 340px;
+      }
+
+      .layoutSize--fbCover .body { padding: 0 1.2rem 0 1.15rem; }
+      .layoutSize--twInstagram .body { padding: 0 1rem 0 1.35rem; }
+      .layoutSize--fbPost .body { padding: 0 0.8rem 0 1.1rem; }
+      
+      .layoutSize--fbPost .copy{    max-height: 275px;	}
+      .layoutSize--fbCover .copy{    max-height: 215px;	}
+      .layoutSize--twInstagram .copy{    max-height: 245px;	}
+      .layoutSize--odSign .copy{    max-height: 150px;	}
+      .layoutSize--edmHeader .copy{    max-height: 120px;	}
+
+      .tinymce_style--light { color: var(--platinum); }
+
+      h1 { font-size: 1.98rem; }
+      h2 strong { font-size: 1.2rem; }
+      h2 { font-size: 1.32rem; }      
+      h2 + h1 {  margin-top: 0.5rem; }
+
+      .layoutSize--fbCover h1 { font-size: 1.41rem;  }
+      .layoutSize--fbCover h2 strong { font-size: 0.86rem; }
+      .layoutSize--fbCover h2 { font-size: 0.955rem; line-height: 1rem;}
+      .layoutSize--fbCover h2 + h1 { margin-top: 0.25rem; }
+
+      .layoutSize--odSign h1 { font-size: 1.7rem; }
+      .layoutSize--odSign h2 strong { font-size: 1.16rem; }
+      .layoutSize--odSign h2 { font-size: 1.09rem; }
+      
+      .layoutSize--edmHeader h1 { font-size: 1.7rem; }
+      .layoutSize--edmHeader h2 strong { font-size: 1.16rem; }
+      .layoutSize--edmHeader h2 { font-size: 1.09rem; }
+
+      .layoutSize--twInstagram h1 { 
+        font-size: 2.1rem; 
+        line-height: 1.1em;
+      }
+
+      .layoutSize--twInstagram h2 {  font-size: 1.35rem; }
+      .layoutSize--twInstagram h2 strong {  font-size: 1.25rem; }
+      .layoutSize--twInstagram h2 + h1 { margin-top: 0; }
+
+      .layoutSize--fbPost h1 { 
+        font-size: 1.7rem;
+        line-height: 0.99em;
+      }
+
+      .layoutSize--fbPost h2 { font-size: 1.09rem; }
+      .layoutSize--fbPost h2 strong {  font-size: 1rem; }
+      .layoutSize--fbPost h2 + h1 { margin-top: 0; }
+      
+      .layoutSize--twCover .hero{
+        width: 910px;
+      }
+      
+      .layoutSize--twCover .body{
+        padding: 0;
+        margin-left: 1.6rem;
+        justify-content: normal;
+      }
+      
+      .layoutSize--twCover h2 strong{
+        font-size: 0.78rem;
+      }
+      
+      .layoutSize--twCover h1{
+        font-size: 1.28rem;
+      }
+      
+      .layoutSize--twCover h2{
+        font-size: 0.85rem;
+      }
+      
+      .placeholder__container{
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}
+                                         layoutSize--{{ANU_layout-size--od}}{{^ANU_layout-size--od}}twCover{{/ANU_layout-size--od}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="hero"> <div class="reposition-fix"> {{{ANU_feature-image--od}}} </div> <!-- reposition-fix-->  </div> <!-- hero -->
+          <div class="body">
+            <div class="copy" data-max-height="css"> {{{ANU_copy--od}}}  </div> <!-- copy -->
+          </div> <!-- body -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+        if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();
+
+    </script>
+
+
+  </body>
+</html>
