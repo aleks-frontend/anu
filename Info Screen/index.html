@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html data-sign="OSB">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Helvetica%20Neue%20LT/stylesheet.css');
+
+      html {
+        font-family: 'Helvetica Neue LT Std';
+        font-size: 10pt;
+        color: {{account.colors.process-black}};
+      }
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative;
+        z-index: 999;}
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0;
+        right: 0;
+        height: 1em;
+        width: 1em;
+        border: 0.01rem solid red;
+        color: red;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 1em;
+        text-align: center;
+        line-height: 1em;
+        background-color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'Max number of lines exceeded!';
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: black;
+        color: white;
+        border-radius: 0;
+        padding: 0.5em 4em 0.5em 0.5em;
+        box-sizing: border-box;
+        font-size: 0.3em;
+        font-weight: 400;
+        text-align: right;
+        line-height: 1.1em;
+        z-index: 2;
+      }
+
+      .overflow[data-max-height]:hover:after {
+        content: 'Max height exceeded!';  
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      } 
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }       
+
+      .fit {
+        display: flex;
+      }
+
+      .side {
+        position: relative;
+        width: 10.448rem;
+        overflow: hidden;
+      }
+
+      .theme--2 .side {
+        width: 10.895rem;
+      }
+
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 1.391rem 1.412rem;
+      }
+
+      .theme--2 .main {
+        padding: 1.42rem 1.49rem;
+      }
+
+      .logo {
+        width: 4.386rem;
+        margin-left: 0.064rem;
+        flex-shrink: 0;
+      }
+
+      .theme--2 .logo {
+        width: 4.54rem;
+        margin-left: 0;
+      }
+
+      .body {
+        flex: 1;
+        padding-top: 339pt;
+      }
+
+      .theme--2 .body {
+        padding-top: 387pt;
+      }
+
+      .heading {
+        margin-bottom: 0.749rem;
+      }
+
+      .heading h1 {
+        font-size: 0.877rem;
+        font-weight: bold;
+      }
+
+      .theme--2 .heading h1 {
+        font-size: 0.916rem;
+      }
+
+      .tinymce_style--light {
+        color: {{account.colors.platinum}};
+      }
+
+      .tinymce_style--dark {
+        color: {{account.colors.process-black}};
+      }
+
+      .content {
+        font-size: 0.357rem;
+      }
+
+      .content p {
+        margin-bottom: 0.143rem;
+        font-size: 0.472rem;
+      }
+
+      .theme--2 .content p {
+        margin-bottom: 0.146rem;
+        font-size: 0.495rem;
+      }
+
+      .content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .content a {
+        color: {{account.colors.process-black}};
+        text-decoration: none;
+      }
+
+      .content h2 {
+        font-size: 0.472rem;
+        color: {{account.colors.platinum}};
+      }
+
+      .theme--2 .content h2 {
+        /*margin-bottom: 0.3rem;*/
+        font-size: 0.495rem;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} {{{ ANU_theme--is }}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="side">
+            {{{ ANU_hero--is }}}
+          </div> <!-- side -->
+          <div class="main">
+            <img src="{{{account.logos.logo-gold}}}" class="logo"/>
+            <div class="body">
+              <div class="heading" data-max-line="2">
+                {{{ ANU_heading--is }}}
+              </div> <!-- heading -->
+              <div class="content" data-max-height="6" data-max-unit="rem">
+                {{{ ANU_body-text--is }}}
+              </div> <!-- heading -->
+            </div> <!-- body -->
+          </div> <!-- main -->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+    </script>
+    <script src="main.js"></script>   
+    <script src="prefixfree.js"></script>
+    <script src="placeholder-controller.js"></script>
+    <script src="char-limit.js"></script>
+    <script src="check-export-mode.js"></script>
+    <script src="check-height.js"></script>    
+    <script src="max-line-check.js"></script>    
+    <script src="max-height-check.js"></script>    
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Fix for the resizable background images - fullscreen and digital vairaitons only
+      function checkCrop() {
+        if (window.showCrop === true) {
+        } else {
+          [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+            el.parentNode.style.left = '0';
+            el.parentNode.style.right = '0';
+            el.parentNode.style.top = '0';
+            el.parentNode.style.bottom = '0';
+            el.parentNode.style.width = '100%';
+            el.parentNode.style.height = '100%';
+          });
+        }
+      }
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          checkHeight(document.getElementsByClassName('check-overflow')); 
+          maxLineCheck(); 
+          maxHeightCheck(); 
+          charLimit();
+        });
+      });    
+
+      const maxLineChecks = document.querySelectorAll('[data-max-line]');
+      const maxHeightChecks = document.querySelectorAll('[data-max-height]');
+      const charLimitChecks = document.querySelectorAll('[data-char-limit]');
+      const textFitChecks = document.querySelectorAll('.textFit');
+      const checkOverflows = document.querySelectorAll('.check-overflow');
+
+      if ( maxLineChecks.length !== 0) {
+        maxLineChecks.forEach(maxLineCheck => {
+          overflowObserver.observe(maxLineCheck, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });        
+        });
+      }
+
+      if ( maxHeightChecks.length !== 0) {
+        maxHeightChecks.forEach(maxHeightCheck => {
+          overflowObserver.observe(maxHeightCheck, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });        
+        });
+      }      
+
+      if ( checkOverflows.length !== 0) {      
+        checkOverflows.forEach(checkOverflow => {
+          overflowObserver.observe(checkOverflow, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });        
+        });      
+      }      
+
+      if ( charLimitChecks.length !== 0) {
+        charLimitChecks.forEach(charLimitCheck => {
+          overflowObserver.observe(charLimitCheck, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });        
+        });
+      }      
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        checkHeight(document.getElementsByClassName('check-overflow')); 
+        maxLineCheck(); 
+        maxHeightCheck();         
+      });
+
+      placeholderController();
+      checkCrop();  
+      checkExport(); 
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+    </script>
+
+
+  </body>
+</html>
