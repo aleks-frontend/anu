@@ -17,6 +17,7 @@
       {{show-crop}}
       {{placeholder-toggle-new}}
       {{placeholder-opacity}}
+      {{prevent-export-blank-page}}
       {{ANU_variation--mpgip}}  
       */
 
@@ -33,7 +34,7 @@
         --a4ImageSize: 6.72rem;
         --a5ImageSize: 6.6rem;
         --black: {{{account.colors.process-black}}};
-       }
+      }
 
 
       html {
@@ -43,11 +44,17 @@
         color: var(--primary);
         word-break: break-word;
       }
-       html .theme--dark{
+      html .theme--dark{
         font-family: 'Helvetica Neue LT Std';
         font-size: 11pt;
         font-weight: normal;
       }
+      .footer.anu_wayfinder p {
+        font-size: 14pt !important;
+        line-height: 1.2 !important;
+      }
+
+
       p {
         font-size: 9pt !important;
         line-height: 1.2 !important;
@@ -83,82 +90,110 @@
         background: var(--primary);
       }
 
-      .fit--contents { padding: 1.5rem 1.15rem; }
-      .is-export-mode .fit--contents { padding-bottom: 1.492rem; }
-      .fit--timetable { padding: 1.45rem 1.04rem }
-      .is-export-mode .fit--timetable { padding-bottom: 1.442rem; }
+      .fit--contents { 
+        /* padding: 1.5rem 1.15rem; */
+        padding: 1.324rem 0.927rem;
+      }
+
+      .is-export-mode .fit--contents { 
+        /* padding-bottom: 1.492rem; */
+        padding-bottom: 0.92rem;
+      }
+
+      .fit--timetable {  padding: 1.324rem 0.927rem; }
+      .is-export-mode .fit--timetable { /* padding-bottom: 1.442rem; */ }
       .fit--contact { padding: 2.95rem 1.245rem; }
 
-      .variation--a5 .fit--timetable { padding: 1.5rem 1.07rem; }
-      .is-export-mode.variation--a5 .fit--timetable { padding-bottom: 1.492rem; }
+      .variation--a5 .fit--timetable { /* padding: 1.5rem 1.07rem; */ }
+      .is-export-mode.variation--a5 .fit--timetable { /* padding-bottom: 1.492rem; */ }
 
       .fit--notes {
-        padding: 1.45rem 1.1rem 0.9rem 1.2rem;
+        /* padding: 1.45rem 1.1rem 0.9rem 1.2rem; */
+        padding: 1.324rem 0.927rem;
       }
 
       .variation--a5  .fit--notes {
-        padding: 1.52rem 1.1rem 0.9rem 1.25rem;
+        /* padding: 1.52rem 1.1rem 0.9rem 1.25rem; */
       }
 
       .fit--oneColumnPage {
-        padding: 1.43rem 2.8rem 1.15rem 1.18rem;
+        /* padding: 1.43rem 2.8rem 1.15rem 1.18rem; */
+        padding: 1.324rem 0.927rem;
       }
-      
-      .is-export-mode .fit--oneColumnPage { padding-bottom: 1.144rem; }
+
+      .is-export-mode .fit--oneColumnPage { 
+        /* padding-bottom: 1.144rem; */
+        padding-bottom: 0.92rem;
+      }
 
       .variation--a5 .fit--oneColumnPage {
-        padding: 1.52rem 2.8rem 1rem 1.23rem;
+        /* padding: 1.52rem 2.8rem 1rem 1.23rem; */
       }
-      
-      .is-export-mode .variation--a5 .fit--oneColumnPage { padding-bottom: 0.995rem; }
-    
+
+      .is-export-mode .variation--a5 .fit--oneColumnPage { /* padding-bottom: 0.995rem; */ }
+
       .fit--annotation {
-        padding: 1.54rem 1.05rem 1.55rem 1.2rem;
+        /* padding: 1.54rem 1.05rem 1.55rem 1.2rem; */
+        padding: 1.324rem 0.927rem;
       }
 
       .variation--a5 .fit--annotation {
-        padding: 1.58rem 1.05rem 1.57rem 1.22rem;
+        /*  padding: 1.58rem 1.05rem 1.57rem 1.22rem; */
       }
 
       .fit--biographies {
-        padding: 1.44rem 3.25rem 1.35rem 1.05rem;
+        /* padding: 1.44rem 3.25rem 1.35rem 1.05rem; */
+        padding: 1.324rem 0.927rem;
       }
-      
-      .is-export-mode .fit--biographies { padding-bottom: 1.343rem; }
+
+      .is-export-mode .fit--biographies { 
+        /* padding-bottom: 1.343rem; */
+        padding-bottom: 0.92rem;
+      }
 
       .variation--a5 .fit--biographies {
-        padding: 1.5rem 3.25rem 1.15rem 1.07rem;
+        /* padding: 1.5rem 3.25rem 1.15rem 1.07rem; */
       }
-      
+
       .is-export-mode.variation--a5 .fit--biographies { padding-bottom: 1.144rem; }
 
       .fit--spanColumns {
-        padding: 1.44rem 1.15rem 1.1rem 1.05rem;
+        /*  padding: 1.44rem 1.15rem 1.1rem 1.05rem; */
+        padding: 1.324rem 0.927rem; 
       }
-      
-      .is-export-mode .fit--spanColumns { padding-bottom: 1.094rem; }
+
+      .is-export-mode .fit--spanColumns { 
+        /* padding-bottom: 1.094rem; */
+        padding-bottom: 0.92rem;  
+      }
 
       .variation--a5 .fit--spanColumns {
-        padding: 1.5rem 1.2rem 1.38rem 1.07rem;
+        /* padding: 1.5rem 1.2rem 1.38rem 1.07rem; */
       }
-      
-      .is-export-mode.variation--a5 .fit--spanColumns { padding-bottom: 1.373rem; }
+
+      .is-export-mode.variation--a5 .fit--spanColumns { /* padding-bottom: 1.373rem; */ }
 
       .fit--twoColumnPage, 
       .fit--threeColumnPage {
-        padding: 1.6rem 1rem 1.1rem 1.05rem;
+        /* padding: 1.5rem 1rem 1.1rem 1.05rem; */
+        padding: 1.324rem 0.927rem;
       }
-      
+
       .is-export-mode .fit--twoColumnPage, 
-      .is-export-mode .fit--threeColumnPage { padding-bottom: 1.094rem; }
+      .is-export-mode .fit--threeColumnPage { 
+        /* padding-bottom: 1.094rem; */
+        padding-bottom: 0.92rem;
+      }
 
       .variation--a5 .fit--twoColumnPage, 
       .variation--a5 .fit--threeColumnPage {
-        padding: 1.7rem 1rem 1.15rem 1.08rem;
+        /* padding: 1.7rem 1rem 1.15rem 1.08rem; */
       }
-      
+
       .is-export-mode.variation--a5 .fit--twoColumnPage, 
-      .is-export-mode.variation--a5 .fit--threeColumnPage { padding-bottom: 1.144rem; }      
+      .is-export-mode.variation--a5 .fit--threeColumnPage { 
+        /*  padding-bottom: 1.144rem; */
+      }      
 
       .header {
         position: relative;
@@ -173,21 +208,21 @@
       }
 
       .header--biographies {
-        height: 1.68rem;
+        /*   height: 1.68rem; */
       }
 
       .variation--a5 .header--biographies {
-        height: 1.64rem;
+        /*  height: 1.64rem; */
       }
 
       .header--twoColumnPage,
       .header--threeColumnPage {
-        height: 1.4rem;
-       }
+        /* height: 1.4rem */
+      }
 
       .variation--a5 .header--twoColumnPage,
       .variation--a5 .header--threeColumnPage {
-        height: 1.31rem;
+        /*   height: 1.31rem; */
       }
 
       .logo {
@@ -219,11 +254,15 @@
       }
 
       .body--twoColumnPage {
-        margin-left: -0.3rem;
+        /* margin-left: -0.3rem; */
+        margin-left: 0.331rem;
+        /* margin-top: -0.4rem; */
       }
 
       .body--threeColumnPage {
-        margin-left: -0.2rem;
+        /* margin-left: -0.2rem; */
+        margin-left: 0.331rem;
+        /* margin-top: -0.4rem; */
       }
 
       .body__inner { 
@@ -237,11 +276,13 @@
 
       .body__inner--twoColumnPage { 
         width: 6.2rem;
-        margin-left: 0.3rem;
+        /* margin-left: 0.3rem; */
+        margin-left: 0.331rem;
       }
       .body__inner--threeColumnPage { 
         width: 4.1rem;
-        margin-left: 0.2rem;
+        /*  margin-left: 0.2rem */
+        margin-left: 0.331rem;
       }
 
       .hero {
@@ -340,11 +381,13 @@
       }
 
       .heading--timetable {
-        margin-bottom: 1.15rem;
+        /* margin-bottom: 1.15rem */
+        margin-bottom: 0.662rem;
       }
 
       .heading--notes {
-        margin-bottom: 0.7rem;
+        /* margin-bottom: 0.7rem; */
+        margin-bottom: 0.662rem;
         padding-right: 6.4rem;
       }
 
@@ -369,11 +412,12 @@
 
       .fit--contact .anu_wayfinder {    
         font-size: 0.28rem;
+        font-weight: bold;
       }
 
       .footer { padding-right: 6.3rem; }
 
-      
+
       .contact { margin-bottom: 0.4rem; }
 
       .contact__text { 
@@ -460,35 +504,37 @@
       }
 
       /*.page:nth-child(even) .pageNumber__container {
-        position: absolute;
-        bottom: 0.56rem;
-        left: 0.7rem;
-        display: flex;
-        width: 90%;
+      position: absolute;
+      bottom: 0.56rem;
+      left: 0.7rem;
+      display: flex;
+      width: 90%;
       }
-       .page:nth-child(odd) .pageNumber__container {
-        position: absolute;
-        bottom: 0.56rem;
-        left: 0.7rem; 
-        display: flex;
-        flex-direction: row-reverse;
-        width: 90%;
+      .page:nth-child(odd) .pageNumber__container {
+      position: absolute;
+      bottom: 0.56rem;
+      left: 0.7rem; 
+      display: flex;
+      flex-direction: row-reverse;
+      width: 90%;
       }*/
-      
+
       .pageNumber__container.left {
         position: absolute;
-        bottom: 0.56rem;
+        bottom: 0.596rem;
         left: 0.7rem;
         display: flex;
         width: 90%;
+        padding-left: 0.35rem;
       }
-       .pageNumber__container.right {
+      .pageNumber__container.right {
         position: absolute;
-        bottom: 0.56rem;
+        bottom: 0.596rem;
         left: 0.7rem; 
         display: flex;
         flex-direction: row-reverse;
         width: 90%;
+        padding-right: 0.27rem;
       }
 
       .variation--a5 .pageNumber__container {
@@ -568,10 +614,14 @@
       .event__row.event__row--subheading.noLeftHeading.noRightHeading {
         display: none !important;
       }
+      
+      /*
       align-items: flex-end;
-    padding-bottom: 0.03rem;
-    border-bottom: 1.5pt solid var(--platinum);
-}
+      padding-bottom: 0.03rem;
+      border-bottom: 1.5pt solid var(--platinum);
+      }
+      
+      */
 
 
 
@@ -638,7 +688,7 @@
 
       .block--textColumn {
         display: flex;
-        margin-left: -0.3rem;
+        margin-left: -0.33rem;
       }
 
       .block--textSecondary {
@@ -746,23 +796,50 @@
         line-height: 1.2em;
       }
 
-      .block--text ul {
+      .block--text ul,
+      .block--text ol,
+      .biography__text ul,
+      .biography__text ol,
+      .annotation ul,
+      .annotation ol,
+      .event__text ul,
+      .event__text ol,
+      .block--quote ul,
+      .block--quote ol {
         margin-left: 0.3265rem;
         margin-bottom: 0.1166rem;
       }
 
-      .block--text li {
+      .block--text li,
+      .biography__text li,
+      .annotation li,
+      .event__text li,
+      .block--quote li {
         position: relative;
         font-size: 0.236rem;    
         font-weight: 300;
         margin-top: 2mm;
       }
+      
+      .biography__text li {
+        font-size: 0.202rem;
+      }
+      
+      .annotation li,
+      .event__text li,
+      .block--quote li {
+        font-size: 9pt;
+      }
 
-      .block--text li::before {
+      .block--text ul li::before,
+      .biography__text ul li::before,
+      .annotation ul li::before,
+      .event__text ul li::before,
+      .block--quote ul li::before {
         content: ">";
         position: absolute;
         top: -0.0233rem;
-        left: -5mm;
+        left: -3mm;
         font-weight: bold;
       }      
 
@@ -880,12 +957,12 @@
         padding-top: 0.14rem;
       }
 
-    /*  .image__caption {
-        font-size: 0.168rem;       
+      /*  .image__caption {
+      font-size: 0.168rem;       
       }*/
-       .image__caption {
+      .image__caption {
         font-size: 11pt;   
-         line-height: 1.1;
+        line-height: 1.1;
       }
 
       .variation--a5 .image__caption {
@@ -969,7 +1046,7 @@
         text-align: center;     
       }
       tr {
-            vertical-align: top;
+        vertical-align: top;
       }
       tr .tableSection__row:nth-last-child(n+2):nth-last-child(-n+2):first-child, .tableSection__row:nth-last-child(n+2):nth-last-child(-n+2):first-child ~ .tableSection__row { 
         width: 50%;
@@ -1016,7 +1093,7 @@
         font-weight: bold;
         font-size: 0.23rem;
       }
-     
+
 
       .block--tableSecondary .tableSection__row--heading {
         font-weight: bold;
@@ -1320,7 +1397,7 @@
 
       .column {
         width: 5.9rem;
-        margin-left: 0.3rem;
+        margin-left: 0.33rem;
       }
 
       .note__line {
@@ -1545,12 +1622,12 @@
       .template--multipageCover .fit--contact .anu_wayfinder {
         padding-bottom: 0.2rem;
         font-size: 0.28rem;
-        line-height: 1em;
+        line-height: calc(1em + 4px);
       }
 
       .template--multipageCover .footer { padding-right: 6.3rem; }
 
-      
+
       .template--multipageCover .contact { margin-bottom: 0.2rem; }
 
       ..template--multipageCover contact__text { 
@@ -1776,6 +1853,7 @@
 
       .template--multipageCover .block--text a {
         color: var(--primary);
+        
         text-decoration: none;
       }
 
@@ -1970,7 +2048,7 @@
       .template--multipageCover .socialSection__text a,
       .template--multipageCover .contactSection__value a {
         color: var(--primary);
-        text-decoration: none;
+        /*text-decoration: none;*/
       }
 
       .template--multipageCover .outfitCricosCode {         
@@ -1994,6 +2072,12 @@
       .body__inner {
         display: flex;
         flex-direction: column;
+        /* justify-content: space-between;*/
+      }
+      .fit--contact  .body__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
       .variation--a5 {
         --imageSize: var(--a5ImageSize);
@@ -2010,10 +2094,11 @@
       .page--sponsors-page .section {
         display: none;
       }
-     
-    
       
-
+      a{
+        color: var(--primary) !important;
+        text-decoration: underline !important;
+      }
 
       /********************************************** Multipage Cover **********************************************/
     </style>
@@ -2021,7 +2106,8 @@
   <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}
                                          variation--{{{ANU_variation--mpgip}}}{{^ANU_variation--mpgip}}a4{{/ANU_variation--mpgip}}
                                          theme--{{ANU_theme--mgip}}{{^ANU_theme--mgip}}light{{/ANU_theme--mgip}}
-                                         " data-crop="{{show-crop}}">
+                                         " data-crop="{{show-crop}}"
+        	data-prevent-export-blank-page="{{prevent-export-blank-page}}{{^prevent-export-blank-page}}false{{/prevent-export-blank-page}}">
     <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
     </div><!-- end placeholderMaster -->
 
@@ -2092,10 +2178,10 @@
                 {{/spreadsheet.ANU_table-contents--mgip}}
                 {{/collection.ANU_content--mgip}}
               </div> <!-- table -->
-              
+
             </div> <!-- data-max-height -->
-             </div> <!-- section -->
-            <div class="body body--oneColumnPage sponsorsPageChoice">
+          </div> <!-- section -->
+          <div class="body body--oneColumnPage sponsorsPageChoice">
             <div data-max-height="dynamic">
               {{#collection.ANU_content--mpgip}}
               {{#block.ANU_copy--mpgip}}
@@ -2136,7 +2222,7 @@
               {{/collection.ANU_content--mpgip}}
             </div><!-- data-max-height -->
           </div> <!-- body -->
-         
+
         </div><!--container fit-->
 
       </div><!--bleed-->
@@ -2148,7 +2234,7 @@
     {{#collection.ANU_internal-pages-additions--mpgip}}
     <!--adding contents page -->
     {{#block.ANU_contents--mgip}}
-       <div class="page template--multipageCover">
+    <div class="page template--multipageCover">
 
       <div class="bleed">
 
@@ -2157,7 +2243,7 @@
             <div data-max-height="dynamic">
               <div class="heading heading--contents"> contents </div> <!-- heading -->
               <div class="table">
-                
+
                 {{#ANU_heading-column--mgip}}
                 <div class="table__row table__row--subheading"> 
                   <div class="table__column table__column--big table__column--header" data-max-line="1"> {{{ANU_heading-column--mgip}}} </div> <!--table__column --> 
@@ -2170,14 +2256,14 @@
                   <div class="table__column" data-max-line="1"> {{{ANU_section-page-number--mgip}}} </div> <!--table__column --> 
                 </div> <!-- table__row -->
                 {{/spreadsheet.ANU_table-contents--mgip}}
-                
+
               </div> <!-- table -->
-              
+
             </div> <!-- data-max-height -->
-             </div> <!-- section -->
-           </div> <!-- Container -->
-             </div> <!-- Bleed -->
-         </div> <!-- Page -->
+          </div> <!-- section -->
+        </div> <!-- Container -->
+      </div> <!-- Bleed -->
+    </div> <!-- Page -->
     {{/block.ANU_contents--mgip}}
     <!--ending contents page -->
     {{#block.ANU_notes--mpgip}}
@@ -2238,10 +2324,10 @@
               <div class="heading heading--timetable" data-max-line="2"> {{{ANU_timetable-page-heading--mpgip}}} </div> <!-- heading -->
               {{/ANU_timetable-page-heading--mpgip}}
               <div class="venue-location"> Venue: {{{event-venue}}} </div>
-             
+
               {{#collection.event-table--mpgip}}
               <div class="event"> 
-                 <div class="dayHeading" style="color: var(--{{{day-heading-colour}}});">{{{day-heading}}}</div>
+                <div class="dayHeading" style="color: var(--{{{day-heading-colour}}});">{{{day-heading}}}</div>
                 <div class="event__row event__row--subheading {{^ANU_table-heading-left--mpgip}}noLeftHeading{{/ANU_table-heading-left--mpgip}} {{^ANU_table-heading-right--mpgip}}noRightHeading{{/ANU_table-heading-right--mpgip}}" style="grid-template-columns: {{{event-column1-width}}}% 1fr;"> 
                   <div class="event__text event__text--subheading" data-max-line="1" > {{{ANU_table-heading-left--mpgip}}} </div> <!-- event__heading -->
                   <div class="event__text event__text--subheading" data-max-line="1" > {{{ANU_table-heading-right--mpgip}}} </div> <!-- event__heading -->
@@ -2276,11 +2362,11 @@
       <div class="bleed">
 
         <div class="container fit fit--twoColumnPage">
+          {{#ANU_two-column-page-heading--mpgip}}
           <div class="header header--twoColumnPage"> 
-            {{#ANU_two-column-page-heading--mpgip}}
             <div class="heading heading--twoColumnPage" data-max-line="2"> {{{ANU_two-column-page-heading--mpgip}}} </div> <!-- heading -->
-            {{/ANU_two-column-page-heading--mpgip}}
           </div> <!-- header -->
+          {{/ANU_two-column-page-heading--mpgip}}
           <div class="body body--twoColumnPage">   
             <div class="dynamic__container" data-max-height="dynamic">
               <div class="body__inner body__inner--twoColumnPage">
@@ -2463,11 +2549,11 @@
       <div class="bleed">
 
         <div class="container fit fit--threeColumnPage">
+          {{#ANU_three-column-page-heading--mpgip}}
           <div class="header header--threeColumnPage"> 
-            {{#ANU_three-column-page-heading--mpgip}}
             <div class="heading heading--threeColumnPage" data-max-line="2"> {{{ANU_three-column-page-heading--mpgip}}} </div> <!-- heading -->
-            {{/ANU_three-column-page-heading--mpgip}}
           </div> <!-- header -->
+          {{/ANU_three-column-page-heading--mpgip}}
           <div class="body body--threeColumnPage">   
             <div class="dynamic__container" data-max-height="dynamic">
               <div class="body__inner body__inner--threeColumnPage">
@@ -2732,11 +2818,11 @@
       <div class="bleed">
 
         <div class="container fit fit--oneColumnPage">
-          <div class="header header--oneColumnPage"> 
-            {{#ANU_one-column-page-heading--mpgip}}
+          {{#ANU_one-column-page-heading--mpgip}}
+          <div class="header header--oneColumnPage">
             <div class="heading heading--oneColumnPage" data-max-line="2"> {{{ANU_one-column-page-heading--mpgip}}} </div> <!-- heading -->
-            {{/ANU_one-column-page-heading--mpgip}}
-          </div> <!-- header -->
+          </div><!-- header -->
+          {{/ANU_one-column-page-heading--mpgip}}
           <div class="body body--oneColumnPage">
             <div data-max-height="dynamic">
               {{#collection.ANU_content--mpgip}}
@@ -2788,7 +2874,7 @@
 
     </div><!--page-->
     {{/block.ANU_one-column-page--mpgip}}
-    
+
     <!--TIMETABLE PAGE-->
     {{#block.ANU_annotated-image-page--mpg}}
     <div class="page js-page">
@@ -2820,11 +2906,11 @@
       <div class="bleed">
 
         <div class="container fit fit--biographies">
+          {{#ANU_biographies-page-heading--mpgip}}
           <div class="header header--biographies"> 
-            {{#ANU_biographies-page-heading--mpgip}}
             <div class="heading heading--biographies" data-max-line="2">{{{ANU_biographies-page-heading--mpgip}}} </div> <!-- heading -->
-            {{/ANU_biographies-page-heading--mpgip}}
           </div> <!-- header -->
+          {{/ANU_biographies-page-heading--mpgip}}
           <div class="body body--biographies">
             <div class="dynamic__container" data-max-height="dynamic">
               {{#collection.ANU_biography--mpgip}}
@@ -2866,11 +2952,11 @@
       <div class="bleed">
 
         <div class="container fit fit--spanColumns">
+          {{#ANU_span-columns-page-heading--mpgip}}
           <div class="header header--spanColumns"> 
-            {{#ANU_span-columns-page-heading--mpgip}}
             <div class="heading heading--spanColumns" data-max-line="2"> {{{ANU_span-columns-page-heading--mpgip}}} </div> <!-- heading -->
-            {{/ANU_span-columns-page-heading--mpgip}}
           </div> <!-- header -->
+          {{/ANU_span-columns-page-heading--mpgip}}
           <div class="body">   
             <div class="dynamic__container" data-max-height="dynamic">
               {{#collection.ANU_content--mpgip}}
@@ -2960,6 +3046,7 @@
       <div class="bleed">
 
         <div class="container fit fit--contents bg--{{{ANU_background-colour--mpgip}}}{{^ANU_background-colour--mpgip}}white{{/ANU_background-colour--mpgip}}">   
+          
         </div><!--container fit-->
 
       </div><!--bleed-->
@@ -3044,7 +3131,7 @@
                   {{/ANU_college-linkedln--mpgip}}
                 </div> <!-- contact -->
                 {{/collection.ANU_contact-details--mpgip}}
-               <div class="contact__text contact__text--small"> {{{account.snippets.cricosCode}}} </div> <!-- contact__text -->
+                <div class="contact__text contact__text--small"> {{{account.snippets.cricosCode}}} </div> <!-- contact__text -->
               </div> <!-- contact__container -->
             </div> <!-- body__inner -->
             <div class="exportNumber" data-max-line="1"> {{#metadata}}OF_EXPORTID: {{export_id}}{{/metadata}}akjfbkahdahks </div> <!-- exportNumber --> 
@@ -3067,6 +3154,7 @@
     <script src="js/max-line-check.js"></script>
     <script src="js/max-height-check.js"></script>
     <script src="js/hide-empty-titles.js"></script>
+    <script src="js/fontfaceobserver.js"></script>
     <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
     <script src="https://outfit-assets-production.s3.amazonaws.com/scripts/clients/anu/anu-wayfinder/wayfinder_v1.0.js"></script>
     <script>
@@ -3115,16 +3203,19 @@
       function injectFooter() {
         const pageContainers = document.querySelectorAll('.pageNumber__container');
         pageContainers.forEach((pageContainer, index) => {
-          if(index%2 == 1){
+          var value; 
+          if((index+1)%2 == 1){
             pageContainer.classList.add("right");
+            value = "{{{ANU_page-footnote-right--mpgip}}}";
           } else{
             pageContainer.classList.add("left");
+            value = "{{{ANU_page-footnote-left--mpgip}}}";
           }
-          
+
           const pageNumber = pageContainer.querySelector('.js-pageNumber');
           pageNumber.innerText = index + 1;
-          
-          const value = "{{{ANU_page-footnote--mpgip}}}";
+
+
           const footnote = pageContainer.querySelector('.js-pageFootnote');
           footnote.innerText = value;
         });
@@ -3133,7 +3224,30 @@
 
       detectSystem();
       injectFooter();
+      
+      
+      
+      // Calling text size restriction functions once the fonts are loaded
+      // All external font-families need to be added to 'fonts' array
+      document.addEventListener('DOMContentLoaded', function(event) {
+        const fonts = ['Helvetica Neue LT Std'];
+        const fontObservers = [];
 
+        fonts.forEach(font => {
+          const obs = new FontFaceObserver(font);
+          fontObservers.push(obs.load())
+        });
+
+        Promise.all(fontObservers).then(() => {
+          maxLineCheck();
+          maxHeightCheck();
+          hideEmptyTitles();
+
+          document.dispatchEvent(new Event('printready'));
+        });
+      });      
+
+      
     </script>
     <script type="text/javascript">
       // Add many fallbacks for Print Ready
@@ -3146,6 +3260,12 @@
       }, 5000);
 
       document.dispatchEvent(new Event('printready'));
+      
+      if({{{hideFirstandLastPages}}}{{^hideFirstandLastPages}}false{{/hideFirstandLastPages}}){
+        document.querySelector(".container.fit.fit--contents.page--content").parentElement.parentElement.style.display = "none";
+        var pages = document.querySelectorAll(".page");
+        pages[pages.length-2].style.display = "none";
+      }
     </script>
 
   </body>
